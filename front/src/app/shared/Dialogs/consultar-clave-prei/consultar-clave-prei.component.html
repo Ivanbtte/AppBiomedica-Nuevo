@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Equipo Contratado</h1>
+<div mat-dialog-content>
+  <mat-card class="oh text-left little-profile" *ngIf="clave">
+    <mat-card-content>
+      <h3 class="m-b-0" style="color: #003366"><strong>Clave Cuadro Basico: </strong>{{claveCuadro}}</h3>
+      <h3 class="m-b-0 m-t-0" style="color: #003366"><strong>Clave PREI: </strong>{{clave.IdArticulo}}</h3>
+      <h3 class="m-t-0 m-t-10"><strong>Descripcion: </strong>{{regresaDescripcion(clave.Descripcion)}}.</h3>
+      <h3 class="m-t-10 m-b-10"><strong>Objeto de contratacion: </strong>{{clave.CuadroBasico.Grupo}}</h3>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="oh text-center little-profile" *ngIf="error">
+    <div>
+      <h3 class="m-b-0 font-bold" style="color: #661421">No se ecnontro este ID PREI:  {{data.id_prei}}</h3>
+    </div>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100" class="col-md-4"><img
+          src="../../../../assets/images/background/errorNot.png" alt="" class="img-responsive"
+          style="overflow: hidden"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="clave" cdkFocusInitial *ngIf="clave">Seleccionar
+  </button>
+</div>

@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-title class="p-20">Presupuesto de necesidades</mat-card-title>
+  <mat-card-content style="width: 100%">
+    <mat-label class="text-inverse m-b-10">Agregar el presupuesto destinado para este perido de solicitudes
+    </mat-label>
+    <br><br>
+    <div class="div-flex">
+      <mat-form-field>
+        <input matInput placeholder="Presupuesto" type="number" class="example-right-align" [readonly]="habilitarInput"
+               [value]="value" [formControl]="presupuesto">
+        <span matPrefix>$&nbsp;</span>
+        <span matSuffix>.00</span>
+      </mat-form-field>
+      <button mat-flat-button color="primary" class="botones" (click)="agregarPresupuesto()" *ngIf="botonAgregar">
+        Agregar
+        <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+      </button>
+      <button mat-flat-button color="primary" class="botones" *ngIf="botonEditar" (click)="habilitarEdicion()">
+        Editar
+        <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+      </button>
+      <button mat-flat-button color="primary" class="botones" *ngIf="botonActualizar" (click)="actualizarPresupuesto()">
+        Actualizar
+        <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

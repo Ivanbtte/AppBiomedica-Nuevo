@@ -1,0 +1,135 @@
+<h1 mat-dialog-title align="center" style="color: #003366">{{titulo}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formulario_contrato" style="background-color: white">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona Proveedor</mat-label>
+          <input matInput formControlName="AliasEmpresa"
+                 autocomplete="off" readonly required>
+          <button matSuffix mat-icon-button color="primary" type="button" *ngIf="!data.editar"
+                  (click)="DialogProveedor()">
+            <mat-icon aria-label="Selecciona">search</mat-icon>
+          </button>
+          <button matSuffix mat-icon-button color="primary" type="button" *ngIf="data.editar"
+                  (click)="DialogProveedor()">
+            <mat-icon aria-label="Selecciona">edit</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Información del representante</mat-label>
+          <input matInput formControlName="NombreCompleto"
+                 autocomplete="off" readonly required>
+          <button matSuffix mat-icon-button color="primary" type="button" *ngIf="!data.editar"
+                  (click)="DialogRepresentante()">
+            <mat-icon aria-label="Selecciona">search</mat-icon>
+          </button>
+          <button matSuffix mat-icon-button color="primary" type="button" *ngIf="data.editar"
+                  (click)="DialogRepresentante()">
+            <mat-icon aria-label="Selecciona">edit</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Numero de contrato</mat-label>
+          <input matInput placeholder="Numero de contrato"
+                 formControlName="NumeroContrato" autocomplete="off" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" (click)="picker.open()">
+          <mat-label>Fecha Inicio contrato</mat-label>
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                 placeholder="Seleccionar fecha" readonly (dateChange)="valorFecha($event)"
+                 formControlName="InicioContrato" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" (click)="picker2.open()">
+          <mat-label>Fecha fin contrato</mat-label>
+          <input matInput [min]="minDate2" [matDatepicker]="picker2" placeholder="Seleccionar fecha"
+                 readonly formControlName="FinContrato" (dateChange)="valorFechaLimite($event)" required>
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker2 color="primary"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Procedimiento de contratacion</mat-label>
+          <input matInput placeholder="Procedimiento de contratacion" formControlName="ProcedContratacion"
+                 autocomplete="off" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Descripcion Procedimiento</mat-label>
+          <input matInput placeholder="Descripcion del procedimiento" formControlName="TipoProcedContratacion"
+                 autocomplete="off" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" (click)="picker3.open()">
+          <mat-label>Fecha Fallo</mat-label>
+          <input matInput [min]="minDate" [matDatepicker]="picker3" placeholder="Fecha del fallo"
+                 readonly formControlName="FechaFallo" (dateChange)="valorFechaFallo($event)" required>
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker3 color="primary"></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Monto total del contrato sin IVA</mat-label>
+          <input matInput placeholder="Monto total del contrato" formControlName="MontoTotal"
+                 autocomplete="off" type="number" class="soloNumeros" required>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de Contrato</mat-label>
+          <mat-select formControlName="TipoContrato" [compareWith]="compare" required>
+            <mat-option *ngFor="let tipos of tipo_contrato" [value]="tipos.Id">
+              {{tipos.TipoContrato}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="delegacionesArray">
+        <mat-form-field appearance="outline" *ngIf="!data.editar">
+          <mat-label>Selecciona una delegacion</mat-label>
+          <mat-select multiple formControlName="form_delegaciones"
+                      (selectionChange)="seleccionados()" [compareWith]="compareDeleg">
+            <mat-option *ngFor="let deleg of delegacionesArray" [value]="deleg">
+              {{deleg.NombreDele}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+        <label>* Campos requeridos</label>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center" align="end">
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-stroked-button (click)="onNoClick()" color="warn" cdkFocusInitial>Cancelar</button>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!data.editar">
+    <button mat-raised-button color="primary" [disabled]="formulario_contrato.invalid" (click)="agregar_contrato()">
+      Agregar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" *ngIf="data.editar">
+    <button mat-raised-button color="primary"
+            [disabled]="!formulario_contrato.dirty || formulario_contrato.invalid"
+            (click)="editarContrato()">
+      Guardar Cambios
+    </button>
+  </div>
+</div>

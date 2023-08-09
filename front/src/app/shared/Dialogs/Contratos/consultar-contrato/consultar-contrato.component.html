@@ -1,0 +1,21 @@
+<h1 mat-dialog-title align="center" style="color: #003366">Detalles del Contrato Registrado</h1>
+<div mat-dialog-content>
+  <mat-card class="oh text-left little-profile" *ngIf="Contrato">
+    <mat-card-title align="center"><strong>Contrato Numero: </strong>{{Contrato.NumeroContrato}}</mat-card-title>
+    <mat-card-content>
+      <h5 class="m-t-10 m-b-10"><strong>Numero de Procedimiento: </strong>{{Contrato.ProcedContratacion}}</h5>
+      <h5 class="m-t-10 m-b-10 "><strong>Tipo de Procedimiento: </strong>{{Contrato.TipoProcedContratacion}}</h5>
+      <h5 class="m-t-10 m-b-10 "><strong>Tipo de Contrato: </strong>{{Contrato.TipoContrato.Tipo}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Inicio de Contrato: </strong>{{Contrato.InicioContrato}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Fin de Contrato: </strong>{{Contrato.FinContrato}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Monto Total (Sin IVA): </strong>{{Contrato.MontoTotal | currency}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Numero de Proveedor: </strong>{{Contrato.ProveedorNProvImss}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Proveedor: </strong>{{Contrato.Proveedor.NombreEmpresa}}</h5>
+      <h5 class="m-t-10 m-b-10"><strong>Fecha de Fallo: </strong>{{Contrato.FechaFallo}}</h5>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()" color="warn">Cerrar</button>
+  <!--  <button mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>-->
+</div>

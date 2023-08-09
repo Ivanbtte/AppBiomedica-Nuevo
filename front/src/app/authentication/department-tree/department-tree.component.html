@@ -1,0 +1,83 @@
+<h2 mat-dialog-title style="color: #082e6a; font-weight: bold" class="m-0 centerText" *ngIf="data.unitMedId">
+  {{data.UnitMed.DenominacionUni}}</h2>
+<h2 mat-dialog-title style="color: #082e6a; font-weight: bold" class="m-0 centerText" *ngIf="data.clvDelegation">
+  {{data.Delegation.NombreDele}}</h2>
+<h2 mat-dialog-title style="color: #082e6a; font-weight: bold" class="m-0 centerText" *ngIf="data.puesto">
+  Designacion del administrador del modulo</h2>
+<h4 style="color: #1976d2; font-weight: bold" class="m-0 centerText" *ngIf="!data.puesto">
+  Selecciona tu departamento de adscripción</h4>
+<h4 style="color: #1976d2; font-weight: bold" class="m-0 centerText" *ngIf="data.puesto">
+  Selecciona un departamento</h4>
+<mat-dialog-content class="mat-typography">
+  <img src="../../../assets/images/warning2.png" alt="Advertencia" width="145" height="145" title="imagen"
+    class="img-centro" *ngIf="mnsError">
+  <h2 class="centerText" *ngIf="mnsError" style="color: #be1b14">{{mnsError}}, favor de comunicarse con su
+    administrador de la plataforma</h2>
+  <mat-progress-bar mode="indeterminate" *ngIf="!dataSource.data.length && !mnsError"></mat-progress-bar>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" *ngIf="dataSource.data.length">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+      <!-- use a disabled button to provide padding for tree leaf -->
+      <button mat-icon-button aria-label="Icon button" class="m-r-10" style="color: #0a7864"
+        *ngIf="idDepartamento!=node.departamentoId" (click)="selectedDepartment(node)">
+        <mat-icon>check_box_outline_blank</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Icon button" color="primary" (click)="selectedDepartment(node)"
+        *ngIf="idDepartamento==node.departamentoId">
+        <mat-icon>check_box</mat-icon>
+      </button>
+      {{node.name}}
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding style="font-weight: bold">
+      <button mat-icon-button aria-label="Icon button" color="primary" (click)="selectedDepartment(node)"
+        *ngIf="idDepartamento!=node.departamentoId">
+        <mat-icon>check_box_outline_blank</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Icon button" color="primary" (click)="selectedDepartment(node)"
+        *ngIf="idDepartamento==node.departamentoId">
+        <mat-icon>check_box</mat-icon>
+      </button>
+      <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+        <mat-icon class="mat-icon-rtl-mirror" color="primary">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      {{node.name}}
+    </mat-tree-node>
+  </mat-tree>
+  <div *ngIf="data.puesto">
+    <mat-divider class="m-b-20"></mat-divider>
+    <h4 style="color: #1976d2; font-weight: bold" class="m-0 centerText" *ngIf="data.puesto && positions.length>0">
+      Selecciona un puesto</h4>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div *ngIf="data.puesto && positions.length>0" fxFlex.gt-sm="75" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona el puesto</mat-label>
+          <mat-select required [formControl]="puesto">
+            <mat-option *ngFor="let positions of positions" [value]="positions">
+              {{positions.catalogoPuesto.Puesto}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="puestosBuscar && positions.length==0" fxFlex.gt-sm="75" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-label class="text-danger font-bold">No hay puestos registrados en este departamento</mat-label>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+  <!-- <div fxLayout="row wrap" fxLayoutAlign="space-evenly center"> -->
+    <div fxFlex="60" fxFlex.gt-sm="60" fxFlex.gt-xs="100" >
+      <button mat-stroked-button color="warn" *ngIf="data.idDepartamento" (click)="eliminarAdministrador()">Eliminar</button>
+    </div>
+    <div fxFlex="12" fxFlex.gt-sm="12" fxFlex.gt-xs="100">
+      <button mat-flat-button color="primary" [disabled]="!puesto.value"
+        (click)="agregarAdministrador()">Guardar</button>
+    </div>
+    <div fxFlex="12" fxFlex.gt-sm="12" fxFlex.gt-xs="100">
+      <button mat-flat-button mat-dialog-close color="warn" cdkFocusInitial>Cerrar</button>
+    </div>
+  <!-- </div> -->
+</mat-dialog-actions>

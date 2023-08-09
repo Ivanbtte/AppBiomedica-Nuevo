@@ -1,0 +1,27 @@
+table {
+  width: 100%;
+}
+.adminUser {
+  .mat-table {
+    .mat-column-unidad {
+      flex: 0 0 20%;
+      justify-content: left !important;
+    }
+    .mat-column-departamento {
+      flex: 0 0 25%;
+      justify-content: center !important;
+    }
+    .mat-column-puesto {
+      flex: 0 0 20%;
+      justify-content: center !important;
+    }
+    .mat-column-nombre {
+      flex: 0 0 23%;
+      justify-content: center !important;
+    }
+    .mat-column-accion {
+      flex: 0 0 12%;
+      justify-content: center !important;
+    }
+  }
+}

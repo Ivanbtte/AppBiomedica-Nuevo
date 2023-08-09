@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Busqueda Avanzada</h1>
+<!-- ============================================================== -->
+<!-- Image Card row-->
+<!-- ============================================================== -->
+<div mat-dialog-content fxLayout="row wrap">
+  <!-- Card column -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title style="color: #c90025">Selecciona lo que deseas buscar</mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Selecciona un estatus</mat-label>
+        <mat-select style="max-width: 90%" [(value)]="valor" (selectionChange)="valorSeleccionado(valor)">
+          <mat-option *ngFor="let estatus of resultad" [value]="estatus.Id">
+            {{estatus.Status}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" (click)="actualizarSolicitud()">Cambiar Estado</button>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>

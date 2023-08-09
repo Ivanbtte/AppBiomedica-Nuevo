@@ -1,0 +1,456 @@
+<!-- ============================================================== -->
+<!-- Image Card row-->
+<!-- ============================================================== -->
+<div fxLayout="row wrap">
+  <!-- Card column -->
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card class="oh text-center little-profile">
+      <img mat-card-image src="assets/images/background/fondoAlas.jpeg" alt="Photo of a Shiba Inu" />
+      <mat-card-content style="background-color: #f1f8ff">
+        <div *ngIf="femenino" class="pro-img">
+          <img src="assets/images/users/woman.png" width="100" alt="user" />
+        </div>
+        <div *ngIf="masculino" class="pro-img">
+          <img src="assets/images/users/man.png" width="100" alt="user" />
+        </div>
+        <div *ngIf="otro" class="pro-img">
+          <img src="assets/images/users/otro.png" width="100" alt="user" />
+        </div>
+        <h2 class="m-b-0">
+          {{ usuarioLog.Nombre }} {{ usuarioLog.AppellidoP }} {{ usuarioLog.ApellidoM }}
+        </h2>
+        <h4 class="m-t-0" *ngIf="userPosition">{{ position }}</h4>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <!-- Card column -->
+  <div fxFlex.gt-sm="75" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-tab-group [selectedIndex]="indexSelected" color="primary">
+        <!-- Tab 1 -->
+        <mat-tab label="Datos personales">
+          <mat-card-content class="m-0">
+            <mat-card-title class="centerText">Actualiza tu información personal</mat-card-title>
+            <div class="endAlign" *ngIf="!editDataPerson">
+              <button mat-flat-button color="primary" (click)="enableFirsForm()">
+                Editar datos
+              </button>
+            </div>
+            <div class="endAlign" *ngIf="editDataPerson">
+              <button mat-flat-button color="warn" (click)="cancelEditionOfPersonalData()">
+                Cancelar
+              </button>
+            </div>
+            <!-- ============================================================== -->
+            <!-- column -->
+            <!-- ============================================================== -->
+
+            <div *ngIf="!editDataPerson && userPosition">
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Nombre(s)" disabled readonly
+                      [value]="userPosition.Usuario.Persona.Nombre" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Apellido Paterno" disabled readonly
+                      [value]="userPosition.Usuario.Persona.ApellidoPat" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Apellido Materno" disabled readonly
+                      [value]="userPosition.Usuario.Persona.ApellidoMat" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Fecha de Nacimiento" disabled readonly
+                      [value]="userPosition.Usuario.Persona.FechaNac" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <Label style="color: rgb(163, 163, 163);">Genero</Label>
+                  <mat-radio-group aria-label="Select an option " style="flex-direction: column; display: flex"
+                    [required]="true">
+                    <mat-radio-button value="M" [checked]="masculino" disabled>Masculino</mat-radio-button>
+                    <mat-radio-button value="F" [checked]="femenino" disabled>Femenino</mat-radio-button>
+                    <mat-radio-button value="O" [checked]="otro" disabled>Otro</mat-radio-button>
+                  </mat-radio-group>
+                  <br />
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Telefono" disabled readonly
+                      [value]="userPosition.Usuario.Persona.Telefono" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Extensión" disabled readonly
+                      [value]="userPosition.Usuario.Persona.Extension" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Matricula" disabled readonly
+                      [value]="userPosition.Usuario.Persona.Matricula" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Celular" disabled readonly
+                      [value]="userPosition.Usuario.Persona.Celular" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <!-- formulario para editar los datos personales -->
+            <form class="basic-form" [formGroup]="firstFormGroup" *ngIf="editDataPerson">
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Nombre(s)" formControlName="Nombre" required />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Nombre'].hasError('pattern')" class="text-danger support-text">
+                    Nombre no valido
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Apellido Paterno" formControlName="ApellidoPat" required />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['ApellidoPat'].hasError('pattern')"
+                    class="text-danger support-text">
+                    Apellido no valido
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Apellido Materno " formControlName="ApellidoMat" required />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['ApellidoMat'].hasError('pattern')"
+                    class="text-danger support-text">
+                    Apellido no valido
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field appearance="legacy ">
+                    <mat-label>Fecha de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="pickerU" placeholder="Dia/Mes/Año " autocomplete="off "
+                      formControlName="FechaNac" (dateChange)="selectedDate($event)" readonly [attr.disabled]="true"
+                      [min]="minDate" [max]="maxDate" />
+                    <mat-datepicker-toggle matSuffix [for]="pickerU"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerU touchUi [attr.disabled]="false"></mat-datepicker>
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['FechaNac'].hasError('required') && firstFormGroup.controls['FechaNac'].touched"
+                    class="text-danger support-text">Campo requerido
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <Label>Genero</Label>
+                  <mat-radio-group aria-label="Select an option " style="flex-direction: column; display: flex"
+                    formControlName="Genero" [required]="true">
+                    <mat-radio-button value="M " [checked]="masculino">Masculino</mat-radio-button>
+                    <mat-radio-button value="F " [checked]="femenino">Femenino</mat-radio-button>
+                    <mat-radio-button value="O " [checked]="otro">Otro</mat-radio-button>
+                  </mat-radio-group>
+                  <br />
+                  <small
+                    *ngIf="firstFormGroup.controls['Genero'].hasError('required') &&firstFormGroup.controls['Genero'].touched"
+                    class="text-danger support-text">
+                    Campo requerido.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput #input maxlength="10 " placeholder="Telefono " formControlName="Telefono"
+                      required />
+                    <mat-hint align="end ">{{ input.value?.length || 0 }}/10</mat-hint>
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Telefono'].hasError('pattern')"
+                    class="text-danger support-text">Telefono incorrecto.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput type="number" maxlength="5 " placeholder="Extension" formControlName="Extension" />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Extension'].hasError('pattern')"
+                    class="text-danger support-text">Extension incorrecta.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput maxlength="10" placeholder="Matricula" formControlName="Matricula" required />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Matricula'].hasError('pattern')"
+                    class="text-danger support-text">Matricula incorrecta.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput maxlength="10 " placeholder="Celular " formControlName="Celular" />
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Celular'].hasError('pattern')"
+                    class="text-danger support-text">Celular incorrecto.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <button mat-raised-button color="primary" (click)="actualizarPersona()"
+                    [disabled]="firstFormGroup.pristine || !firstFormGroup.valid">
+                    Actualizar Datos
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+        <!-- End Tab 1 -->
+        <!-- Tab 2 -->
+        <mat-tab label="Puesto">
+          <mat-card-content>
+            <mat-card-title class="centerText" *ngIf="!editPosition">Datos del puesto</mat-card-title>
+            <mat-card-title class="centerText" *ngIf="editPosition">Agregar datos del puesto</mat-card-title>
+            <div class="endAlign" *ngIf="!editPosition">
+              <button mat-flat-button color="primary" (click)="enableEditPosition()">
+                Editar datos
+              </button>
+            </div>
+            <div class="endAlign" *ngIf="editPosition">
+              <button mat-flat-button color="warn" (click)="cancelEditPositionForm()">
+                Cancelar
+              </button>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="space-evenly center" *ngIf="!editPosition && userPosition">
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="80" fxFlex="80" *ngIf="userTypeUnit && userPosition">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Delegación</mat-label>
+                  <input matInput placeholder="Delegación" readonly disabled
+                    [value]="userPosition.PuestoOrganigrama.organigramaUnidad.unidadMed.Delegacion.NombreDele" />
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="80" fxFlex="80" *ngIf="!userTypeUnit && userPosition">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Delegación</mat-label>
+                  <input matInput placeholder="Delegación" readonly disabled
+                    [value]="userPosition.PuestoOrganigrama.organigramaDelegacion.delegaciones.NombreDele" />
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="80" fxFlex="80" *ngIf="userTypeUnit && userPosition">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Unidad Medica</mat-label>
+                  <input matInput placeholder="Unidad Medica" readonly disabled
+                    [value]="userPosition.PuestoOrganigrama.organigramaUnidad.unidadMed.DenominacionUni" />
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="80" fxFlex="80">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Departamento</mat-label>
+                  <input matInput placeholder="Departamento" readonly disabled [value]="department" />
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="80" fxFlex="80">
+                <mat-form-field appearance="legacy">
+                  <mat-label>Puesto</mat-label>
+                  <input matInput placeholder="Puesto" readonly disabled
+                    [value]="userPosition.PuestoOrganigrama.catalogoPuesto.Puesto" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <form [formGroup]="positionForm" *ngIf="editPosition">
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="indexSelected != 0">
+                <!-- Tipo de usuario -->
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25">
+                  <mat-label class="m-0">Tipo de Usuario:</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="70" fxFlex="70">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select (selectionChange)="selectedUserType($event.value)" formControlName="userType" required>
+                      <mat-option *ngFor="let tipo of userTypes" [value]="tipo.Id">
+                        {{ tipo.Tipo }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <!--  Delegaciones -->
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25" *ngIf="delegations.length">
+                  <mat-label class="m-0">{{ textTypeDelegations }}</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="70" fxFlex="70" *ngIf="delegations.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select formControlName="delegation" required
+                      (selectionChange)="selectedDelegation($event.value)">
+                      <mat-option *ngFor="let dele of delegations" [value]="dele">
+                        {{ dele.NombreDele }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <!-- unidad medica -->
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25" *ngIf="unitMedics.length">
+                  <mat-label class="m-0">Unidad Médica:</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="70" fxFlex="70" *ngIf="unitMedics.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select formControlName="unitMedic" required (selectionChange)="changeSelectedUnitMedic()">
+                      <mat-option *ngFor="let unidad of unitMedics" [value]="unidad">
+                        {{ unidad.DenominacionUni }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </form>
+            <form [formGroup]="areaForm" *ngIf="editPosition && positionForm.valid">
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="editPosition && positionForm.valid">
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positionForm.valid">
+                  <mat-label>Departamento</mat-label>
+                </div>
+                <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positionForm.valid">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Departamento</mat-label>
+                    <input matInput formControlName="department" placeholder="selecciona --->" readonly />
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="17" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positionForm.valid">
+                  <button mat-raised-button color="accent" (click)="openDialogDepartment()" type="button"
+                    [disabled]="positionForm.invalid" *ngIf="!areaForm.get('department').value">
+                    Selecccionar
+                    <mat-icon>apartment</mat-icon>
+                  </button>
+                  <button mat-raised-button color="accent" (click)="openDialogDepartment()" type="button"
+                    [disabled]="positionForm.invalid" *ngIf="areaForm.get('department').value">
+                    Editar
+                    <mat-icon>apartment</mat-icon>
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="25" fxFlex="25" *ngIf="areaForm.get('department').value">
+                  <mat-label>Area</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="70" fxFlex="70" *ngIf="areaForm.get('department').value">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select required formControlName="area">
+                      <mat-option *ngFor="let area of areas" [value]="area.id">
+                        {{ area.nombre }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positions.length">
+                  <mat-label>Puesto</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positions.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select required formControlName="position">
+                      <mat-option *ngFor="let positions of positions" [value]="positions">
+                        {{ positions.catalogoPuesto.Puesto }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100"
+                  *ngIf="positions.length == 0 && areaForm.get('department').value">
+                  <mat-label>No existen puestos disponibles en este departamento
+                  </mat-label>
+                </div>
+              </div>
+            </form>
+            <div fxLayout="row wrap" fxLayoutAlign="end center" *ngIf="editPosition">
+              <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+                <button mat-raised-button color="primary" [disabled]="areaForm.invalid" (click)="addNewUserPosition()">
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-tab>
+        <mat-tab label="Contraseña">
+          <mat-card-content>
+            <mat-card-title class="centerText">Actualiza tu contraseña</mat-card-title>
+            <!-- ============================================================== -->
+            <!-- column -->
+            <!-- ============================================================== -->
+            <form class="basic-form" [formGroup]="form" (submit)="actualizarUsuario()">
+              <div fxLayout="row wrap">
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Contraseña Actual" [type]="hide3 ? 'password' : 'text'"
+                      formControlName="Password" autocomplete="off" readonly
+                      onfocus="this.removeAttribute('readonly');" />
+                    <mat-icon matSuffix (click)="hide3 = !hide3">{{ hide3 ? "visibility_off" :
+                      "visibility" }}
+                    </mat-icon>
+                  </mat-form-field>
+                  <small *ngIf="form.controls['Password'].hasError('required') && form.controls['Password'].touched"
+                    class="text-danger support-text">Contraseña requerida.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Contraseña Nueva" [type]="hide ? 'password' : 'text'"
+                      formControlName="NewPassword" autocomplete="off" readonly
+                      onfocus="this.removeAttribute('readonly');" />
+                    <mat-icon matSuffix (click)="hide = !hide">{{ hide ? "visibility_off" :
+                      "visibility" }}
+                    </mat-icon>
+                  </mat-form-field>
+                  <small
+                    *ngIf="form.controls['NewPassword'].hasError('required') && form.controls['NewPassword'].touched"
+                    class="text-danger support-text">Contraseña requerida.
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Confirmar Contraseña Nueva" [type]="hide2 ? 'password' : 'text'"
+                      formControlName="confirmPassword" autocomplete="off" readonly
+                      onfocus="this.removeAttribute('readonly');" />
+                    <mat-icon matSuffix (click)="hide2 = !hide2">{{ hide2 ? "visibility_off" :
+                      "visibility" }}
+                    </mat-icon>
+                  </mat-form-field>
+                  <small
+                    *ngIf="form.controls['confirmPassword'].hasError('required') &&form.controls['confirmPassword'].touched"
+                    class="text-danger support-text">Contraseña requerida.
+                  </small>
+                  <small *ngIf="form.controls['confirmPassword'].errors?.equalTo" class="text-danger support-text">Las
+                    contraseñas no coinciden
+                  </small>
+                </div>
+                <!-- column -->
+                <div fxFlex.gt-sm="100" fxFlex="100">
+                  <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+                    Actualizar Contraseña
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-tab>
+        <!-- end mat 2 -->
+      </mat-tab-group>
+    </mat-card>
+  </div>
+</div>

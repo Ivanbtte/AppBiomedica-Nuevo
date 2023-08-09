@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-header>
+    <button mat-icon-button color="warn" (click)="regresar()">
+      <mat-icon aria-label="regresar">keyboard_return</mat-icon>
+      Regresar
+    </button>
+  </mat-card-header>
+  <mat-card-title align="center">Fianza</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="formulario_fianza" *ngIf="numero_contrato">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de Fianza</mat-label>
+            <mat-select formControlName="Tipo" required>
+              <mat-option value="Afianzadora">Afianzadora</mat-option>
+              <mat-option value="Cheque">Cheque</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Afianzadora / Cheque</mat-label>
+            <input matInput placeholder="Afianzadora o Cheque"
+                   formControlName="Afianzadora" autocomplete="off"
+                   required>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Numero Poliza / Cheque</mat-label>
+            <input matInput placeholder="Numero de poliza o Cheque"
+                   formControlName="NumPoliza" autocomplete="off"
+                   required>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Monto de la Fianza</mat-label>
+            <input matInput placeholder="Monto de Fianza" type="number" class="example-right-align" autocomplete="off"
+                   formControlName="MontoFianza" required>
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" class="margenBoton"
+            (click)="agregarFianza()" *ngIf="!estado_fianza" [disabled]="formulario_fianza.invalid">
+      Agregar
+    </button>
+  </mat-card-actions>
+</mat-card>

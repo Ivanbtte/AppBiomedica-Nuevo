@@ -1,0 +1,176 @@
+<!-- Card Group Row -->
+<!-- ============================================================== -->
+<mat-card>
+  <mat-card-title>
+    <h2 class="centerText m-b-0">Tablero de control para contratos de transporte subrogado</h2>
+  </mat-card-title>
+  <div class="startText m-l-20">
+    <button mat-raised-button color="warn" (click)="regresar()" style="background-color: #E91818;">
+      <mat-icon>keyboard_return</mat-icon>
+      Regresar
+    </button>
+  </div>
+  <mat-card-content>
+    <div class="b-all" style="border-width: 4px;">
+      <h3 class="font-bold centerText">{{item.contrato.NumeroContrato}}</h3>
+      <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+        <!-- column -->
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content class="centerText">
+              <!-- column -->
+              <h2>Devengo</h2>
+              <div *ngIf="item.devengo">
+                <h1 class="m-0">{{item.devengo | currency}}</h1>
+                <h5 class="text-muted m-t-0 m-b-10">Monto ejercido del contrato</h5>
+                <mat-progress-bar mode="determinate" [value]="item.porcentajeDevengo"></mat-progress-bar>
+                <h2 class="m-t-0 m-b-10">{{item.porcentajeDevengo/100 | percent:'.2-2'}}</h2>
+              </div>
+              <div *ngIf="!item.devengo">
+                <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <!-- column -->
+        <!-- column -->
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content class="centerText">
+              <!-- column -->
+              <h2>Con acompañantes</h2>
+              <div *ngIf="item.conAcompaniante">
+                <h1 class="m-0">{{item.conAcompaniante}} solicitudes</h1>
+                <h5 class="text-muted m-t-0 m-b-10">Total de solicitudes con acompañantes</h5>
+                <mat-progress-bar color="warn" mode="determinate" [value]="item.porcentajeAcompanianteContrato*100">
+                </mat-progress-bar>
+                <h2 class="m-t-0 m-b-10">{{item.porcentajeAcompanianteContrato | percent:'.2-2'}}</h2>
+              </div>
+              <div *ngIf="!item.conAcompaniante">
+                <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <!-- column -->
+        <!-- column -->
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content class="centerText">
+              <!-- column -->
+              <h2>Mas acompañantes</h2>
+              <div *ngIf="item.promedioAcompaniante.Promedio.Promedio">
+                <h1 class="m-0">{{item.promedioAcompaniante.UnidadMedica.DenominacionUni}}</h1>
+                <h5 class="text-muted m-t-0 m-b-10">Unidad con mayor % de acompañantes</h5>
+                <mat-progress-bar color="accent" mode="determinate"
+                  [value]="item.promedioAcompaniante.Promedio.Promedio*100"></mat-progress-bar>
+                <h2 class="m-t-0 m-b-10">{{item.promedioAcompaniante.Promedio.Promedio | percent:'.2-2'}}</h2>
+              </div>
+              <div *ngIf="!item.promedioAcompaniante.Promedio.Promedio">
+                <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <!-- column -->
+        <!-- column -->
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card>
+            <mat-card-content class="centerText">
+              <!-- column -->
+              <h2>Mas traslados</h2>
+              <div *ngIf="item.mayorSolicitud.porcentaje">
+                <h1 class="m-0">{{item.mayorSolicitud.unidad.DenominacionUni}}</h1>
+                <h5 class="text-muted m-t-0  m-b-10">La unidad con mas traslados</h5>
+                <mat-progress-bar color="accent" mode="determinate" [value]="item.mayorSolicitud.porcentaje*100">
+                </mat-progress-bar>
+                <h2 class="m-t-0 m-b-10">{{item.mayorSolicitud.porcentaje | percent:'.2-2'}}</h2>
+              </div>
+              <div *ngIf="!item.mayorSolicitud.porcentaje">
+                <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+
+        <!-- column -->
+        <div fxFlex.gt-sm="90" fxFlex.gt-xs="100" fxFlex="100" *ngIf="datos">
+          <mat-tab-group animationDuration="1500ms" [backgroundColor]="colorTab">
+            <mat-tab label="Devengo">
+
+              <!-- <div fxLayout="row wrap"> -->
+              <!-- Column-->
+              <!-- <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100"> -->
+              <mat-card>
+                <mat-card-content>
+                  <div class="endText">
+                    <button mat-raised-button color="primary"
+                      (click)="descargarImagen('myChart1','devengo_mes')">
+                      <mat-icon>cloud_download</mat-icon>
+                    </button>
+                  </div>
+                  <div style="display: block" >
+                    <canvas baseChart id="myChart1" [data]="data2" [options]="barChartOptions"
+                      [plugins]="barChartPlugins" [type]="barChartType" (chartHover)="chartHovered($event)"
+                      (chartClick)="chartClicked($event)" *ngIf="datos.devengo.length > 0">
+                    </canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <!-- </div>
+          </div> -->
+            </mat-tab>
+            <mat-tab label="Solicitudes realizadas">
+              <!-- <div fxLayout="row wrap"> -->
+              <!-- Column-->
+              <!-- <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100"> -->
+              <mat-card>
+                <mat-card-content>
+                  <div class="endText">
+                    <button mat-raised-button color="primary"
+                      (click)="descargarImagen('myChart2','solicitudes_realizadas')">
+                      <mat-icon>cloud_download</mat-icon>
+                    </button>
+                  </div>
+                  <div style="display: block">
+                    <canvas baseChart id="myChart2" [data]="data3" [options]="barChartOptions2"
+                      [plugins]="barChartPlugins" [type]="barChartType" (chartHover)="chartHovered($event)"
+                      *ngIf="datos.devengo.length > 0">
+                    </canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <!-- </div>
+          </div> -->
+            </mat-tab>
+            <mat-tab label="Porcentaje mayor acompañantes">
+
+              <!-- <div fxLayout="row wrap"> -->
+              <!-- Column-->
+              <!-- <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100"> -->
+              <mat-card>
+                <mat-card-content>
+                  <div class="endText">
+                    <button mat-raised-button color="primary"
+                      (click)="descargarImagen('myChart3','porcentaje_acompaniantes')">
+                      <mat-icon>cloud_download</mat-icon>
+                    </button>
+                  </div>
+                  <div style="display: block">
+                    <canvas baseChart id="myChart3" [data]="data4" [options]="barChartOptions3"
+                      [plugins]="barChartPlugins" [type]="barChartType" (chartHover)="chartHovered($event)"
+                      *ngIf="datos.devengo.length > 0">
+                    </canvas>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+              <!-- </div>
+          </div> -->
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

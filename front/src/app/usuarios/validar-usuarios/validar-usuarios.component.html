@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-title class="centerText p-10 text-blue-title font-bold">Validación de usuarios</mat-card-title>
+  <!--  <mat-card-subtitle>Lista de usuarios para validar</mat-card-subtitle>-->
+  <mat-card-content>
+    <div class="responsive-table mat-elevation-z8" *ngIf="resultado.length">
+      <mat-table [dataSource]="dataSource">
+        <!--  Columna Nombre del usuario -->
+        <ng-container matColumnDef="nameUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Nombre</mat-header-cell>
+          <mat-cell
+            *matCellDef="let row"> {{row.Usuario.Persona.Nombre}} {{row.Usuario.Persona.ApellidoPat}} {{row.Usuario.Persona.ApellidoMat}}</mat-cell>
+        </ng-container>
+
+        <!-- Columna del correo del usuario -->
+        <ng-container matColumnDef="departmentUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Departamento</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{returnDepartment(row).department}}</mat-cell>
+        </ng-container>
+        <!-- Columna de la matricula del usuario -->
+        <ng-container matColumnDef="cargoUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Cargo</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.PuestoOrganigrama.catalogoPuesto.Puesto}}</mat-cell>
+        </ng-container>
+
+        <!-- Columna del detalle del usuario -->
+        <ng-container matColumnDef="detalleUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Datos</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="openDialogClave(row)" style="color: #0d6dfb;">
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <!-- Columna del Validar del usuario -->
+        <ng-container matColumnDef="validarUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Validar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" style="color: #198654" (click)="validarUsuario(row.Id)">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="rechazarUser">
+          <mat-header-cell *matHeaderCellDef class="mat-header-cell2">Rechazar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" style="color: #e43935" (click)="rechazarUsuario(row)">
+              <mat-icon>person_add_disabled</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

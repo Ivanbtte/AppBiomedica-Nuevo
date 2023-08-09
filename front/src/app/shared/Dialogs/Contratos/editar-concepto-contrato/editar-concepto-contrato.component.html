@@ -1,0 +1,84 @@
+<h1 mat-dialog-title>Editar Concepto</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formulario_conceptos" *ngIf="conceptoUpdate">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div fxFlex.gt-sm="13" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" color="warn">
+              <mat-label>ID PREI</mat-label>
+              <input matInput formControlName="PreiIdArticulo"
+                     autocomplete="off" placeholder="ID SIN CEROS" readonly>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Descripcion</mat-label>
+              <input matInput [value]="descripcion"
+                     autocomplete="off" readonly placeholder="Marca del equipo">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Marca</mat-label>
+              <input matInput formControlName="Marca"
+                     autocomplete="off" placeholder="Marca del equipo" style="text-transform: uppercase">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Modelo</mat-label>
+              <input matInput formControlName="Modelo"
+                     autocomplete="off" placeholder="Modelo del equipo" style="text-transform: uppercase">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Cantidad Contratada</mat-label>
+              <input matInput formControlName="CantidadConcepto" type="number" class="soloNumeros"
+                     autocomplete="off" placeholder="Cantidad contratada">
+            </mat-form-field>
+            <small
+              *ngIf="formulario_conceptos.controls['CantidadConcepto'].hasError('pattern') && formulario_conceptos.controls['CantidadConcepto'].touched"
+              class="text-danger support-text">Solo numeros.
+            </small>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Precio Sin IVA</mat-label>
+              <input matInput formControlName="PrecioUniSnIva" type="number" class="soloNumeros"
+                     autocomplete="off" placeholder="Precio Unitario">
+              <span matPrefix>$&nbsp;</span>
+
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" (click)="picker.open()">
+              <mat-label>Fecha Maxima de Entrega</mat-label>
+              <input matInput [matDatepicker]="picker"
+                     placeholder="Seleccionar fecha" readonly (dateChange)="valorFecha($event)"
+                     formControlName="FechaMaxEntrega">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Meses de garantia</mat-label>
+              <input matInput formControlName="GarantiaBienes" type="number" class="soloNumeros"
+                     autocomplete="off" placeholder="Numero de Meses">
+            </mat-form-field>
+            <small
+              *ngIf="formulario_conceptos.controls['GarantiaBienes'].hasError('pattern') && formulario_conceptos.controls['GarantiaBienes'].touched"
+              class="text-danger support-text">Solo numeros.
+            </small>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="actualizar()" [disabled]="!formulario_conceptos.dirty">Actualizar</button>
+</div>

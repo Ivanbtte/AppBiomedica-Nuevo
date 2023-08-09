@@ -1,0 +1,31 @@
+.mat-radio-button {
+  margin: 0 12px;
+}
+
+.example-tooltip-red {
+  background: #de8500;
+  font-size: 11pt;
+  font-weight: bold;
+  font-family: "Montserrat Light", serif;
+}
+.example-tooltip-destino {
+  background: #27771f;
+  font-size: 11pt;
+  font-weight: bold;
+  font-family: "Montserrat Light", serif;
+}
+
+.example-tooltip-firma {
+  background: #f15333;
+  font-size: 11pt;
+  font-weight: bold;
+  font-family: "Montserrat Light", serif;
+}
+
+.mat-he {
+  text-align: left !important;
+}
+
+.colorAvailable {
+  color: #1976d2;
+}

@@ -1,0 +1,28 @@
+<h1 mat-dialog-title align="center" class="m-b-0">Datos del Proveedor</h1>
+<div mat-dialog-content>
+  <div fxLayout="row wrap">
+    <div fxFlex.gt-sm="100" fxFlex="100">
+      <mat-card class="oh text-center little-profile">
+<!--        <img mat-card-image src="assets/images/background/weatherbg.jpg" alt="Photo of a Shiba Inu">-->
+        <div>
+          <qr-code [value]="vCardInfo" [size]="150"></qr-code>
+        </div>
+        <mat-card-content>
+          <h2 class="m-b-0">{{detalle_proveedor.AliasEmpresa}}</h2>
+          <h4 class="m-t-0 ">{{detalle_proveedor.NombreEmpresa}}</h4>
+          <a href="mailto:{{detalle_proveedor.Correo}}">{{detalle_proveedor.Correo}}</a>
+          <h4 class="m-t-10 m-b-10"><strong>Telefono: </strong>{{detalle_proveedor.Telefono}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Numero de Proveedor IMSS: </strong>{{detalle_proveedor.NProvImss}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>RFC: </strong>{{detalle_proveedor.RFC}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Direccion: </strong>{{detalle_proveedor.Direccion}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Estado: </strong>{{detalle_proveedor.Estados.Nombre}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Municipio: </strong>{{detalle_proveedor.Municipio}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Codigo Postal: </strong>{{detalle_proveedor.CP}}</h4>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="onNoClick()" color="warn">Cerrar</button>
+</div>

@@ -1,0 +1,68 @@
+<h1 mat-dialog-title style="color: #003366" align="center">Numero de Contrato: {{data.num_contrato}}</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div *ngIf="Contrato" fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card class="bg-megna text-white text-center">
+            <div class="p-10">
+              <h5 class="m-0">Monto total registrado en el contrato sin IVA</h5>
+              <h3 class="m-0"> {{Contrato.MontoTotal | currency}}</h3>
+            </div>
+          </mat-card>
+        </div>
+        <div *ngIf="MontoContratado" fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card class="bg-info text-white text-center">
+            <div class="p-10">
+              <h5 class="m-0">Monto total registrado previamente sin IVA</h5>
+              <h3 class="m-0"> {{MontoContratado | currency}}</h3>
+            </div>
+          </mat-card>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-card class="bg-warning text-inverse text-center">
+            <div class="p-10">
+              <h5 class="m-0">Monto total a registrar sin IVA</h5>
+              <h3 class="m-0">{{data.total_contratado |currency}}</h3>
+            </div>
+          </mat-card>
+        </div>
+        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="MontoContratado">
+          <mat-card class="bg-danger text-white text-center">
+            <div class="p-10">
+              <h5 class="m-0">Monto Excedido sin IVA</h5>
+              <h3 class="m-0">{{((data.total_contratado + MontoContratado) - Contrato.MontoTotal) | currency}}</h3>
+            </div>
+          </mat-card>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-raised-button color="primary" (click)="AutorizacionEdicion()" *ngIf="!Autorizado">Editar Monto
+            Total del Contrato
+          </button>
+        </div>
+        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="Autorizado">
+          <mat-form-field appearance="outline">
+            <mat-label>Monto Total sin IVA</mat-label>
+            <input matInput type="number" placeholder="Monto Total sin IVA" autocomplete="off"
+                   class="example-right-align" [formControl]="Monto">
+            <span matPrefix>$&nbsp;</span>
+            <mat-hint>**Monto total sugerido: {{MontoSugerido | currency}}</mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="18" fxFlex.gt-xs="100" fxFlex="100" *ngIf="Autorizado">
+          <button mat-raised-button color="primary" (click)="ActualizarMonto()"
+                  [disabled]=Monto.invalid>
+            <span class="fa fa-save"></span> Guardar
+          </button>
+        </div>
+        <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+          <small>Nota: Si el monto total del contrato es correcto, se debera validar el precio de los conceptos y las
+            cantidades.</small>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>

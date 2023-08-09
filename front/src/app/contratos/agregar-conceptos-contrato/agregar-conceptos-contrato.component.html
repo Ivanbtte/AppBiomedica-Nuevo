@@ -1,0 +1,165 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario_conceptos">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="13" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>ID PREI</mat-label>
+            <input matInput formControlName="PreiIdArticulo"
+                   (keyup.enter)="openDialogAgregarConcepto()"
+                   autocomplete="off" placeholder="ID SIN CEROS">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm=8 fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-icon-button *ngIf="formulario_conceptos.controls['PreiIdArticulo'].value"
+                  matSuffix aria-label="buscar">
+            <mat-icon style="color: #1e88e5" (click)="openDialogAgregarConcepto()">search</mat-icon>
+          </button>
+        </div>
+        <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Descripcion</mat-label>
+            <input matInput [value]="descripcion"
+                   autocomplete="off" readonly placeholder="Marca del equipo"
+                   (click)="openDialogAgregarConcepto()">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Marca</mat-label>
+            <input matInput formControlName="Marca"
+                   autocomplete="off" placeholder="Marca del equipo" style="text-transform: uppercase">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Modelo</mat-label>
+            <input matInput formControlName="Modelo"
+                   autocomplete="off" placeholder="Modelo del equipo" style="text-transform: uppercase">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Cantidad Contratada</mat-label>
+            <input matInput formControlName="CantidadConcepto" type="number" class="soloNumeros"
+                   autocomplete="off" placeholder="Cantidad contratada">
+          </mat-form-field>
+          <small
+            *ngIf="formulario_conceptos.controls['CantidadConcepto'].hasError('pattern') && formulario_conceptos.controls['CantidadConcepto'].touched"
+            class="text-danger support-text">Solo numeros.
+          </small>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Precio Sin IVA</mat-label>
+            <input matInput formControlName="PrecioUniSnIva" type="number" class="soloNumeros"
+                   autocomplete="off" placeholder="Precio Unitario">
+            <span matPrefix>$&nbsp;</span>
+
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline" (click)="picker.open()">
+            <mat-label>Fecha Maxima de Entrega</mat-label>
+            <input matInput [matDatepicker]="picker"
+                   placeholder="Seleccionar fecha" readonly (dateChange)="valorFecha($event)"
+                   formControlName="FechaMaxEntrega">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Meses de garantia</mat-label>
+            <input matInput formControlName="GarantiaBienes" type="number" class="soloNumeros"
+                   autocomplete="off" placeholder="Numero de Meses">
+          </mat-form-field>
+          <small
+            *ngIf="formulario_conceptos.controls['GarantiaBienes'].hasError('pattern') && formulario_conceptos.controls['GarantiaBienes'].touched"
+            class="text-danger support-text">Solo numeros.
+          </small>
+        </div>
+      </div>
+    </form>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <button mat-flat-button color="primary" [disabled]="estaVacioArreglo()" (click)="agregarConceptos()">
+          <mat-icon>save</mat-icon>
+          Finalizar
+        </button>
+      </div>
+      <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+        <span style="color: #661421">Total Restante del contrato (SIN IVA): </span> <strong><span
+        style="color: #661421">{{MontoRestante|currency}}</span></strong>
+      </div>
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <button mat-flat-button color="primary" [disabled]="estadoDescripcion || formulario_conceptos.invalid"
+                (click)="AgregarItemArray()">
+          <mat-icon>playlist_add</mat-icon>
+          Siguiente
+        </button>
+      </div>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <!-- pendiente de volver a implementar -->
+      <!-- Tabla de equipos que contiene el contrato -->
+<!--      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="p-t-10">-->
+<!--        <mat-divider inset style="background-color: #263238"></mat-divider>-->
+<!--        <h4 align="center" style="color: #16584b">Lista de equipos para incluir en el contrato</h4>-->
+<!--        <ng2-smart-table [settings]="configuraciones" [source]="source"-->
+<!--                         (custom)="onCustomAction($event)"></ng2-smart-table>-->
+<!--      </div>-->
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-divider inset style="background-color: #263238"></mat-divider>
+        <h4 align="center" style="color: #661421">Lista de equipos ya incluidos en el contrato</h4>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- Direccion Column -->
+            <ng-container matColumnDef="id_prei">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Id Prei</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.PreiIdArticulo}}</mat-cell>
+            </ng-container>
+            <!-- Direccion Column -->
+            <ng-container matColumnDef="clave_cuadro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Clave Cuadro</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                {{row.Prei.Grupo}}.{{row.Prei.Generico}}.{{row.Prei.Especifico}}.{{row.Prei.Diferenciador}}
+                .{{row.Prei.Variable}}
+              </mat-cell>
+            </ng-container>
+            <!-- Direccion Column -->
+            <ng-container matColumnDef="descripcion_prei">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{regresaDescripcion(row.Prei.Descripcion)}}</mat-cell>
+            </ng-container>
+            <!-- Correo Column -->
+            <ng-container matColumnDef="marca">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Marca</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.Marca}}</mat-cell>
+            </ng-container>
+            <!-- RFC Column -->
+            <ng-container matColumnDef="modelo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Modelo</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Modelo}}</mat-cell>
+            </ng-container>
+            <!-- RFC Column -->
+            <ng-container matColumnDef="fecha_max">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha de Entrega</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.FechaMaxEntrega}}</mat-cell>
+            </ng-container>
+            <!-- RFC Column -->
+            <ng-container matColumnDef="precio">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.PrecioUniSnIva | currency}}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

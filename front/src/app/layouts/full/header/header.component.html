@@ -1,0 +1,104 @@
+<!-- ============================================================== -->
+<!-- Notification - style you can find in header.scss -->
+<!-- ============================================================== -->
+
+<button [matMenuTriggerFor]="notification" mat-icon-button class="m-r-10" *ngIf="false">
+  <mat-icon>message</mat-icon>
+  <div class="notify">
+    <span class="heartbit"></span>
+    <span class="point"></span>
+  </div>
+</button>
+<mat-menu #notification="matMenu" class="mymegamenu">
+  <div class="mailbox">
+    <ul>
+      <li>
+        <div class="drop-title">Notifications</div>
+      </li>
+      <li>
+        <div class="message-center">
+          <perfect-scrollbar [config]="config">
+            <!-- Message -->
+            <a href="#" *ngFor="let notification of notifications">
+              <div class="round {{notification.round}}">
+                <i class="{{notification.icon}}"></i>
+              </div>
+              <div class="mail-content">
+                <h5>{{notification.title}}</h5>
+                <span class="mail-desc">{{notification.subject}}</span>
+                <span class="time">{{notification.time}}</span>
+              </div>
+            </a>
+
+          </perfect-scrollbar>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</mat-menu>
+<!-- ============================================================== -->
+<!-- Profile - style you can find in header.scss -->
+<!-- ============================================================== -->
+<button [matMenuTriggerFor]="message" mat-icon-button class="m-r-10" *ngIf="false">
+  <mat-icon>email</mat-icon>
+  <div class="notify">
+    <span class="heartbit"></span>
+    <span class="point"></span>
+  </div>
+</button>
+<mat-menu #message="matMenu" class="mymessage">
+  <div class="mailbox">
+    <ul>
+      <li>
+        <div class="drop-title">You have 4 new Mymessages</div>
+      </li>
+      <li>
+        <div class="message-center">
+          <perfect-scrollbar [config]="config">
+            <!-- Message -->
+            <a href="#" *ngFor="let mymessage of mymessages">
+              <div class="user-img">
+                <img src="{{mymessage.useravatar}}" alt="user" class="img-circle" width="40">
+                <span class="profile-status {{mymessage.status}} pull-right"></span>
+              </div>
+              <div class="mail-content">
+                <h5>{{mymessage.from}}</h5>
+                <span class="mail-desc">{{mymessage.subject}}</span>
+                <span class="time">{{mymessage.time}}</span>
+              </div>
+            </a>
+            <!-- Message -->
+          </perfect-scrollbar>
+        </div>
+      </li>
+    </ul>
+  </div>
+</mat-menu>
+<label class="m-r-20 font-16" *ngIf="position">{{position}}</label>
+<!-- ============================================================== -->
+<!-- Profile - style you can find in header.scss -->
+<!-- ============================================================== -->
+<button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+  <img src="assets/images/users/woman.png" alt="user" class="profile-pic" *ngIf="femenino">
+  <img src="assets/images/users/man.png" alt="user" class="profile-pic" *ngIf="masculino">
+  <img src="assets/images/users/otro.png" alt="user" class="profile-pic" *ngIf="otro">
+</button>
+<mat-menu #profile="matMenu" class="mymegamenu">
+  <!--  <button mat-menu-item (click)="configuracion()">
+      <mat-icon>settings</mat-icon>
+      Configuraciones
+    </button>-->
+  <button mat-menu-item (click)="cuenta()">
+    <mat-icon color="primary">account_box</mat-icon>
+    Cuenta
+  </button>
+  <!--  <button mat-menu-item>
+      <mat-icon>notifications_off</mat-icon>
+      Notificaciones
+    </button>-->
+  <button mat-menu-item (click)="cerrarSesion()">
+    <mat-icon color="warn">exit_to_app</mat-icon>
+    Cerrar sesión
+  </button>
+</mat-menu>

@@ -1,0 +1,203 @@
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-title align="center">Personal IMSS</mat-card-title>
+    <mat-card-subtitle style="color: #c90025">Si no encuentras a la persona que deseas seleccionar puedes agregar sus
+      datos
+    </mat-card-subtitle>
+    <mat-card-content>
+      <mat-accordion tabindex="-1" [@.disabled]="disableAnimation">
+        <mat-expansion-panel tabindex="-1" [(expanded)]="cerrarPanel">
+          <mat-expansion-panel-header tabindex="-1">
+            <mat-panel-title tabindex="-1">
+              Agregar Persona
+            </mat-panel-title>
+            <mat-panel-description tabindex="-1">
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form [formGroup]="formulario_persona">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <mat-label>Correo electrónico</mat-label>
+                  <input matInput placeholder="example@imss.gob.mx"
+                         type="text"
+                         formControlName="Correo"
+                         required>
+                  <mat-hint align="end"
+                            *ngIf="formulario_persona.controls['Correo'].dirty && formulario_persona.controls['Correo'].invalid">
+                    <button mat-button color="warn" (click)="cambiarValidaCorreo()" disabled="{{estadoBoton}}">
+                      No tengo Correo imss
+                    </button>
+                  </mat-hint>
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['Correo'].hasError('pattern') && formulario_persona.controls['Correo'].touched
+                   || formulario_persona.controls['Correo'].hasError('email')"
+                  class="text-danger support-text"> {{mensajeErrorCorreo}}
+                </small>
+              </div>
+              <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput placeholder="Nombre(s)" formControlName="Nombre" required>
+                </mat-form-field>
+                <small *ngIf="formulario_persona.controls['Nombre'].hasError('pattern')"
+                       class="text-danger support-text">Nombre no valido
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput placeholder="Apellido Paterno" formControlName="ApellidoPat" required>
+                </mat-form-field>
+                <small *ngIf="formulario_persona.controls['ApellidoPat'].hasError('pattern')"
+                       class="text-danger support-text">Apellido no valido
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput placeholder="Apellido Materno" formControlName="ApellidoMat" required>
+                </mat-form-field>
+                <small *ngIf="formulario_persona.controls['ApellidoMat'].hasError('pattern')"
+                       class="text-danger support-text">Apellido no valido
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Fecha de Nacimiento" type="date" formControlName="FechaNac" required>
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['FechaNac'].hasError('required') && formulario_persona.controls['FechaNac'].touched"
+                  class="text-danger support-text">Campo requerido
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-radio-group aria-label="Select an option" style="flex-direction: column; display: flex"
+                                 formControlName="Genero" [required]="true">
+                  <mat-label>Genero</mat-label>
+                  <mat-radio-button value="M">Masculino</mat-radio-button>
+                  <mat-radio-button value="F">Femenino</mat-radio-button>
+                </mat-radio-group>
+                <br>
+                <small
+                  *ngIf="formulario_persona.controls['Genero'].hasError('required') && formulario_persona.controls['Genero'].touched"
+                  class="text-danger support-text">Campo requerido.
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput #input maxlength="10" placeholder="Teléfono" formControlName="Telefono" required>
+                  <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['Telefono'].hasError('pattern')"
+                  class="text-danger support-text">Teléfono incorrecto.
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput maxlength="5" placeholder="Extensión" formControlName="Extension">
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['Extension'].hasError('pattern')"
+                  class="text-danger support-text">Extensión incorrecta.
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput maxlength="10" placeholder="Matricula" formControlName="Matricula" required>
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['Matricula'].hasError('pattern')"
+                  class="text-danger support-text">Matricula incorrecta.
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <input matInput maxlength="10" placeholder="Celular" formControlName="Celular">
+                </mat-form-field>
+                <small
+                  *ngIf="formulario_persona.controls['Celular'].hasError('pattern')"
+                  class="text-danger support-text">Celular incorrecto.
+                </small>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!data.editar">
+                <button mat-flat-button color="primary"
+                        [disabled]="formulario_persona.invalid" (click)="agregar_persona()">Agregar
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="p-0" fxLayoutAlign="center center">
+          <mat-form-field class="p-l-20 p-r-20">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <div [hidden]="cargando">
+            <mat-progress-bar mode="query"></mat-progress-bar>
+          </div>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <div [hidden]="cargando">
+            <mat-progress-bar mode="query"></mat-progress-bar>
+          </div>
+          <div class="responsive-table">
+            <mat-table [dataSource]="dataSource" matSort>
+              <!-- Nombre Column -->
+              <ng-container matColumnDef="Nombre">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.Nombre}}</mat-cell>
+              </ng-container>
+              <!-- ApellidoP Column -->
+              <ng-container matColumnDef="ApellidoP">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Apellido Paterno</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.ApellidoPat}}</mat-cell>
+              </ng-container>
+              <!-- ApellidoM Column -->
+              <ng-container matColumnDef="ApellidoM">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Apellido Materno</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.ApellidoMat}}</mat-cell>
+              </ng-container>
+              <!-- Correo Column -->
+              <ng-container matColumnDef="Correo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Correo</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.Correo}}</mat-cell>
+              </ng-container>
+              <!-- Telefono Column -->
+              <ng-container matColumnDef="Telefono">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.Telefono}}</mat-cell>
+              </ng-container>
+              <!-- Matricula Column -->
+              <ng-container matColumnDef="Matricula">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Matricula</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Matricula}}</mat-cell>
+              </ng-container>
+              <!-- Color Column -->
+              <ng-container matColumnDef="SeleccionarPer">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Seleccionar</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-icon-button style="color: #3a83c2" (click)="Selecionar(row)">
+                    <mat-icon>check_box_outline_blank</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                           [showFirstLastButtons]="true"></mat-paginator>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="onNoClick()" color="warn" cdkFocusInitial>Cancelar</button>
+</div>

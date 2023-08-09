@@ -1,0 +1,72 @@
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-title align="center" style="color: #003366; font-weight: bold">Firmas autorizadas para las solicitudes
+        de traslado de pacientes
+      </mat-card-title>
+      <mat-card-content>
+        <div fxLayout="row wrap">
+          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+            <button mat-raised-button color="primary" (click)="openDialogFirm()">
+              <mat-icon aria-label="Exampl">add_circle</mat-icon>
+              Agregar firma
+            </button>
+          </div>
+        </div>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource">
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+            </ng-container>
+            <!-- Position Column -->
+            <ng-container matColumnDef="position">
+              <mat-header-cell *matHeaderCellDef>Cargo</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.cargo}}</mat-cell>
+            </ng-container>
+            <!-- Matric Column -->
+            <ng-container matColumnDef="matric">
+              <mat-header-cell *matHeaderCellDef>Matricula</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.matricula}}</mat-cell>
+            </ng-container>
+            <!-- Type Column -->
+            <ng-container matColumnDef="type">
+              <mat-header-cell *matHeaderCellDef>Tipo de firma</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{(row.tipo | returnTypeFirm)}}
+              </mat-cell>
+            </ng-container>
+
+            <!-- State Column -->
+            <ng-container matColumnDef="state">
+              <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+              <mat-cell *matCellDef="let row"
+                        [style.color]="(row.estado | returnStateFirm).color"
+                        style="font-weight: bold">{{(row.estado | returnStateFirm).text}}
+              </mat-cell>
+            </ng-container>
+            <!-- Buttons of action Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="accent" (click)="openDialogFirmEdit(row)" [disabled]="!row.estado">
+                  <mat-icon aria-label="Icon">edit</mat-icon>
+                </button>
+                <button mat-icon-button style="color: #d60017" *ngIf="row.estado" (click)="enableFirm(row)">
+                  <mat-icon aria-label="Icon">person_off</mat-icon>
+                </button>
+                <button mat-icon-button style="color: #1E88E5" *ngIf="!row.estado" (click)="enableFirm(row)">
+                  <mat-icon aria-label="Icon">person</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="size" [pageSize]="pageSize" [length]="totalRecords"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

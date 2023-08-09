@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-title align="center">Claves en Cuadro Basico</mat-card-title>
+  <mat-card-content>
+    <div fxLayout="row wrap">
+      <div fxFlex="45">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona una Unidad Médica</mat-label>
+          <mat-select (selectionChange)="valorSelectUnidad($event.value)">
+            <mat-option *ngFor="let unidades of unidadesMedicas" [value]="unidades.Id">
+              {{unidades.DenominacionUni}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona un Servicio</mat-label>
+          <mat-select (selectionChange)="valorSelectServicio($event.value)">
+            <mat-option *ngFor="let servicios of serviciosUsuarioResul" [value]="servicios.ServiciosProforma.Id">
+              {{servicios.ServiciosProforma.Descripcion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona un Area</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let areas of areaServicios" [value]="areas.Id">
+              {{areas.Area}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="45">
+
+      </div>
+      <div fxFlex="25">
+        <button mat-flat-button color="primary" (click)="openDialog()">
+          Agregar Claves
+          <mat-icon aria-label="Example icon-button with a heart icon">add_circle</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

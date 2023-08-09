@@ -1,0 +1,275 @@
+<mat-card>
+  <mat-card-title class="p-20">Módulo de análisis de solicitudes</mat-card-title>
+  <div fxLayout="row wrap" fxLayoutAlign="space-around" style="width: 100%">
+    <button mat-raised-button fxflex="30" color="primary" (click)="openDialogCantidad(objClave)">
+      <mat-icon aria-label="Example icon-button with a heart icon">border_color</mat-icon>
+      Editar Cantidad
+    </button>
+    <button fxflex="30" mat-raised-button color="primary" (click)="validarCantidad()">
+      <mat-icon aria-label="Example icon-button with a heart icon">done_outline</mat-icon>
+      Validar Cantidad
+    </button>
+    <button mat-raised-button color="primary" (click)="onNoClick()">
+      <mat-icon aria-label="Example icon-button with a heart icon">close</mat-icon>
+      Cerrar
+    </button>
+
+  </div>
+  <mat-card-content style="width: 100%; height: auto">
+
+    <div fxLayout="row" fxLayoutAlign="space-between none" class="p-10"
+         style="width: 100%; height: max-content;border-style: solid; border-width: 1px" *ngIf="objClave">
+      <div fxFlex="20">
+        <span>Clave: {{objClave.ClaveId}}</span>
+      </div>
+      <div fxFlex="24">
+        <span>{{objClave.Descripcion.substring(0, 100)}}</span>
+      </div>
+      <div fxFlex="18" style="text-align: center">
+        <span>Servicio que solicita</span>
+        <br>
+        <strong>{{objClave.ServiciosProforma.Descripcion}}</strong>
+        <br>
+        <span>Precio</span>
+        <br>
+        <strong>{{objClave.Precio | currency}}</strong>
+      </div>
+      <div fxFlex="18" style="text-align: center">
+        <span>Cantidad Solictada</span>
+        <br>
+        <strong>{{objClave.CantidadSolicitada}}</strong>
+        <br>
+        <span>Total</span>
+        <br>
+        <strong>{{objClave.Precio * objClave.CantidadSolicitada | currency}}</strong>
+      </div>
+      <div fxFlex="18" style="text-align: center">
+        <span>Cantidad Aprobada</span>
+        <br>
+        <strong>{{objClave.CantidadAprobada}}</strong>
+        <br>
+        <span>Total</span>
+        <br>
+        <strong>{{objClave.Precio * objClave.CantidadAprobada | currency}}</strong>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Six Group Row -->
+    <!-- ============================================================== -->
+    <div fxLayout="row wrap">
+      <!-- column -->
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void" (click)="desgloceUnidad=!desgloceUnidad">
+          <mat-card class="bg-inverse text-white text-center">
+            <div class="p-10">
+              <h2 class="m-0">{{totalClave}}</h2>
+              <small>Cantidad total solicitada por todas las unidades médicas</small>
+            </div>
+          </mat-card>
+        </a>
+      </div>
+      <!-- column -->
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void" (click)="desgloceServicio= !desgloceServicio">
+          <mat-card class="bg-megna text-white text-center">
+            <div class="p-10">
+              <h2 class="m-0">{{TotalPorServio}}</h2>
+              <small>Cantidad total solicitada por este servicio en otras unidades</small>
+            </div>
+          </mat-card>
+        </a>
+      </div>
+      <!-- column -->
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void" (click)="desgloceSolicitud= !desgloceSolicitud">
+          <mat-card class="text-white text-center" style="background: #c62828">
+            <div class="p-10">
+              <h2 class="m-0">{{totalSolicitud}}</h2>
+              <small>Cantidad total solicitada en esta solicitud</small>
+            </div>
+          </mat-card>
+        </a>
+      </div>
+      <!-- column -->
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void">
+          <mat-card class="bg-megna text-white text-center">
+            <div class="p-10">
+              <h2 class="m-0">{{objClave.CantidadSolicitada}}</h2>
+              <small>Cantidad solicitada</small>
+            </div>
+          </mat-card>
+        </a>
+      </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Simple four boxes Row -->
+    <!-- ============================================================== -->
+    <!--   <div fxLayout="row wrap">
+         &lt;!&ndash; column &ndash;&gt;
+         <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+           <mat-card>
+             <mat-card-content>
+               &lt;!&ndash; Row &ndash;&gt;
+               <div class="d-flex no-block">
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div class="m-r-10 no-shrink">
+                   <button mat-fab mat-card-icon class="shadow-none bg-inverse  bg-success">
+                     <mat-icon>visibility</mat-icon>
+                   </button>
+                 </div>
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div>
+                   <h6 class="text-muted m-0">Unidades que han pedido esta clave</h6>
+                 </div>
+
+               </div>
+             </mat-card-content>
+           </mat-card>
+         </div>
+         &lt;!&ndash; column &ndash;&gt;
+         &lt;!&ndash; column &ndash;&gt;
+         <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+           <mat-card>
+             <mat-card-content>
+               &lt;!&ndash; Row &ndash;&gt;
+               <div class="d-flex no-block">
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div class="m-r-10 no-shrink">
+                   <button mat-fab color="warn" mat-card-icon class="shadow-none  bg-warning">
+                     <mat-icon>visibility</mat-icon>
+                   </button>
+                 </div>
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div>
+                   <h3 class="m-0">20</h3>
+                   <h6 class="text-muted m-0">Cantidad de esta solicitud</h6>
+                 </div>
+
+               </div>
+             </mat-card-content>
+           </mat-card>
+         </div>
+         &lt;!&ndash; column &ndash;&gt;
+         &lt;!&ndash; column &ndash;&gt;
+         <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+           <mat-card>
+             <mat-card-content>
+               &lt;!&ndash; Row &ndash;&gt;
+               <div class="d-flex no-block">
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div class="m-r-10 no-shrink">
+                   <button mat-fab color="accent" mat-card-icon class="shadow-none">
+                     <mat-icon>visibility</mat-icon>
+                   </button>
+                 </div>
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div>
+                   <h3 class="m-0">352</h3>
+                   <h6 class="text-muted m-0">Solicitudes Consumo</h6>
+                 </div>
+
+               </div>
+             </mat-card-content>
+           </mat-card>
+         </div>
+         &lt;!&ndash; column &ndash;&gt;
+         &lt;!&ndash; column &ndash;&gt;
+         <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+           <mat-card>
+             <mat-card-content>
+               &lt;!&ndash; Row &ndash;&gt;
+               <div class="d-flex no-block">
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div class="m-r-10 no-shrink">
+                   <button mat-fab color="warn" mat-card-icon class="shadow-none bg-danger">
+                     <mat-icon>visibility</mat-icon>
+                   </button>
+                 </div>
+                 &lt;!&ndash; column &ndash;&gt;
+                 <div>
+                   <h3 class="m-0">159</h3>
+                   <h6 class="text-muted m-0">solicitude Equipo Medico</h6>
+                 </div>
+
+               </div>
+             </mat-card-content>
+           </mat-card>
+         </div>
+         &lt;!&ndash; column &ndash;&gt;
+       </div>-->
+    <!-- div de vistas analisis -->
+    <div fxLayout="row wrap" fxLayoutAlign="space-between" style="width: 100%">
+      <div *ngIf="true" fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <h4 style="color: darkred" *ngIf="presupuestoDelegacional">Presupuesto
+          delegacional:  {{presupuestoDelegacional.Presupuesto | currency}}</h4>
+        <h4 *ngIf="presupuestoDelegacional">Presupuesto
+          restante: {{((presupuestoDelegacional.Presupuesto) - (presupuestoGenera)) | currency}}</h4>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" class="p-10">
+          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let item of presupuestoPorSolici">
+            <a href="javascript:void">
+              <mat-card class="text-white text-center" style="background: #1e88e5">
+                <div class="p-10">
+                  <h4 class="m-0">{{item.Total | currency}}</h4>
+                  <small>{{item.Unidad}}</small>
+                </div>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- div de ver unidades que han pedido est clave -->
+      <div *ngIf="desgloceUnidad" fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <h4>Cantidad solicitada por unidad médica</h4>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" class="p-10">
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let item of totalPorUnidades">
+            <a href="javascript:void">
+              <mat-card class="bg-inverse text-white text-center">
+                <div class="p-10">
+                  <h2 class="m-0">{{item.cant}}</h2>
+                  <small>{{item.nombre}}</small>
+                </div>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="desgloceServicio" fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <h4>Cantidad solicitada el el mismo servicio en otras unidades</h4>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" class="p-10">
+          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="90" *ngFor="let item of totalporSercvicio">
+            <a href="javascript:void">
+              <mat-card class=" bg-megna text-white text-center">
+                <div class="p-10">
+                  <h2 class="m-0">{{item.CantidadSolicitada}}</h2>
+                  <strong>{{item.ServiciosProforma.Descripcion}}</strong>
+                  <br>
+                  <small>{{item.Solicitud.UnidadMed.DenominacionUni}}</small>
+                </div>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- div de ver unidades que han pedido est clave -->
+      <div *ngIf="desgloceSolicitud" fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <h4>Cantidad solicitada en esta solicitud</h4>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" class="p-10">
+          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let item of totalPorSolicitud">
+            <a href="javascript:void">
+              <mat-card class="text-white text-center" style="background: #c62828">
+                <div class="p-10">
+                  <h2 class="m-0">{{item.CantidadSolicitada}}</h2>
+                  <strong>{{item.ServiciosProforma.Descripcion}}</strong>
+                  <br>
+                  <small>{{item.Solicitud.UnidadMed.DenominacionUni}}</small>
+                </div>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+

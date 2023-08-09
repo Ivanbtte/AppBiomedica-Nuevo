@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  align-items: center;
+  justify-content: center;
+}
+
+.div-text {
+  width: 50%;
+  max-width: 50%;
+  height: auto;
+  max-height: 430px;
+}
+
+.div-imagen {
+  width: 50%;
+  max-width: 50%;
+  height: auto;
+  max-height: 430px;
+  justify-content: center;
+  margin: 0 auto 0 auto;
+  overflow: hidden;
+  position: relative;
+
+}
+
+.imagen {
+  max-width: 100%;
+  /*height: auto;*/
+  max-height: 600px;
+  margin: 0 auto;
+
+}
+.main-containerAction {
+  display: flex;
+  vertical-align: middle;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}

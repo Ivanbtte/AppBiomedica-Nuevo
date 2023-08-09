@@ -1,0 +1,40 @@
+.mat-header-cell {
+  justify-content: center !important;
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+.mat-table {
+  .mat-column-Clave {
+    flex: 0 0 12%;
+    justify-content: left !important;
+  }
+
+  .mat-column-UnidadPres {
+    flex: 0 0 10%;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .mat-column-Cantidad {
+    flex: 0 0 10%;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .mat-column-Tipo {
+    flex: 0 0 10%;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .mat-column-Descripcion {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+  .mat-column-Vista {
+    flex: 0 0 4.5%;
+    justify-content: center !important;
+  }
+}

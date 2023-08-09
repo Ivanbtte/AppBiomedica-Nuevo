@@ -1,0 +1,27 @@
+.vistaPrevia {
+  .mat-table {
+    .mat-column-Tipo {
+      flex: 0 0 25%;
+      justify-content: left !important;
+    }
+    .mat-column-Ida {
+      flex: 0 0 10%;
+      justify-content: center !important;
+    }
+    .mat-column-Regreso {
+      flex: 0 0 10%;
+      justify-content: center !important;
+    }
+    .mat-column-Boleto {
+      flex: 0 0 15%;
+      justify-content: center !important;
+    }
+    .mat-column-Total {
+      flex: 0 0 15%;
+      justify-content: center !important;
+    }
+    .mat-column-Observaciones {
+      flex: 0 0 25%;
+    }
+  }
+}

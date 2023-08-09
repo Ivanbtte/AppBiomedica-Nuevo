@@ -1,0 +1,53 @@
+<h1 mat-dialog-title align="center" style="color: #003366">Contrato Numero: <strong>{{data.n_contrato}}</strong></h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-title>Representante Legal: <strong>{{data.representante.NombreCompleto}}</strong></mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-around start">
+        <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+          <span style="color: #003366"><strong>Correo(s) Electronico(s)</strong></span>
+          <mat-nav-list class="p-0">
+            <mat-list-item *ngFor="let link of correos" class="p-0">
+              <a matLine
+                 href="mailto:{{link.correo}}?subject=Reporte%20del%20contrato%20No.%20{{data.n_contrato}}">
+                <button mat-icon-button color="primary" style="padding-left: 2px">
+                  {{ link.correo }}
+                  <mat-icon>send</mat-icon>
+                </button>
+              </a>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <span style="color: #003366"><strong>Telefono(s)</strong></span>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let link of telefonos">
+              <h4>{{link.telefono}}</h4>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100">
+          <span style="color: #003366"><strong>Extension(es)</strong></span>
+          <mat-nav-list>
+            <mat-list-item *ngFor="let link of telefonos">
+              <h4>{{link.extension}}</h4>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="todos">
+          <h5>* Enviar correo a todos los destinatarios</h5>
+          <a href="mailto:{{correoTodos}}?subject=Reporte%20del%20contrato%20No.%20{{data.n_contrato}}">
+            <button mat-raised-button color="primary">
+              Enviar a todos
+              <mat-icon>send</mat-icon>
+            </button>
+          </a>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="onNoClick()" cdkFocusInitial>Cerrar</button>
+</div>
+

@@ -1,0 +1,47 @@
+<mat-card>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <div mat-card-avatar fxFlex.gt-sm="5" fxFlex.gt-xs="100" fxFlex="100">
+      <button mat-stroked-button color="warn" [routerLink]="['/traslado/manager']" class="m-l-10">
+        <mat-icon aria-label="Example icon-button with a heart icon">keyboard_return</mat-icon>
+        Regresar
+      </button>
+    </div>
+    <div fxFlex.gt-sm="95" fxFlex.gt-xs="100" fxFlex="100">
+      <h2 class="centerText m-b-0">Asignar o quitar permisos del modulo de <span style="color: #175d6b">SOLICITUDES DE
+          TRASLADOS</span>
+      </h2>
+      <h2 class="centerText m-t-0 m-b-0" style="color: #175d6b" *ngIf="unitMedic">{{unitMedic}}</h2>
+      <h3 *ngIf="user" class="centerText m-t-0 m-b-0">{{user.Usuario.Persona.Nombre}}
+        {{user.Usuario.Persona.ApellidoPat}} {{user.Usuario.Persona.ApellidoMat}}</h3>
+    </div>
+  </div>
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayout.xs="column">
+      <div fxFlex.gt-sm="65" fxFlex.gt-xs="100" fxFlex="100" class="text-center">
+       <span>Habilitar permiso de Capturista de vales de traslado</span>
+        <mat-slide-toggle>Slide me!</mat-slide-toggle>
+      </div>
+      <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100" class="responsive-table mat-elevation-z8">
+        <mat-table [dataSource]="dataSource">
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="module">
+            <mat-header-cell *matHeaderCellDef>Apartado</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.modulo.name}}</mat-cell>
+          </ng-container>
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef>Administrar</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" color="primary"
+                (click)="addPermitModule(element.modulo.name, element.moduloId)">
+                <mat-icon>manage_accounts</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

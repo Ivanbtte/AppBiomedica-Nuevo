@@ -1,0 +1,81 @@
+<h1 mat-dialog-title align="center" style="color: #003366" class="m-0">Numero de
+  contrato {{idPrei.ContratoNumeroContrato}}</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content style="padding: 10px!important;">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <h3 class="text-danger m-0 ">
+            El precio del Id PREI <strong>{{idPrei.PreiIdArticulo}}</strong>
+            que estas intentando registrar es incorrecto al precio
+            <strong>{{idPrei.PrecioUniSnIva | currency}} </strong> ya
+            registrado en el contrato, edita tu archivo de carga.</h3>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <h4>
+            *Nota: Si el precio registrado en el contrato esta mal, puedes editarlo.</h4>
+        </div>
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-raised-button color="primary" (click)="verMas=!verMas">Registro
+            <mat-icon matSuffix>{{!verMas ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </div>
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-raised-button style="background: #d4782c; color: white" (click)="editar=!editar">Editar
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </div>
+      <!-- Cuadro de informacion de ver mas detalles del id prei -->
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="b-all p-10"
+           style="border-width: 1px;  border-color: #0d453c" *ngIf="verMas">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <h3 align="center" style="color: #003366" class="m-0">Informacion de la clave registrada</h3>
+        </div>
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100" fxLayout="column wrap"
+             fxLayoutAlign="space-between start">
+          <h4 class="m-0"><strong>Id PREI: </strong>{{idPrei.PreiIdArticulo}}
+          </h4>
+          <h4 class="m-0"><strong>Numero Contrato: </strong>{{idPrei.ContratoNumeroContrato}}</h4>
+          <h4 class="m-0"><strong>Clave Cuadro: </strong>{{claveCuadro}}</h4>
+        </div>
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100" fxLayout="column wrap"
+             align="end">
+          <h4 class="m-0 text-danger">
+            <strong>Precio Unitario (Sin IVA): </strong>{{idPrei.PrecioUniSnIva | currency}}
+          </h4>
+          <h4 class="m-0 text-danger">
+            <strong>Precio Unitario (Con IVA): </strong>{{(idPrei.PrecioUniSnIva * 1.16) | currency}}
+          </h4>
+          <h4 style="color: #003366" class="m-0">{{regresaDescripcion(idPrei.Prei.Descripcion)}}</h4>
+        </div>
+      </div>
+      <!-- Cuadro de edicion de precio del concepto -->
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="editar" class="m-t-20">
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100" fxLayout="column wrap"
+             fxLayoutAlign="space-between start">
+          <mat-form-field appearance="outline">
+            <mat-label>Precio Registrado Sin IVA</mat-label>
+            <input readonly matInput placeholder="Precio registrado" [value]="idPrei.PrecioUniSnIva | currency">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100" fxLayout="column wrap"
+             fxLayoutAlign="space-between end">
+          <mat-form-field appearance="outline">
+            <mat-label>Precio Actualizar Sin IVA</mat-label>
+            <input matInput placeholder="Precio nuevo Sin IVA" [formControl]="control" autocomplete="off" cdkFocusInitial>
+            <mat-error *ngIf="control.hasError('pattern')">Ingresa solo numeros.</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-raised-button color="primary" [disabled]="control.invalid" (click)="actualizarPrecio()">Guardar
+            <mat-icon>save</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>

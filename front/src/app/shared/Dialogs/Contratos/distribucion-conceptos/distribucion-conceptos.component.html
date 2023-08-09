@@ -1,0 +1,144 @@
+<h1 mat-dialog-title align="center" class="m-0">Distribucion de clave a unidades medicas</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content style="padding: 10px!important;">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" fxLayout="column wrap"
+             fxLayoutAlign="space-between start">
+          <h4 class="m-0"><strong>Id PREI: </strong>{{regresaDescripcion(concepto.PreiIdArticulo)}}
+          </h4>
+          <h4 class="m-0"><strong>Numero del Contrato: </strong>{{concepto.Contrato.NumeroContrato}}</h4>
+          <h4 class="m-0"><strong>Clave Cuadro Basico: </strong>{{claveCuadro}}</h4>
+          <h4 class="m-0 text-danger">
+            <strong>Precio Unitario (Sin IVA): </strong>{{concepto.PrecioUniSnIva | currency}}
+          </h4>
+          <h4 class="m-0 text-danger">
+            <strong>Precio Unitario (Con IVA): </strong>{{(concepto.PrecioUniSnIva * 1.16) | currency}}
+          </h4>
+          <h4 style="color: #003366" class="m-0">{{regresaDescripcion(concepto.Prei.Descripcion)}}</h4>
+        </div>
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" align="end">
+          <div class="m-b-10" *ngIf="dist_dupl">
+            <button mat-flat-button color="accent" [disabled]="concepto.CantidadConcepto - sumatoriaCantidad == 0"
+                    (click)="cambiarCantidad(concepto)">
+              <mat-icon>post_add</mat-icon>
+              Editar Cantidad Contratada
+            </button>
+          </div>
+          <div>
+            <button mat-flat-button color="primary" [disabled]="concepto.CantidadConcepto - sumatoriaCantidad == 0"
+                    *ngIf="!data.archivo" (click)="agregardistribucion()">
+              <mat-icon>post_add</mat-icon>
+              Agregar Distribucion
+            </button>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="m-t-10" *ngIf="concepto">
+          <div fxLayout="column">
+            <mat-card class="bg-megna text-white text-center">
+              <div class="p-10">
+                <h5 class="m-0">Cantidad contratada</h5>
+                <h3 class="m-0">{{concepto.CantidadConcepto}}</h3>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="m-t-10" *ngIf="concepto">
+          <div fxLayout="column">
+            <mat-card class="bg-megna text-center" style="background-color: #d4782c;  color: black">
+              <div class="p-10">
+                <h5 class="m-0">Cantidad previamente distribuida</h5>
+                <h3 class="m-0">{{sumatoriaCantidad}}</h3>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="m-t-10" *ngIf="concepto">
+          <div fxLayout="column">
+            <mat-card class="bg-megna text-white text-center mat-elevation-z5" style="background-color: darkred">
+              <div class="p-10">
+                <h5 class="m-0">Cantidad pendiente de distribuir</h5>
+                <h3 class="m-0">{{concepto.CantidadConcepto - sumatoriaCantidad}}</h3>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="m-t-10" *ngIf="dist_dupl">
+          <div fxLayout="column">
+            <mat-card class="bg-megna text-white text-center" style="background-color: #003366;">
+              <div class="p-10">
+                <h5 class="m-0">Cantidad a registrar</h5>
+                <h3 class="m-0">{{data.cantidad}}</h3>
+                <small>Cantidad excedida: {{data.cantidad - (concepto.CantidadConcepto - sumatoriaCantidad)}}</small>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" *ngIf="sumatoriaCantidad">
+        <!-- div de ver unidades que han pedido est clave -->
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="center">
+          <h4 class="m-0 m-b-5" style="color: #003366">Distribucion por unidad medica</h4>
+        </div>
+        <mat-form-field>
+          <input matInput autocomplete="off" (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
+        </mat-form-field>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <div class="responsive-table mat-elevation-z8">
+            <mat-table [dataSource]="dataSource" matSort matSortStart="desc">
+              <!-- Columna Nombre de la Delegacion -->
+              <ng-container matColumnDef="Delegacion">
+                <mat-header-cell *matHeaderCellDef> Delegacion</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.UnidadMed.Delegacion.NombreDele}} </mat-cell>
+              </ng-container>
+
+              <!-- Columna Nombre de la Unidad Medica -->
+              <ng-container matColumnDef="unidadM">
+                <mat-header-cell *matHeaderCellDef> Unidad Medica</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.UnidadMed.DenominacionUni}}</mat-cell>
+              </ng-container>
+
+              <!-- Columna Cantidad Distribuida -->
+              <ng-container matColumnDef="CantidadDis">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad Distribuida</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Cantidad}} </mat-cell>
+              </ng-container>
+              <!-- Columna Precio Distribuido -->
+              <ng-container matColumnDef="PrecioDis">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Monto Total Sin IVA</mat-header-cell>
+                <mat-cell *matCellDef="let row"
+                          style="color: #661421"> {{(row.Cantidad * concepto.PrecioUniSnIva)| currency}}
+                </mat-cell>
+              </ng-container>
+              <!-- Columna Boton editar -->
+              <ng-container matColumnDef="EditarPro">
+                <mat-header-cell *matHeaderCellDef>Editar</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-button color="primary" (click)="EditarCantidad(row)">
+                    <mat-icon class="material-icons-outlined">edit</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <!-- Columna Boton Eliminar -->
+              <ng-container matColumnDef="EliminarPro">
+                <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-button color="warn" (click)="EliminarCantidad(row)">
+                    <mat-icon class="material-icons-outlined">delete</mat-icon>
+                  </button>
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>

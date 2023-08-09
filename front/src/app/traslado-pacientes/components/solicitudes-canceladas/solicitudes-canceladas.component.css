@@ -1,0 +1,28 @@
+[hidden] {
+  display: none !important;
+}
+.example-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  flex: 1 ;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 6px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+.titles{
+  color: #0d453c;
+  margin: 10px 0;
+  font-weight: bold;
+}
+.example-chip-list {
+  width: 100%;
+}

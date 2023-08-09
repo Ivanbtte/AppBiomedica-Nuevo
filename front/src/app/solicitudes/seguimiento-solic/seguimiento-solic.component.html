@@ -1,0 +1,57 @@
+<mat-card>
+  <mat-card-title class="p-10 p-r-20 p-l-20">Mis Solicitudes</mat-card-title>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="responsive-table">
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <!--  Columna Folio de solicitud -->
+        <ng-container matColumnDef="Folio">
+          <mat-header-cell fxFlex="10px" *matHeaderCellDef mat-sort-header>Folio solicitud</mat-header-cell>
+          <mat-cell fxFlex="10px" *matCellDef="let row"> {{row.Id.substring((row.Id.length - 6), (row.Id.length))}}</mat-cell>
+
+        </ng-container>
+        <!-- columna nombre del solicitante -->
+        <ng-container matColumnDef="Solicitante">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Solicitante</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{usuarioLog.Nombre}} {{usuarioLog.AppellidoP}}</mat-cell>
+
+        </ng-container>
+        <!-- Columna dell total de la solicitud -->
+        <ng-container matColumnDef="Total">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Total | currency}}</mat-cell>
+        </ng-container>
+
+        <!-- Columna de la fecha de solicitud -->
+        <ng-container matColumnDef="Fecha">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.FechaCreacion}}</mat-cell>
+        </ng-container>
+        <!-- Columna del tipo de solicitud -->
+        <ng-container matColumnDef="TipoS">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de solicitud</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.TipoSolicitud.Tipo}}</mat-cell>
+        </ng-container>
+        <!-- Columna del estatus actual de la solicitud -->
+        <ng-container matColumnDef="Estatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Estatus.Status}}</mat-cell>
+        </ng-container>
+        <!-- Columna del boton para ver el detalle de la solicitud -->
+        <ng-container matColumnDef="Detalle">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Seguimiento</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="openDialogClave(row)" color="primary">
+              <mat-icon>not_listed_location</mat-icon>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>
+

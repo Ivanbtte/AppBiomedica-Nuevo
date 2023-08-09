@@ -1,0 +1,28 @@
+.mat-expansion-indicator::after {
+  color: #ffffff !important;
+}
+
+.backAbasto {
+  background-color: #ff9900 !important;
+}
+
+.backFinanzas {
+  background-color: #008000 !important;
+}
+
+.backMedicos {
+  background-color: #0066cc !important;
+}
+
+.backCatalogos {
+  background-color: #990033 !important;
+}
+
+.mat-card-format {
+  margin: 15px 0px !important;
+  flex: 1 0 0;
+  justify-content: center !important;
+  border: 1px solid rgba(100, 110, 119, 0.36);
+  align-items: center !important;
+}
+

@@ -1,0 +1,101 @@
+<h1 mat-dialog-title align="center" class="font-bold" style="color: #003366">Vista previa solicitud de vale de
+  traslado</h1>
+<div mat-dialog-content>
+  <mat-label style="color: red" *ngIf="solicitudValidada">{{nota}}</mat-label>
+  <mat-card>
+    <mat-card-content class="p-0">
+      <h4 class="m-t-10 m-b-10 "><strong>Nombre Paciente: </strong>{{data.solicitud.nombrePaciente}}</h4>
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100">
+          <h4 class="m-t-10 m-b-10"><strong>Folio FTP-01: </strong>{{data.solicitud.ftp01}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Unidad Medica: </strong>{{data.unidad}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Fecha de la Cita: </strong>{{dateCita|date: 'dd/MM/yyyy'}}   {{dateCita|date:'HH:mm'}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Origen: </strong>{{data.solicitud.origen}}</h4>
+        </div>
+        <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100">
+          <h4 class="m-t-10 m-b-10">
+            <strong>N.S.S.: </strong>{{data.solicitud.nss}}&nbsp;-&nbsp;{{data.solicitud.agregadoMedico}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Contrato: </strong>{{data.solicitud.contratoNumeroContrato}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Acompañante: </strong>{{acompaniante}}</h4>
+          <h4 class="m-t-10 m-b-10"><strong>Destino: </strong>{{data.solicitud.destino}}</h4>
+        </div>
+      </div>
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <div class="responsive-table vistaPrevia">
+            <mat-table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+              <!-- Position Column -->
+              <ng-container matColumnDef="Tipo">
+                <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.tipo}} </mat-cell>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="Ida">
+                <mat-header-cell *matHeaderCellDef> Ida</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.ida}} </mat-cell>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="Regreso">
+                <mat-header-cell *matHeaderCellDef> Regreso</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.regreso}} </mat-cell>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="Boleto">
+                <mat-header-cell *matHeaderCellDef> Boleto</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.tipoBoleto}} </mat-cell>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="Total">
+                <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.total}} </mat-cell>
+              </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="Observaciones">
+                <mat-header-cell *matHeaderCellDef> Observaciones</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.observaciones}} </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-evently center" class="m-0 p-0">
+  <div xFlex.gt-sm="13" fxFlex.gt-xs="13" fxFlex="13" *ngIf="data.foliosSeparados" class="m-b-10">
+  </div>
+  <div xFlex.gt-sm="80" fxFlex.gt-xs="80" fxFlex="80" *ngIf="data.foliosSeparados" class="m-b-10">
+    <label class="text-danger">Nota: Se generan dos vales</label>
+  </div>
+  <div fxFlex.gt-sm="13" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!solicitudRealizada">
+    <button mat-stroked-button (click)="Cerrar()" type="button" color="warn"> Cerrar</button>
+  </div>
+  <div fxFlex.gt-sm="13" fxFlex.gt-xs="100" fxFlex="100" *ngIf="solicitudRealizada">
+    <button mat-stroked-button (click)="onNoClick()" color="warn"> Editar</button>
+  </div>
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-raised-button color="primary" (click)="realizarsolicitud()" *ngIf="!data.foliosSeparados"
+            [disabled]="solicitudValidada || !solicitudRealizada">Realizar
+      Solicitud
+    </button> 
+    <button mat-raised-button color="primary" (click)="realizarsolicitud()" *ngIf="data.foliosSeparados"
+    [disabled]="solicitudValidada || !solicitudRealizada">Realizar
+Solicitudes
+</button>
+  </div>
+  <div fxFlex.gt-sm="29" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-raised-button color="primary" [disabled]="solicitudRealizada" (click)="imprimirSolicitud()">
+      Imprimir Solo Datos
+    </button>
+  </div>
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-raised-button color="primary" [disabled]="solicitudRealizada" (click)="imprimirSolicitudCompleta()">
+      Imprimir Solicitud Completa
+    </button>
+  </div>
+</div>

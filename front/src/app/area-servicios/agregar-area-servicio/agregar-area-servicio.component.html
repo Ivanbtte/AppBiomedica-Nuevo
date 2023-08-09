@@ -1,0 +1,70 @@
+<mat-card>
+  <mat-card-title class="p-10">Areas de Servicios por Unidades Medicas</mat-card-title>
+  <mat-card-content>
+    <div fxLayout="row wrap">
+      <div fxFlex="80">
+        <button mat-raised-button color="primary" (click)="formularioVisible=true">
+          <mat-icon>add_circle</mat-icon>
+          Agregar Nueva Area
+        </button>
+      </div>
+      <br>
+      <form [formGroup]="formularioAgregar">
+      <div fxFlex="100" *ngIf="formularioVisible" fxLayoutAlign="space-between center" class="m-t-30 m-b-30">
+        <div fxFlex="26">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona una Unidad Médica</mat-label>
+            <mat-select (selectionChange)="valueSelectUnit($event.value)" formControlName="UnidadMedId">
+              <mat-option *ngFor="let unidades of unidadesMedicas" [value]="unidades.Id">
+                {{unidades.DenominacionUni}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="22">
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona un Servicio</mat-label>
+            <mat-select (selectionChange)="valueService($event.value)" formControlName="ServiciosProformaId">
+              <mat-option *ngFor="let servicios of serviciosUsuarioResul" [value]="servicios.ServiciosProforma.Id">
+                {{servicios.ServiciosProforma.Descripcion}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex="20">
+          <mat-form-field appearance="outline">
+            <mat-label>Area</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="Area">
+          </mat-form-field>
+        </div>
+        <div fxFlex="18">
+          <mat-form-field appearance="outline">
+            <mat-label>Centro de Costo</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="CentroCosto">
+            <mat-hint align="end">Opcional</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      </form>
+      <br>
+      <div fxFlex="30" *ngIf="formularioVisible">
+        <button mat-raised-button color="warn" (click)="formularioVisible=false">
+          <mat-icon>cancel</mat-icon>
+          Cancelar
+        </button>
+      </div>
+      <div fxFlex="30" *ngIf="formularioVisible">
+        <button mat-raised-button color="primary" (click)="addArea()" [disabled]="formularioAgregar.invalid">
+          <mat-icon>save</mat-icon>
+          Agregar
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+<!--  <mat-card-content>-->
+<!--    <div fxFlex="100" class="table-responsive smart-table">-->
+<!--      <h3 align="center">Lista de Areas Registradas</h3>-->
+<!--      <ng2-smart-table [settings]="configuraciones" [source]="datos" class="mat-table no-wrap"></ng2-smart-table>-->
+<!--    </div>-->
+<!--  </mat-card-content>-->
+</mat-card>

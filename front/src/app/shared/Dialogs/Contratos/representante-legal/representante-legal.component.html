@@ -1,0 +1,106 @@
+<h1 mat-dialog-title align="center">{{titulo}}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="representanteForm">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del Representante</mat-label>
+          <input matInput placeholder="Nombre y Apellidos" formControlName="NombreCompleto" autocomplete="off" required>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Formulario dinamico de correos -->
+    <mat-divider class="p-b-20"></mat-divider>
+    <div class="p-b-10">
+      <button mat-stroked-button color="primary" (click)="agregarCorreo()" type="button">
+        Agregar nuevo
+        <mat-icon class="material-icons-outlined">email</mat-icon>
+      </button>
+    </div>
+    <div formArrayName="Correos" *ngFor="let correo of Correos.controls; let i = index">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" [formGroupName]="i">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label [attr.for]="'TipoCorreo' + i">Nombre del correo</mat-label>
+            <input matInput placeholder="Ej. Personal, Ventas ,Soporte"
+                   autocomplete="off" required [attr.id]="'TipoCorreo'+ i" formControlName="TipoCorreo">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label [attr.for]="'Correo' + i">Correo electronico</mat-label>
+            <input matInput placeholder="Correo"
+                   autocomplete="off" required [attr.id]="'Correo'+ i" formControlName="Correo">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" align="end">
+          <button mat-stroked-button color="warn" (click)="borrarCorreo(i)">
+            Eliminar
+            <mat-icon class="material-icons-outlined">email</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Formulario dinamico de telefonos -->
+    <mat-divider class="p-b-20" style="color: #0d453c"></mat-divider>
+    <div class="p-b-10">
+      <button mat-stroked-button color="primary" (click)="agregarTelefonos()" type="button">
+        Agregar nuevo
+        <mat-icon class="material-icons-outlined">local_phone</mat-icon>
+      </button>
+    </div>
+    <!--  -->
+    <div formArrayName="Telefonos" *ngFor="let telefono of Telefonos.controls; let i = index">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" [formGroupName]="i">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label [attr.for]="'TipoTelefono' + i">Nombre del telefono</mat-label>
+            <input matInput placeholder="Ej. Personal, Ventas ,Soporte"
+                   autocomplete="off" required [attr.id]="'TipoTelefono'+ i" formControlName="TipoTelefono">
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label [attr.for]="'Telefono' + i">Telefono</mat-label>
+            <input matInput placeholder="Telefono" maxlength="13" minlength="7"
+                   autocomplete="off" required [attr.id]="'Telefono'+ i" formControlName="Telefono">
+            <mat-error *ngIf="Telefonos.controls[i].get('Telefono').errors?.pattern">
+              Introduce un telefono Valido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label [attr.for]="'Extension' + i">Extensión</mat-label>
+            <input matInput placeholder="Extensión"
+                   autocomplete="off" [attr.id]="'Extension'+ i" formControlName="Extension" maxlength="5">
+            <mat-error *ngIf="Telefonos.controls[i].get('Extension').errors?.pattern">
+              Extensión inválida.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100" align="end">
+          <button mat-stroked-button color="warn" (click)="borrarTelefono(i)">
+            Eliminar
+            <mat-icon class="material-icons-outlined">local_phone</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!-- Botones de accion -->
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center">
+  <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100" align="start">
+    <button mat-stroked-button (click)="onNoClick()" color="warn" cdkFocusInitial>Cerrar</button>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="data.editar">
+    <button mat-raised-button color="primary" type="submit" [disabled]="!representanteForm.dirty ||
+    representanteForm.invalid" (click)="editarRepresentante()">Guardar Cambios
+    </button>
+  </div>
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="!data.editar" (click)="guardar()">
+    <button mat-raised-button color="primary" type="submit" [disabled]="representanteForm.invalid">Guardar Datos
+    </button>
+  </div>
+</div>

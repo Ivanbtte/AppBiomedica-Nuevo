@@ -1,0 +1,124 @@
+<div mat-dialog-title class="m-0">
+  {{titulo}}
+  <h3 class="text-danger font-bold m-0" align="center">{{provee.NombreEmpresa}}</h3>
+</div>
+<div mat-dialog-content class="m-0">
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="font-14">
+    <div fxFlex.gt-xs="40" fxFlex="100">
+      <div fxLayout="column">
+        <span><strong>Correo: </strong><a href="mailto:{{provee.Correo}}">{{provee.Correo}}</a></span>
+        <span><strong>Numero de Proveedor IMSS: </strong>{{provee.NProvImss}}</span>
+        <span><strong>Direccion: </strong>{{provee.Direccion}}</span>
+      </div>
+    </div>
+    <div fxFlex.gt-xs="25" fxFlex="100">
+      <div fxLayout="column">
+        <span><strong>Alias: </strong>{{provee.AliasEmpresa}}</span>
+        <span><strong>Telefono: </strong>{{provee.Telefono}}</span>
+        <span><strong>Municipio: </strong>{{provee.Municipio}}</span>
+      </div>
+    </div>
+    <div fxFlex.gt-xs="22" fxFlex="100">
+      <div fxLayout="column">
+        <span><strong>RFC: </strong>{{provee.RFC}}</span>
+        <span><strong>Estado: </strong>{{provee.Estados.Nombre}}</span>
+        <span><strong>Codigo Postal: </strong>{{provee.CP}}</span>
+      </div>
+    </div>
+  </div>
+  <mat-card>
+    <mat-card-content>
+      <div fxLayout="row wrap">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" fxLayoutAlign="end center">
+          <button mat-flat-button color="primary" (click)="openDialogAgregar()" class="m-0" *ngIf="permisos">
+            <mat-icon>person_add</mat-icon>
+            Contacto
+          </button>
+        </div>
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar" autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div class="responsive-table">
+        <mat-table #table [dataSource]="dataSource" >
+          <!-- Columna Nombre Completo -->
+          <ng-container matColumnDef="NombreCon">
+            <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <span class="header-label">Nombre :</span>{{row.NombreCompleto}}
+            </mat-cell>
+          </ng-container>
+          <!-- Columna Departamento -->
+          <ng-container matColumnDef="Departamento">
+            <mat-header-cell *matHeaderCellDef>Departamento</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Departamento :</span>{{row.Departamento}}
+            </mat-cell>
+          </ng-container>
+          <!-- Columna Cargo -->
+          <ng-container matColumnDef="CargoCon">
+            <mat-header-cell *matHeaderCellDef>Cargo</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Cargo :</span>{{row.Cargo}}</mat-cell>
+          </ng-container>
+          <!-- Columna Celular -->
+          <ng-container matColumnDef="CelularCon">
+            <mat-header-cell *matHeaderCellDef>Celular</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Celular :</span>{{row.Celular}}</mat-cell>
+          </ng-container>
+          <!-- Columna Correo -->
+          <ng-container matColumnDef="CorreoCon">
+            <mat-header-cell *matHeaderCellDef>Correo</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Correo :</span><a
+              href="mailto:{{row.Correo}}">{{row.Correo}}</a></mat-cell>
+          </ng-container>
+          <!-- Columna Boton Detalle -->
+          <ng-container matColumnDef="VerPro">
+            <mat-header-cell *matHeaderCellDef>Detalle</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Detalle :</span>
+              <button mat-icon-button style="color: #3a83c2" (click)="openDialogDetalleContacto(row)">
+                <mat-icon>remove_red_eye</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <!-- Columna Boton Editar -->
+          <ng-container matColumnDef="EditarPro">
+            <mat-header-cell *matHeaderCellDef>Editar</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Editar :</span>
+              <button mat-icon-button color="primary" (click)="openDialogEditar(row)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-cell>
+
+          </ng-container>
+          <!-- Columna Boton Eliminar -->
+          <ng-container matColumnDef="EliminarPro">
+            <mat-header-cell *matHeaderCellDef>Eliminar</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Eliminar :</span>
+              <button mat-icon-button color="warn" (click)="EliminarContacto(row.Id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <!-- Columna Boton Seleccionar -->
+          <ng-container matColumnDef="Seleccionar">
+            <mat-header-cell *matHeaderCellDef>Seleccionar</mat-header-cell>
+            <mat-cell *matCellDef="let row"><span class="header-label">Seleccionar :</span>
+              <button mat-icon-button color="primary" (click)="Selecionar(row)">
+                <mat-icon>check_box_outline_blank
+                </mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" class="m-0">
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-flat-button color="warn" (click)="cerrarDialog()">
+      Cerrar
+    </button>
+  </div>
+</div>

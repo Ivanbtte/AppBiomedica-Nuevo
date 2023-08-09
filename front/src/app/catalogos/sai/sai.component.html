@@ -1,0 +1,166 @@
+<mat-card>
+  <mat-card-content>
+    <div class="bg-light p-10 p-r-20 p-l-20">
+      <mat-card-title class="font-bold centerText m-0" style="color: #003366">Filtros por clave de cuadro básico
+      </mat-card-title>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="standard" *ngIf="Filtro">
+            <mat-label>Grupo</mat-label>
+            <input type="text" placeholder="Filtrar por Grupo" aria-label="Number" matInput
+                   [formControl]="myControl"
+                   [matAutocomplete]="auto"
+                   [value]="grupo_id"
+                   [readonly]="BanderaPorGrupo"
+                   autocomplete="off" #ft01 (keyup.enter)="keytab($event)">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn"
+                              (optionSelected)="buscarPorGrupo()">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.Grupo}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarGrupo()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon matSuffix *ngIf="!myControl.value">filter_list</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="standard">
+            <mat-label>Generico</mat-label>
+            <input type="text" placeholder="Filtrar por Generico" aria-label="Number" matInput
+                   [formControl]="control_generico"
+                   [matAutocomplete]="auto"
+                   [matAutocompleteDisabled]="!grupo_id"
+                   maxlength="3"
+                   (keyup.enter)="buscarPorGenericoSolamente()">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="buscarPorGenerico()">
+              <mat-option *ngFor="let option of filteredGenericos | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button *ngIf="control_generico.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarFiltroGenerico()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon *ngIf="!control_generico.value" matSuffix>filter_list</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="standard">
+            <mat-label>Especifico</mat-label>
+            <input type="text" placeholder="Filtro por Especifico" matInput
+                   [formControl]="control_especifico"
+                   [matAutocomplete]="auto2"
+                   [matAutocompleteDisabled]="!generico_id"
+                   maxlength="4" minlength="4" (keyup.enter)="buscarPorEspecifico()">
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="buscarPorEspecifico()">
+              <mat-option *ngFor="let option2 of filteredEspecificos | async" [value]="option2">
+                {{option2}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix *ngIf="!control_especifico.value">filter_list</mat-icon>
+            <button mat-button *ngIf="control_especifico.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarFiltroEspecifico()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="18" fxFlex.gt-xs="100" fxFlex="100" class="endAlign">
+          <button mat-raised-button color="primary" (click)="openDialog()">Buscar por Temas
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+        <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-chip-list *ngIf="chipsVer">
+            <mat-chip *ngFor="let chips of chipsVer" [selectable]="selectable"
+                      [removable]="removable" (removed)="remove(chips)" selected style="background-color: #1e88e5">
+              {{chips.Tema}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Bienes de Consumo</mat-card-title>
+        <div class="bg-light p-10 p-r-20 p-l-20">
+          <mat-form-field appearance="outline">
+            <mat-label>Buscar por la descripcion de la clave</mat-label>
+            <input matInput [formControl]="control_nombre" (keyup.enter)="buscarPorNombre()"
+                   placeholder="Escribe la descripcion" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div [hidden]="cargando">
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource">
+            <!-- ID Column -->
+            <ng-container matColumnDef="Clave">
+              <mat-header-cell *matHeaderCellDef>Clave Cuadro Basico</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                {{row.Grupo}}.{{row.Generico}}.{{row.Especifico}}.{{row.Diferenciador}}.{{row.Variable}}
+              </mat-cell>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="Descripcion">
+              <mat-header-cell *matHeaderCellDef>Descripción</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="UnidadPres">
+              <mat-header-cell *matHeaderCellDef>Unidad de Presentación</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.UnidadPresentacion.UnidadPresentacion}}</mat-cell>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="Cantidad">
+              <mat-header-cell *matHeaderCellDef>Cantidad de Presentación</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.CantidadPresentacion}}</mat-cell>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="Tipo">
+              <mat-header-cell *matHeaderCellDef>Tipo de Presentación</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.TipoPresentacion.Presentacion}}</mat-cell>
+
+            </ng-container>
+            <!-- Color Column -->
+
+            <ng-container matColumnDef="Vista">
+              <mat-header-cell *matHeaderCellDef>Vista</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="openDialogClave(row.Id)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Agregar">
+              <mat-header-cell *matHeaderCellDef>Agregar</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <mat-button-toggle value="left" (click)="openDialogCantidad(row)" style="color: #16584b">
+                  <mat-icon>add_circle</mat-icon>
+                </mat-button-toggle>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

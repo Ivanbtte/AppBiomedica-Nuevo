@@ -1,0 +1,90 @@
+<mat-card>
+    <mat-card-content>
+      <!-- Boton para agregar un concepto y vista de totales  -->
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="m-t-10 m-b-10">
+            <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+              <button mat-raised-button color="primary">
+                <mat-icon>post_add</mat-icon>
+                Agregar nuevo registro
+              </button>
+            </div>
+            <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+              <span style="color: #003366">Total Agregado: </span> <strong><span
+              style="color: #003366">{{MontoContratado | currency}}</span></strong>
+            </div>
+            <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+              <span style="color: #661421">Total Restante: </span> <strong><span
+              style="color: #661421">{{(data[0].MontoTotal - MontoContratado)|currency}}</span></strong>
+            </div>
+          </div>
+      <!-- Tabla de concentrado de equipos medicos contratados -->
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <div class="responsive-table mat-elevation-z8">
+                <mat-table [dataSource]="dataSource" matSort>
+                  <!-- Unidad medica Columna -->
+                  <ng-container matColumnDef="unMed">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Unidad</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.unidadMed.DenominacionUni}}</mat-cell>
+                  </ng-container>
+                  <!-- Servicio Columna -->
+                  <ng-container matColumnDef="especialidad">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Especialidad</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descripcionServicio.especialidades.nombre}}</mat-cell>
+                  </ng-container>
+                  <!-- Origen Columna -->
+                  <ng-container matColumnDef="descripcion">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Descripcion</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.descripcionServicio.descripcion}}</mat-cell>
+                  </ng-container>
+                  <!-- Destino Destino -->
+                  <ng-container matColumnDef="unidadMedida">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.unidadMedida}}</mat-cell>
+                  </ng-container>
+                  <!-- Cantidad minima Columna -->
+                  <ng-container matColumnDef="precioCon">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+                    <mat-cell *matCellDef="let row">{{row.precioReferencia | currency}}</mat-cell>
+                  </ng-container>
+                  <!-- Cantidad maxima Columna -->
+                  <ng-container matColumnDef="canMax">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Max</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.estudiosMax}}</mat-cell>
+                  </ng-container>
+                  <!-- Importe maximo Columna -->
+                  <ng-container matColumnDef="impMax">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Importe Max</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.importeMax | currency}}</mat-cell>
+                  </ng-container>
+                  <!-- Boton Editar Columna -->
+                  <ng-container matColumnDef="EditarPro">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                      <button mat-icon-button color="primary">
+                        <mat-icon class="material-icons-outlined">edit</mat-icon>
+                      </button>
+                    </mat-cell>
+                  </ng-container>
+                  <!-- Boton Eliminar Columna -->
+                  <ng-container matColumnDef="EliminarPro">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Eliminar
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                      <button mat-icon-button color="warn">
+                        <mat-icon class="material-icons-outlined">delete</mat-icon>
+                      </button>
+                    </mat-cell>
+                  </ng-container>
+                  <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;">
+                  </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                               [showFirstLastButtons]="true"></mat-paginator>
+              </div>
+            </div>
+          </div>
+    </mat-card-content>
+  </mat-card>
+  

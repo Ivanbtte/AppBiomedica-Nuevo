@@ -1,0 +1,121 @@
+<mat-card>
+  <mat-card-content *ngIf="informacion">
+    <div class="mb-1" *ngIf="resultado">
+      <h3 class="m-0">
+        <strong>{{resultado.TipoSolicitud.Tipo}}</strong>
+      </h3>
+    </div>
+    <div fxLayout="row wrap" *ngIf="resultado">
+      <div fxFlex.gt-xs="50" fxFlex="100">
+        <h4 class="text-danger font-bold m-0">Unidad Médica: {{resultado.UnidadMed.DenominacionUni}}</h4>
+        <div fxLayout="column">
+          <span>Estado: {{resultado.Estatus.Status}}</span>
+          <span>Fecha de solicitud: {{resultado.FechaCreacion}}</span>
+          <span>Total solicitado: {{resultado.Total | currency}}</span>
+        </div>
+      </div>
+      <div fxFlex.gt-xs="50" fxFlex="100" class="text-right">
+        <h4 class="font-bold m-0">Solicitante</h4>
+        <div fxLayout="column">
+          <span>{{resultado.Usuario.Persona.Nombre}} {{resultado.Usuario.Persona.ApellidoPat}}</span>
+          <span>{{resultado.Correo}}</span>
+          <span>Matricula: {{resultado.Usuario.Persona.Matricula}}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+    <div fxLayout="row wrap">
+      <button mat-button value="left" fxflex="30" color="primary" style="width: max-content"
+              (click)="revisarSolicitud()">
+        <mat-icon>visibility</mat-icon>
+        {{textBtnInf}}
+      </button>
+      <button mat-button value="left" fxflex="30" color="primary" style="width: max-content"
+              (click)="aprobarSolicitud()" *ngIf="!informacion">
+        <mat-icon>done</mat-icon>
+        Aprobar Solicitud
+      </button>
+      <!--      <button mat-button value="left" fxflex="30"  style="width: max-content; color: #1e88e5"
+                    (click)="consultasAnaliticas()" *ngIf="!informacion">
+              <mat-icon>visibility</mat-icon>
+              Realizar analisis
+            </button>-->
+    </div>
+    <div class="responsive-table" *ngIf="!informacion">
+      <mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="Validado">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Validado</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox [checked]="comprobarValidados(row)"
+                          style="pointer-events: none; color: #1976d2"></mat-checkbox>
+          </mat-cell>
+        </ng-container>
+        <!-- ID Column -->
+        <ng-container matColumnDef="Clave">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Clave Cuadro Basico</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ClaveId}}</mat-cell>
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Descripcion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>
+
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Servicio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Servicio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ServiciosProforma.Descripcion}}</mat-cell>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="Precio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Precio | currency}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Cantidades">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Solicitada</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.CantidadSolicitada}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Aprobada">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Aprobada</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.CantidadAprobada}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="CPM">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>C P M</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{(row.CantidadSolicitada / 12) | number:'1.0-0'}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Total">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Total | currency}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Editar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Analizar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="consultasAnaliticas(row)" color="primary">
+              <mat-icon>scatter_plot</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Eliminar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Eliminar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="eliminarClave(row)" color="warn">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+      <h4 class="font-medium" style="width: max-content; align-content: end;">{{ totalSolicitud | currency}}</h4>
+    </div>
+  </mat-card-content>
+</mat-card>

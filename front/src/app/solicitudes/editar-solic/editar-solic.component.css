@@ -1,0 +1,105 @@
+.div-principal {
+  width: 100%;
+  height: auto;
+}
+
+.main-principal {
+  width: 100%;
+  height: auto;
+}
+
+.m10 {
+  margin-bottom: 10px;
+}
+
+.div-cabecera {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  height: auto;
+  background: #f6f6f6;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dddddd;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.div-informacion {
+  vertical-align: middle;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  height: auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dddddd;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.div-cabecera-izquierdo {
+  width: 65%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  height: auto;
+}
+
+.div-cabecera-derecha {
+  width: 30%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  height: auto;
+}
+
+.div-fecha {
+  width: 30%;
+}
+
+.div-total {
+  width: 20%;
+}
+
+.div-enviar-a {
+  width: 35%;
+}
+
+.div-pedido {
+  text-align: right;
+  width: 90%;
+}
+
+.div-botones {
+  width: 35%;
+  vertical-align: middle;
+}
+
+.botones {
+  width: 90%;
+  margin-bottom: 15px;
+}
+
+.div-inf {
+  width: 50%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.detalles {
+  width: 90%;
+}

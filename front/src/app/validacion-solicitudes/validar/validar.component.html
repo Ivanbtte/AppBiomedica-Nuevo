@@ -1,0 +1,46 @@
+<mat-card>
+  <mat-card-title class="p-20">Validación de solicitudes</mat-card-title>
+  <mat-card-content>
+    <div class="responsive-table">
+      <!--      <button mat-button value="left" color="red" style="text-align: right; width: max-content" (click)="openDialog()">
+              Filtros<mat-icon>filter_list</mat-icon>
+            </button>-->
+      <mat-table [dataSource]="dataSource" matSort
+                 style="border-style: solid; border-width: 1px; border-color: #e0e0e0">
+        <!--  Columna Id del usuario -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Usuario.Persona.Nombre}}</mat-cell>
+        </ng-container>
+        <!--  Columna Nombre del usuario -->
+        <ng-container matColumnDef="TipoSolicitud">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.TipoSolicitud.Tipo}}</mat-cell>
+        </ng-container>
+        <!-- columna apellido del usuario -->
+        <ng-container matColumnDef="UnidadMedi">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Unidad M.</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.UnidadMed.DenominacionUni}}</mat-cell>
+
+        </ng-container>
+        <!-- Columna del correo del usuario -->
+        <ng-container matColumnDef="Estatus">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Estatus</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Estatus.Status}}</mat-cell>
+        </ng-container>
+        <!-- Columna del Validar del usuario -->
+        <ng-container matColumnDef="Validar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Revisar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" color="primary" [routerLink]="['/requerimientos/revision/validar',row.Id]">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

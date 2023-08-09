@@ -1,0 +1,272 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav fixedTopGap="0" disableClose mode="side"
+               [perfectScrollbar]="config">
+    <div style="padding: 6px 12px;">
+      <h4 style="margin: 10px 0; color: #8e2545; font-weight: bold; text-align: center">Filtros</h4>
+      <h5 class="titles">Acompañante</h5>
+      <mat-radio-group [formControl]=controlCompanion
+                       aria-labelledby="example-radio-group-label"
+                       class="example-radio-group"
+                       (change)="changeCompanion({filter:'Acompañante',value:$event.value})">
+        <mat-radio-button value="1" [disabled]="withCompanion">Si</mat-radio-button>
+        <mat-radio-button value="2" [disabled]="unaccompanied">No</mat-radio-button>
+      </mat-radio-group>
+      <h5 class="titles">Origen</h5>
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por origen</mat-label>
+        <mat-select (selectionChange)="changeOrigin({filter: 'Origen', value:$event.value})"
+                    [formControl]="controlOrigin">
+          <mat-option *ngFor="let origin of origins" [value]="origin">
+            {{origin}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <h5 class="titles">Destino</h5>
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por destino</mat-label>
+        <mat-select (selectionChange)="changeDestination({filter: 'Destino', value:$event.value})"
+                    [formControl]="controlDestination">
+          <mat-option *ngFor="let destination of destinations" [value]="destination">
+            {{destination}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- informacion del contrato -->
+      <h5 class="titles">Contrato(s)</h5>
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por contrato</mat-label>
+        <mat-select [formControl]="controlNumberContract"
+                    (selectionChange)="changeContractNumber({filter:'Numero Contrato',value:$event.value})">
+          <mat-option *ngFor="let contract of contracts" [value]="contract.NumeroContrato">
+            {{contract.NumeroContrato}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="m-b-15">
+          <div mat-card-avatar fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="cancel">
+            <button mat-icon-button (click)="sidenav.open()" color="primary" *ngIf="!sidenav.opened">
+              <mat-icon aria-label="Example icon-button with a heart icon">arrow_back_ios</mat-icon>
+            </button>
+            <button mat-icon-button (click)="sidenav.close()" color="primary" *ngIf="sidenav.opened">
+              <mat-icon aria-label="Example icon-button with a heart icon">arrow_forward_ios</mat-icon>
+            </button>
+          </div>
+          <div mat-card-avatar fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!cancel">
+          </div>
+          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+            <h4 class="centerText m-0">Solicitudes <b style="color: #ff0000">Canceladas</b> de Traslado de Pacientes
+            </h4>
+            <h4 class="m-0 centerText">Contratos Vigentes</h4>
+            <h5 *ngIf="unitMedic"
+                class="m-0 font-bold text-info centerText">{{unitMedic.unidadMed.DenominacionUni}}</h5>
+          </div>
+
+          <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" class="endText" *ngIf="cancel">
+            <button mat-raised-button style="font-weight: bold; background: #eb4138; color: white"
+                    (click)="habilitarCancelacion()">
+              <mat-icon aria-label="Example icon-button with a heart icon">delete_forever</mat-icon>
+              Cancelar Folio
+            </button>
+          </div>
+          <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" class="endText" *ngIf="!cancel">
+            <button mat-stroked-button style="font-weight: bold" color="warn"
+                    (click)="habilitarCancelacion()">
+              <mat-icon aria-label="Example icon-button with a heart icon">cancel</mat-icon>
+              Cerrar
+            </button>
+          </div>
+        </div>
+
+        <form [formGroup]="formCancelar" *ngIf="!cancel">
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="b-all"
+               style="padding-top: 16px; padding-left: 16px;padding-right: 16px; margin-top: 10px">
+            <div fxFlex.gt-sm="28" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Ingresa el Folio a cancelar</mat-label>
+                <input matInput placeholder="Ingresa el Folio a cancelar" autocomplete="off"
+                       formControlName="Folio">
+                <mat-error *ngIf="formCancelar.controls['Folio'].hasError('pattern') &&
+                  formCancelar.controls['Folio'].touched">
+                  Introduce un numero de folio valido.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100" *ngIf="solicitud">
+              <mat-form-field appearance="outline">
+                <mat-label>Ingresa el motivo de cancelacion</mat-label>
+                <textarea matInput placeholder="Ingresa el motivo de cancelacion" autocomplete="off"
+                          style="height: 70px" formControlName="Motivo"></textarea>
+                <mat-error *ngIf="formCancelar.controls['Motivo'].hasError('required') &&
+                  formCancelar.controls['Motivo'].touched">
+                  Campo obligatorio.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="!solicitud">
+              <button mat-raised-button style="font-weight: bold" color="primary" type="button"
+                      [disabled]="formCancelar.controls['Folio'].invalid" (click)="buscarFolio()">
+                <mat-icon aria-label="Example icon-button with a heart icon">find_in_page</mat-icon>
+                Buscar Folio
+              </button>
+            </div>
+            <div fxFlex.gt-sm="23" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="solicitud">
+              <button mat-raised-button style="font-weight: bold" color="warn"
+                      [disabled]="formCancelar.invalid" (click)="solicitarCancelacion()">
+                <mat-icon aria-label="Example icon-button with a heart icon">disabled_by_default</mat-icon>
+                Cancelar Solicitud
+              </button>
+            </div>
+          </div>
+        </form>
+        <div *ngIf="solicitud">
+          <h3 class="m-t-10 m-b-10" style="color: #003366" *ngIf="!foliosCancelar"><strong>Folio de
+            solicitud a cancelar: </strong>{{solicitudTralado.folio}}</h3>
+            <h3 class="m-t-10 m-b-10" style="color: #003366" *ngIf="foliosCancelar"><strong>Folios de
+              solicitudes a cancelar: </strong>{{foliosCancelar}}</h3>
+          <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+            <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+              <h3 class="m-t-10 m-b-10"><strong>Nombre: </strong>{{solicitudTralado.nombrePaciente}}</h3>
+              <h3 class="m-t-10 m-b-10"><strong>Folio FTP-01: </strong>{{solicitudTralado.ftp01}}</h3>
+              <h3 class="m-t-10 m-b-10"><strong>Unidad
+                Medica: </strong>{{solicitudTralado.unidadMed.DenominacionUni}}
+              </h3>
+              <h3 class="m-t-10 m-b-10"><strong>Fecha de la Cita: </strong>{{dateAppointment}}</h3>
+              <h3 class="m-t-10 m-b-10"><strong>Origen: </strong>{{solicitudTralado.origen}}</h3>
+            </div>
+            <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+              <h3 class="m-t-10 m-b-10">
+                <strong>N.S.S.: </strong>{{solicitudTralado.nss}}&nbsp;-&nbsp;{{solicitudTralado.agregadoMedico}}
+              </h3>
+              <h3 class="m-t-10 m-b-10"><strong>Contrato: </strong>{{solicitudTralado.contratoNumeroContrato}}</h3>
+              <h3
+                class="m-t-10 m-b-10"><strong>Acompañante: </strong>{{acompaniante}}</h3>
+              <h3 class="m-t-10 m-b-10"><strong>Destino: </strong>{{solicitudTralado.destino}}</h3>
+              <h3 class="m-t-10 m-b-10"><strong>Fecha Expedicion: </strong>{{dateRequest}}
+                Hora: {{dateRequestTmp | date:'mediumTime'}}</h3>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="bg-light p-r-20 p-l-20"
+             *ngIf="cancel">
+          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field class="p-b-0" style="padding-bottom: 0!important;">
+              <input matInput [formControl]="searchInputControl" (keyup.enter)="consultRequest()"
+                     placeholder="Buscar solicitud cancelada"
+                     autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="12" fxFlex.gt-xs="100" fxFlex="100" class="startText">
+            <button mat-raised-button class="buttonBlue font-bold"
+                    (click)="consultRequest()">
+              <mat-icon aria-label="Example icon-button with a heart icon">find_in_page</mat-icon>
+              Buscar
+            </button>
+          </div>
+          <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+            <mat-form-field appearance="legacy" class="p-t-15">
+              <mat-label>Buscar por fechas</mat-label>
+              <mat-date-range-input [formGroup]="range" [rangePicker]="picker" [min]="minDate" [max]="maxDate">
+                <input matStartDate formControlName="start" placeholder="Inicio" readonly>
+                <input matEndDate formControlName="end" placeholder="Fin" readonly>
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="picker">
+              </mat-datepicker-toggle>
+              <mat-date-range-picker #picker>
+                <mat-date-range-picker-actions>
+                  <button type="button" mat-stroked-button matDateRangePickerCancel color="warn"
+                          (click)="resetFilterDates()">Borrar
+                  </button>
+                  <button mat-raised-button color="primary"
+                          matDateRangePickerApply (click)="rangeDateChange()">Filtrar
+                  </button>
+                </mat-date-range-picker-actions>
+              </mat-date-range-picker>
+              <button type="button" matSuffix mat-icon-button aria-label="Icon" *ngIf="range.get('end').value"
+                      color="warn"
+                      (click)="resetFilterDates()">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="10" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+            <button mat-raised-button (click)="sidenav.toggle()" color="accent">
+              <mat-icon aria-label="Example icon-button with a heart icon">filter_alt</mat-icon>
+              Filtros
+            </button>
+          </div>
+          <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-chip-list>
+              <mat-chip *ngFor="let filter of filters"
+                        (removed)="removeChips(filter)"
+                        style="border-radius: 5px; font-family: 'Lucida Console', monospace; font-size: small">{{filter.filter}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+            </mat-chip-list>
+          </div>
+        </div>
+        <div class="responsive-table" [hidden]="!cancel">
+          <mat-table [dataSource]="dataSource">
+
+            <!-- Folio Column -->
+            <ng-container matColumnDef="folio">
+              <mat-header-cell *matHeaderCellDef>Folio</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.folio}} </mat-cell>
+            </ng-container>
+            <!-- Elaboracion Column -->
+            <ng-container matColumnDef="elaboracion">
+              <mat-header-cell *matHeaderCellDef>Elaboracion</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{formatExpeditionDate(row.fechaExpedicion)}} </mat-cell>
+            </ng-container>
+            <!-- FTP Column -->
+            <ng-container matColumnDef="ftp">
+              <mat-header-cell *matHeaderCellDef>FTP01</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.ftp01}}</mat-cell>
+            </ng-container>
+
+            <!-- Origen Column -->
+            <ng-container matColumnDef="origen">
+              <mat-header-cell *matHeaderCellDef>Origen</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.origen}} </mat-cell>
+            </ng-container>
+
+            <!-- Destino Column -->
+            <ng-container matColumnDef="destino">
+              <mat-header-cell *matHeaderCellDef>Destino</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.destino}} </mat-cell>
+            </ng-container>
+
+            <!-- Nombre del paciente Column -->
+            <ng-container matColumnDef="nombre_pac">
+              <mat-header-cell *matHeaderCellDef>Nombre Paciente</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.nombrePaciente}} </mat-cell>
+            </ng-container>
+
+            <!-- Fecha de la cita Column -->
+            <ng-container matColumnDef="fecha">
+              <mat-header-cell *matHeaderCellDef>Fecha de Cita</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{formatoFecha(row.fechaCita)}} </mat-cell>
+            </ng-container>
+            <!-- Botones de Accion Column -->
+            <ng-container matColumnDef="accion">
+              <mat-header-cell *matHeaderCellDef>PDF</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button style="font-size: 25pt; color: #d60017" (click)="consultarPDF(row.folio)">
+                  <mat-icon aria-label="Example icon-button with a heart icon">picture_as_pdf</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize" [length]="length"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bcc0f56b-0399-4980-8198-6ff7f82e6fe1" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Controladores/ActionModuleControlador/ActionModuleControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/AreasControlador/AreasControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/TrasladosControlador/FilterCompanionControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/DepartamentoControlador/DepartmentsControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/DepartamentoControlador/PositionOrganizationControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/ModulosControlador/ModulosControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/PermitUserFromModule/PermitByUserControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioPuestoControler.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Controladores/UsuarioControlador/Utils.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Init/InitMenu.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/AreaModel/MArea.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/AreaModel/SArea.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MActionExceptionByUser.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MDepartamentoPadre.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MOrganigramaDelegacional.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MOrganigramaUnidades.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MPuestoOrganigrama.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MPuestoOrganigramaRoleModule.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MUsuarioPuestoRoleModule.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MValidarUsuarioPuesto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/SCatalogoPuesto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/SOrganigrama.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/SPuestoOrganigrama.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/SUsuarioPuesto.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/MenuModel/MMenu.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/MenuModel/SMenu.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/ModuloModel/MModulo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/ModuloModel/SModulo.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/RoleModel/MRole.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/RoleModel/MRoleModule.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/RoleModel/MRoleModuleAction.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Modelos/RoleModel/SRole.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/appbiomedica.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/appbiomedica.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/AuthControlador/AuthControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/AuthControlador/AuthControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/CargoControlador/CargoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/CargoControlador/NombramientoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/CargoControlador/UnidadNombramientoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/CatalogoControlador/PreiControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/CatalogoControlador/PreiControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosControlador/ConceptosControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosControlador/ConceptosControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosControlador/UtilsConceptos.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosControlador/UtilsConceptos.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosServiciosControlador/ConceptosServiciosControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/ConceptosServiciosControlador/ConceptosServiciosControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/ContratoControlador/ContratoControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/ContratoControlador/ContratoControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/DistribucionControlador/DistribucionControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/DistribucionControlador/DistribucionControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/DistribucionControlador/UtilsDistribucion.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/DistribucionControlador/UtilsDistribucion.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/TrasladosControlador/SolicitudControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/TrasladosControlador/SolicitudControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ContratosControlador/TrasladosControlador/TrasladoosControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/ContratosControlador/TrasladosControlador/TrasladoosControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/DepartamentoControlador/DepartamentoControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/DepartamentoControlador/DepartamentoControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/DepartamentoControlador/DepartamentoPuestoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/MenuItemControlador/MenuItemControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/PermisoControlador/PermisoControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/PermisoControlador/PermisoControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/PersonaControlador/PersonaControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/PersonaControlador/PersonaControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/PersonaControlador/Utilerias/EnviarCorreo.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/PersonaControlador/Utilerias/EnviarCorreo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/PuestosControlador/PermisoPuestoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/PuestosControlador/PuestoControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/PuestosControlador/PuestoControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/ServiciosUsuarioControlador/ServiciosUsuarioControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/UnidadesMedicasControlador/DelegacionesControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/UnidadesMedicasControlador/DelegacionesControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioPermisoControler.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioUnidadControler.go" beforeDir="false" afterPath="$PROJECT_DIR$/Controladores/UsuarioControlador/UsuarioUnidadControler.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Init/Init.go" beforeDir="false" afterPath="$PROJECT_DIR$/Init/Init.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Init/InitContratos.go" beforeDir="false" afterPath="$PROJECT_DIR$/Init/InitContratos.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Init/InitDepartamentosUnidades.go" beforeDir="false" afterPath="$PROJECT_DIR$/Init/InitDepartamentosUnidades.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Init/InitProveedores.go" beforeDir="false" afterPath="$PROJECT_DIR$/Init/InitProveedores.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Init/InitUsuarios.go" beforeDir="false" afterPath="$PROJECT_DIR$/Init/InitUsuarios.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/AreaServiciosModel/MAreaServicios.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/AreaServiciosModel/MAreaServicios.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/AuthModel/MAuth.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/AuthModel/MAuth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/AuthModel/SAuth.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/AuthModel/SAuth.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/CargoModel/MCargo.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/CargoModel/MNombramiento.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/CargoModel/MUnidadesNombramiento.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/CargoModel/SCargo.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/CatalogosModel/MPrei.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/CatalogosModel/MPrei.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ContratoModel/ConceptosServiciosModelo/MTrasladoPacientes.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ContratoModel/ConceptosServiciosModelo/MTrasladoPacientes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ContratoModel/ConceptosServiciosModelo/ValidaTrasladoPacientes.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ContratoModel/ConceptosServiciosModelo/ValidaTrasladoPacientes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ContratoModel/PermisosContratoModelo/STipoContratoPuesto.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ContratoModel/PermisosContratoModelo/STipoContratoPuesto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/DepartamentosModel/MDepartamento.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MDepartamento.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/DepartamentosModel/MDepartamentoPuesto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/DepartamentosModel/SDepartamentoPuesto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/DepartamentosModel/SDepartamentos.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/SDepartamentos.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ModeloUnidadM/MDelegaciones.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ModeloUnidadM/MDelegaciones.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ModeloUnidadM/MUnidadM.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ModeloUnidadM/MUnidadM.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ModeloUnidadM/SUnidadM.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ModeloUnidadM/SUnidadM.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PermisoModel/MPermiso.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/PermisoModel/MPermiso.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PermisoModel/SPermiso.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/PermisoModel/SPermiso.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PersonaModel/MPersona.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/PersonaModel/MPersona.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ProveedoresModel/SNombreComunClave.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ProveedoresModel/SProveedorNombreComun.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PuestosModel/MCatalogoPuesto.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MCatalogoPuesto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PuestosModel/MPermisoCatalogoPuesto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PuestosModel/SCatalogoPuesto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/PuestosModel/SPermisoCatalogoPuesto.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/MRutasConsumidas.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/MRutasConsumidas.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/MSolicitudTraslado.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/MSolicitudTraslado.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/SSolicitud.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/SSolicitud.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/UtileriaPDF.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/ServiciosSubrogados/TrasladoPacientesModel/UtileriaPDF.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosUsuarioModel/MServiciosUsuarios.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/ServiciosUsuarioModel/SServiciosUsuarios.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/MUnidadMedicaUsuario.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuario.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuario.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuarioPermiso.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuarioPuesto.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/DepartamentosModel/MUsuarioPuesto.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuarioTipo.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/UsuarioModel/MUsuarioTipo.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/SUnidadMedicaUsuario.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modelos/UsuarioModel/SUsuario.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modelos/UsuarioModel/SUsuario.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/Estructuras/Funciones.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/Estructuras/Funciones.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/Sesion/MenuItems.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/Sesion/MenuItems.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Modulos/Sesion/Sesion.go" beforeDir="false" afterPath="$PROJECT_DIR$/Modulos/Sesion/Sesion.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go Application" />
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" url="file:///usr/local/go" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Rsj0ZeEXy0D6pVqhjJ1ml7fIYn" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="configurable.Global.GOPATH.is.expanded" value="true" />
+    <property name="configurable.Module.GOPATH.is.expanded" value="false" />
+    <property name="configurable.Project.GOPATH.is.expanded" value="false" />
+    <property name="go.formatter.settings.were.checked" value="true" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.modules.go.list.on.any.changes.was.set" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Modelos/DepartamentosModel" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Modelos/DepartamentosModel" />
+      <recent name="$PROJECT_DIR$/Modelos/CatalogoPuestoModel" />
+      <recent name="$PROJECT_DIR$/Modelos/UsuarioModel" />
+      <recent name="$PROJECT_DIR$/Modelos/UsuarioPuestoModel" />
+      <recent name="$PROJECT_DIR$/Modelos/PuestosModel" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Go Build.go build main.go">
+    <configuration name="go build MClavesSolicitud.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="appbiomedica" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <package value="appbiomedica" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/Modelos/SolicitudModel/MClavesSolicitud.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="appbiomedica" />
+      <working_directory value="$PROJECT_DIR$/" />
+      <kind value="FILE" />
+      <package value="appbiomedica" />
+      <directory value="$PROJECT_DIR$/" />
+      <filePath value="$PROJECT_DIR$/main.go" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Build.go build MClavesSolicitud.go" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

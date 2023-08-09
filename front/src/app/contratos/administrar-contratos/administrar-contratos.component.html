@@ -1,0 +1,113 @@
+<div class="mat-elevation-z3">
+  <mat-card style="margin-left: 5px!important;">
+    <mat-card-title style="color: #003366;" align="center" class="font-bold">Administracion de contratos
+    </mat-card-title>
+    <mat-card-content style="padding-left: 5px!important;">
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field class="p-l-10">
+            <input matInput [formControl]="control_nombre" (keyup.enter)="buscarPorNombre()"
+                   placeholder="Buscar un contrato"
+                   autocomplete="off">
+          </mat-form-field>
+        </div>
+        <!-- Columna de botones -->
+        <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" fxLayout="row wrap" fxLayoutAlign="space-evenly start">
+          <div fxFlex.gt-sm="23" fxFlex.gt-xs="100" fxFlex="100">
+            <button mat-flat-button color="primary" (click)="openDialogAgregar()">
+              <mat-icon>post_add</mat-icon>
+              Contrato
+            </button>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <button mat-flat-button color="primary" [matMenuTriggerFor]="menu">
+              <mat-icon>cloud_upload</mat-icon>
+              Carga Masiva
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="openDialogCargaMasiva()">
+                <mat-icon>folder_open</mat-icon>
+                <span>Contratos</span>
+              </button>
+              <button mat-menu-item (click)="openDialogConceptosArchivo()">
+                <mat-icon>post_add</mat-icon>
+                <span>Equipos/Servicios</span>
+              </button>
+              <button mat-menu-item [matMenuTriggerFor]="distribucion" *ngIf="menu_distribucion">
+                <mat-icon>view_quilt</mat-icon>
+                <span>Distribucion</span>
+              </button>
+            </mat-menu>
+            <mat-menu #distribucion="matMenu">
+              <button mat-menu-item (click)="openDialogDistribucionArchivo(true)">
+                <mat-icon>view_quilt</mat-icon>
+                <span>Conceptos ya registrados</span>
+              </button>
+              <button mat-menu-item (click)="openDialogDistribucionArchivo(false)">
+                <mat-icon>view_quilt</mat-icon>
+                <span>Sin conceptos registrados</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+            <button mat-flat-button color="primary" (click)="AbrirVentanaFiltros()">
+              <mat-icon>filter_list</mat-icon>
+              Filtros
+            </button>
+          </div>
+
+        </div>
+        <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-chip-list>
+            <mat-chip style="background-color: #1e88e5" [selectable]="selectable" selected [removable]="removable"
+                      *ngIf="proveedor.length>0" (removed)="EliminarFiltro('proveedor')">
+              Proveedores
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <mat-chip style="background-color: #1e88e5" [selectable]="selectable" selected [removable]="removable"
+                      *ngIf="delegacion.length>0" (removed)="EliminarFiltro('delegacion')">
+              Delegaciones
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div [hidden]="cargando">
+  <mat-progress-bar mode="query" color="warn"></mat-progress-bar>
+</div>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngFor="let item of elementos" class="mat-elevation-z3">
+    <mat-card class="oh text-center little-profile">
+      <div align="center">
+        <a [routerLink]="['/contratos/detalle', item.NumeroContrato]"><h3
+          class="m-b-0 font-bold" style="color: #0800ef">{{item.NumeroContrato}}</h3></a>
+        <a mat-flat-button routerLink="." (click)="AbrirDialogArchivos(item)">
+          <mat-icon color="primary">folder_open</mat-icon>
+        </a>
+      </div>
+      <mat-card-content class="m-b-0">
+        <a [routerLink]="" (click)="openDialogDetalleProveedor(item.Proveedor)" *ngIf="item" style="color: #003366"><h3
+          class="m-b-0 m-t-0 font-bold">{{item.Proveedor.NombreEmpresa}}</h3></a>
+        <h5 style="color: #661421"><strong>Vigencia:</strong> del {{item.InicioContrato}}
+          al {{item.FinContrato}}</h5>
+        <a [routerLink]="" (click)="AbrirDetallecontrato(item.NumeroContrato)"><h4
+          class="m-b-0 font-bold" style="color: #0800ef">{{item.ProcedContratacion}}</h4></a>
+      </mat-card-content>
+      <mat-card-actions class="p-t-0">
+        <button mat-button color="warn">
+          <mat-icon>delete</mat-icon>
+          <span>Eliminar</span>
+        </button>
+        <button mat-button color="primary" (click)="editando(item)">
+          <mat-icon>edit</mat-icon>
+          <span>Editar</span>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+               [showFirstLastButtons]="true"></mat-paginator>

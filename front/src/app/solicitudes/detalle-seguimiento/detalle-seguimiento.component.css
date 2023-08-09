@@ -1,0 +1,36 @@
+.sliderDiv:disabled {
+  width: 100%;
+}
+
+.slider {
+  pointer-events: none;
+  width: 100%;
+}
+
+.div-principal {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  height: auto;
+}
+
+.div-estatus {
+  width: 45%;
+  display: block;
+  height: max-content;
+}
+.div-bitacora {
+  width: 45%;
+  display: block;
+  height: max-content;
+}
+
+.div-alinear {
+  display: inline-block;
+  vertical-align: middle;
+  height: max-content;
+}
+

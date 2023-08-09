@@ -1,0 +1,65 @@
+<mat-card>
+  <h2 class="centerText m-b-0">Configurar permisos para el modulo de <span style="color: #175d6b">solicitudes de traslados</span>
+  </h2>
+  <h2 class="centerText m-t-0 m-b-0" style="color: #175d6b"
+      *ngIf="unitMedic">{{unitMedic.unidadMed.DenominacionUni}}</h2>
+  <mat-card-content>
+    <div class="responsive-table mat-elevation-z8 customTable">
+      <mat-table [dataSource]="dataSource">
+        <!-- Config Column -->
+       <!-- columna bloqueada temporalmente en desarrollo-->
+        <!-- <ng-container matColumnDef="config">
+          <mat-header-cell *matHeaderCellDef>Permisos</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button aria-label="Example icon button with a vertical three dot icon" color="primary"
+                    [routerLink]="['/traslado/permit',element.user.UsuarioId,unitMedic.unidadMed.DenominacionUni]"
+                    [disabled]="!(element.user.Valid || element.permit)"
+                    matTooltip="Modificar permisos"
+                    matTooltipClass="example-tooltip-transfer">
+              <mat-icon>manage_accounts</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container> -->
+        <!-- Name Column -->
+        <ng-container matColumnDef="nameTras">
+          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+          <mat-cell
+            *matCellDef="let element">{{element.user.Usuario.Persona.Nombre }} {{ element.user.Usuario.Persona.ApellidoPat}}
+            {{ element.user.Usuario.Persona.ApellidoMat}}</mat-cell>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="positionTras">
+          <mat-header-cell *matHeaderCellDef>Puesto</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.user.PuestoOrganigrama.catalogoPuesto.Puesto}}</mat-cell>
+        </ng-container>
+
+        <!-- Department Column -->
+        <ng-container matColumnDef="departmentTras">
+          <mat-header-cell *matHeaderCellDef>Departamento</mat-header-cell>
+          <mat-cell
+            *matCellDef="let element">{{element.user.PuestoOrganigrama.organigramaUnidad.departamento.Nombre}}</mat-cell>
+        </ng-container>
+
+        <!-- UnitMedic Column -->
+        <ng-container matColumnDef="unitMedic">
+          <mat-header-cell *matHeaderCellDef>Unidad</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{unitMedic.unidadMed.DenominacionUni}}</mat-cell>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Usuario</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button class="m-r-10" mat-flat-button color="primary" (click)="ValidateUser(element)" *ngIf="!element.user.Valid">
+              Validar
+            </button>
+            <button mat-flat-button color="warn" (click)="openDialog(element)">Baja</button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

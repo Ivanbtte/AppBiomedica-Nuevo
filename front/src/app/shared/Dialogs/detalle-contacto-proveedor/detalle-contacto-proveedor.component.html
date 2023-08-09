@@ -1,0 +1,27 @@
+<h1 mat-dialog-title align="center">Datos del Contacto</h1>
+<div mat-dialog-content>
+  <div fxLayout="row wrap">
+    <div fxFlex.gt-sm="100" fxFlex="100">
+      <mat-card class="oh text-center little-profile">
+        <div>
+          <h3 class="m-b-0 font-bold" style="color: #003366">{{contacto.Proveedor.AliasEmpresa}}</h3>
+          <h4 class="m-b-0 m-t-0" style="color: #003366">{{contacto.Proveedor.NombreEmpresa}}</h4>
+          <qr-code [value]="vCardInfo" [size]="140"></qr-code>
+        </div>
+        <mat-card-content>
+          <h3 class="m-b-0 font-bold">{{contacto.NombreCompleto}}</h3>
+          <h6 class="m-t-0 ">{{contacto.Cargo}}</h6>
+          <a href="mailto:{{contacto.Correo}}?Subject={{contacto.Asunto}}">{{contacto.Correo}}</a>
+          <h6 class="m-t-10 m-b-10"><strong>Departamento: </strong>{{contacto.Departamento}}</h6>
+          <h6 class="m-t-10 m-b-10"><strong>Telefono: </strong>{{contacto.Telefono}}</h6>
+          <h6 class="m-t-10 m-b-10"><strong>Extension: </strong>{{contacto.Extension}}</h6>
+          <h6 class="m-t-10 m-b-10"><strong>Celular: </strong>{{contacto.Celular}}</h6>
+          <h6 class="m-t-10 m-b-10"><strong>Detalles: </strong>{{contacto.Comentarios}}</h6>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button (click)="onNoClick()" color="warn">Cerrar</button>
+</div>

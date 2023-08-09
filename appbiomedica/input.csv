@@ -1,0 +1,34 @@
+id	alias_empresa	nombre_empresa	correo	rfc	n_prov_imss	telefono	direccion	estado_id	municipio	cp	estado
+1		ALTA TECNOLOGIA EN EQUIPO MEDICO ISAGEI S.A. DE C.V.	altatecnologiaisagei@gmail.com	ATE171204TS1	16398	17282850212	Avenida Circuito de la Industria No.59 Col. Corredor Industrial	15	Lerma	52004	1
+2		BIOMEDIKAL INSTRUMENTS S.A. DE C.V.	atn.clientes@biomedikal.com.mx	BIN060602M27	A00003394	55 5638-0222	Las Flores 313 Salon Gris Col. Las Aguilas Pilares, Del. Alvaro Obregon 	9	Álvaro Obregón	1710	1
+3		BTL LABORATORIOS DE TECNOLOGIA S.A. DE C.V. 	DSORCIA@BTLMED.COM.MX	BTL100714JDA	102360	55 5135 2080	Casas Grandes 82, Col. Nalvarte	9	Benito Juárez	3020	1
+4		CAMPAS EQUIPOS, S.A. DE C.V.	campasequipos@gmail.com	CEQ160218IA3	15114	0155-556-33-35	Avenida Guaymas No. 116  Colonia Jardines de la Casa Nueva 	15	Ecatepec de Morelos	55430	1
+5		CATALINA SANCHEZ PARADA	anaya400@hotmail.com	SAPC810429SB4	11621	01 951 51 289 75	Rotonda Enrique C Rebsamen No.102 Colonia del Maestro 	20	Santiago Chazumba	68010	1
+6		COMERCIALIZADORA ITAMAGUI S.A. DE C.V.	itamagui_sa_cv@hotmail.com	CIT0501268X3	0	01 951 516 50 28 	Mitla 101, San Jose de la Noria 	20	Oaxaca de Juárez	68120	1
+7		COMERLAT S.A. DE C.V.	ventas.gobierno@co-merlat.com	COM990629V1A	116772	0155- 5575-8175	Calle Magdalena No. 320 Colonia del Valle 	9	Benito Juarez	3100	1
+8		COMPAÑÍA INTERNACIONAL DE DISTRIBUCIONES S.A. DE C.V.	coindissa@yahoo.com	IDI980512-BV4	28035	15585906525	Cefeo No.25 Planta Alta, Col. Prado Churubusco Del. Coyoacan	9	Coyoacán	4230	1
+9		DECEGA CORPORATION, SA. DE C.V.	decegaservicios@gmail.com	DCO0904038E9	11928	15555933585	Heroes de la Padernia, Del. Magdalena Contreras	9	La Magdalena Contreras	10700	1
+10		DEWIMED, S.A. DE C.V.	consursos@dewimed.com.mx	DEW780426CF3	35563	55 56 06 07 77	Col. Isidro Fabela, Del. Tlalpan	9	Tlalpan	14030	1
+11		EQUIPOS INTERFERENCIALES DE MEXICO S.A. DE C.V.	Serviciotecnico@interferenciales.com.mx	EIM8706121T2	7132	15556895988	Cerro de Guadalupe No. 28 Col. Campestre Churubusco	9	Coyoacán	4200	1
+12		ESPECIALISTAS EN ESTERILIZACION Y ENVASE S.A. DE C.V.	puebla@grupoeee.com	EEE830909BM4	35229	01 52-55 3636-5001	Guillermo Barbosa 11A Industria las Armas	15	Tlanepantla de la paz	54080	1
+13		FHELMEX, S.A. DE C.V.	fehimex@fehimex.com	FEH781106F99	35798	18002883345	AV. Industria 244 Col. Moctezuma 2 Seccion	9	Venustiano Carranza	15530	1
+14		FISIOLAB, S.A. DE C.V. 	Ibaez@fisiolab.mx	FIS110315EYA	130937	5555344046	Tejocotes 202-101 Del Valle	9	Benito Juárez	3100	1
+15		FLEURETTY DE MEXICO, S.A. DE C.V. 	epolanco@fleuretty.com.mx	FME070731EJ3	110872	01552622-29-86	Calle Moreras No.105, Col. Villa de las Torres 2DA. Seccion	15	Coacalco de Berriozábal	55710	1
+16		GE SISTEMAS MEDICOS DE MEXICO S.A. DE C.V.	Karen.fuentes@ge.com	GSM920409JL6	35981	91770300	Antonio Dovali Jaime No. 70 Torre 8 Piso 4 Col. Santa Fe Deleg. Alvaro Obregon	9	Álvaro Obregón	1210	1
+17		GENERA NEGOCIOS, S.A. DE C.V. 	raul.cuellar@generanegocios.com.mx	GEN081219LU5	106554	56985821	Manuel Acuña 81-A Local 1, Barrio de San Pedro. Deleg. Iztacalco 	9	Iztacalco	8220	1
+18		GRUPO ORINLA S.A DE C.V	info@orinla.com.mx	GOR070404QU7	96337	55 5687 9816	Goya No. 22 Col. Insurgentes Mixcoac	9	Benito Juarez	3920	1
+19		HEALT GROUP INDUSTRIAS DE MEXICO, S.A. DE C.V.	licitaciones@ortiz.biz	HGI9711269IA	30047	01 33 3777 4000 	AV. Vallarta No. 6245 Ciudad Granja	14	Zapopan	45010	1
+20		INSTRUMENTOS Y EQUIPOS AUTOMATIZADOS S.A. DE C.V.	info@instrumentosyaccesorios.com	IAA980126MD4	33005	6444130016	Calle: 1 No. Exterior: 314 Colonia: Deportiva Pensiin Miguel Hidalgo	9	Miguel Hidalgo	11470	1
+21		LAB-TECH INSTRUMENTACIÓN S.A. DE C.V.	ventas@labtech.com.mx	LTI960220FP5	13842	3336194040	Comercio Exterior No.1080 La Aurora	14	Guadalajara	44460	1
+22		MAINEQ DE MEXICO S.A. DE C.V.	ventas@maineq.com.mx	MME070126FLA	12381	15555793692	Playa Langosta No. 33 Col. Reforma Iztaccihuatl Norte	9	Iztacalco	8810	1
+23		MANTENIMIENTO PREVENTIVO Y CORRECTIVO, S.A. DE C.V.	ggr@manprec.com	MPC 910220EX3	104924	53127730	Enrique Jacob No. 7 Col. San Andres Atoto Naucalpan de Juarez	15	Naucalpan de Juárez	53500	1
+24		MAQUINAS DE DIBUJO S.A. DE C.V.	ventas@microscopios.net	MDI-770309-RG7	B135016610	10871087	Camino Real Sna Lorenzo No.263 Interior 2, Colonia Barrio de San Miguel 	9	Iztapalapa	9360	1
+25		MARTHA ANDREA BARRERA MCDONALD	proveedoraviva@hotmail.com	BAMM880608B22	131308	442 2 94 61 23	Heriberto D. Amador No.97 Col. Doctores	28	Reynosa	88690	1
+26		MED RENT S.A. DE C.V.	framirez@med-rent.com	MRE911025QI5	16388	5567286058	Santa Margarita  No.117 Insurgentes San Borja Del. Benito Juarez	9	Benito Juárez	3100	1
+27		PROMOTORA COMERCIAL TORRES BATIZ S.A. DE C.V.		PCT8910262E8	18073		5A. Poniente Norte 342 Centro	7	Tuxtla Gutiérrez	29000	1
+28		QUANTUM MEDICAL GROUP S.A. DE C.V.	ventas@qmg.com.mx	QMG61108N30	92552	55 5875 5754	San Pablo 24 San Pablo de las Salinas, Tultitlan	15	Tultitlán	54930	1
+29		RADIOLOGIA Y ELECTRONICA DE MEXICO S.A. DE C.V. 	Ventas@remsamexico.com	REM88110176J7	28400	5555139959	Calz de Tlalpan 4892, Col. Tlalpan 	9	Tlalpan	14000	1
+30		REPRESENTACIONES Y DISTRIBUCIONES DEL RELLO S.A. DE C.V. 	ventas@rdr.com.mx	RDR-870923-E77	32153	56871717	Magdalena No. 111 Col. Del Valle Del. Benito Juarez	9	Benito Juárez	3100	1
+31		SERVICIO DE INTEGRACION BIOMEDICA DE MEXICO S.A. DE C.V.	licitaciones@sibimsa.com.mx	SIB060516LH1	102360	5335 1890	Tejocotes 202 Piso 1 Col. Del Valle, Benito Jurez	9	Benito Juárez	3100	1
+32		SERVICIOS BIOMEDICOS BAZAFI S.A. DE C.V.	victor.ramirez@bazafi.com.mx	SBB080710QN0	12072		Calle Anaxagoras numero interior 741 exterior 303 Colonia Narvarte Poniente	9	Benito Juárez	3020	1
+33		SERVICIOS DE INGENIERIA EN MEDICINA S.A. DE C.V.	jossue.lopez@gruposim.com	SIM881017I91	35849	01 222 234-9630	Calzada de Tlalpan 479 Alamos 	9	Benito Juárez	3400	1

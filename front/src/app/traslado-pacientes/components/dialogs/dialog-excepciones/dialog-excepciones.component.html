@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Autorizaciones especiales</h1>
+<div *ngIf="eliminar">
+  <button mat-icon-button color="warn" (click)="eliminarExcepciones()">
+    <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+    Excepcion
+  </button>
+</div>
+<div mat-dialog-content>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+    <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de autorizacion</mat-label>
+        <mat-select (selectionChange)="motivoSeleccionado($event.value)">
+          <mat-option *ngFor="let item of excep" [value]="item.value">
+            {{item.motivo}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <!-- recoleccion de medicamentos -->
+    <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100" *ngIf="medicamentos" class="m-t-10 m-b-10">
+      <mat-label>¿Quien viajara?</mat-label>
+      <div>
+        <mat-radio-group aria-label="Quien viajara" [formControl]="controlMedicamentos">
+          <mat-radio-button value="1" [disabled]="mayorEdad">Solo el paciente</mat-radio-button>
+          <mat-radio-button value="2">Solo el acompañante</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <!-- Acompañante extra -->
+    <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100" *ngIf="acompaniante" class="m-t-10 m-b-10">
+      <form [formGroup]="formAcompaniante">
+        <mat-form-field appearance="outline">
+          <textarea matInput placeholder="Justificacion" style="height: 100px" formControlName="justificacion"></textarea>
+        </mat-form-field>
+      </form>
+    </div>
+    <!-- Medio boleto -->
+    <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100" *ngIf="medioBoleto">
+      <mat-form-field appearance="outline">
+        <textarea matInput placeholder="Justificacion" style="height: 100px" [formControl]="controlBoleto"></textarea>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center" align="end" class="m-0 p-0">
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-stroked-button color="warn" (click)="onNoClick()">Cerrar</button>
+  </div>
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-flat-button color="primary" [disabled]="habilitarBoton()" (click)="guardar()">Guardar</button>
+  </div>
+</div>

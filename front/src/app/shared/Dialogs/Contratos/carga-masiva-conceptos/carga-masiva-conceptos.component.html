@@ -1,0 +1,127 @@
+<h1 mat-dialog-title align="center" style="color: #003366;">Carga masiva de conceptos o servicios de contratos</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="tipo_contrato">
+          <mat-label>Seleciona el tipo de contrato</mat-label>
+          <mat-select required (selectionChange)="tipoSeleccionado($event.value)">
+            <mat-option *ngFor="let tipo of tipo_contrato" [value]="tipo">
+              {{tipo.tipo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="lista_sub_tipos.length>0">
+          <mat-label>Selecciona</mat-label>
+          <mat-select required (selectionChange)="subTipoSeleccionado($event.value)">
+            <mat-option *ngFor="let sub of lista_sub_tipos" [value]="sub" style="font-size: 13px">
+              {{sub.SubTipo}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-card-title>
+      <button mat-raised-button color="primary" (click)="descargar()" [disabled]="!tipo_seleccionado && !sub_tipo_seleccionado">
+        <mat-icon>cloud_download</mat-icon>
+        Descaragar Plantilla
+      </button>
+    </mat-card-title>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <ngx-dropzone accept=".xlsx" (change)="onSelect($event)" [multiple]="false" [disableClick]="files.length>0"
+                        matTooltip="Solo puedes seleccionar un archivo"
+                        matTooltipPosition="above"
+                        matTooltipClass="example-tooltip-red">
+            <ngx-dropzone-label>Haga clic o arrastra tu archivo aqui!!</ngx-dropzone-label>
+            <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove($event)">
+              <ngx-dropzone-label>{{ f.name }} ({{ f.size / 1024 / 1024 | number:'.2' }} MB)</ngx-dropzone-label>
+            </ngx-dropzone-preview>
+          </ngx-dropzone>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+          <p>Archivo para subir: {{ files?.length }}</p>
+          <table class="table">
+            <thead>
+            <tr>
+              <th width="30%">Nombre</th>
+              <th>Tamaño</th>
+              <th width="50%">Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of files">
+              <td>
+                <strong>{{ item?.name }}</strong>
+              </td>
+              {{ item?.size / 1024 / 1024 | number:'.2' }} MB
+              <td>
+                <button mat-raised-button color="primary" (click)="ValidarArchivo()" [ngStyle]="{'background':color}">
+                  <span class="fa fa-upload"></span> Validar
+                </button>
+                <button mat-raised-button color="warn" (click)="onRemove($event)" class="m-l-10">
+                  <span class="fa fa-trash"></span> Eliminar
+                </button>
+                <button mat-raised-button color="primary" class="m-l-10" [disabled]="!validado"
+                        (click)="AgregarConceptos()">
+                  <span class="fa fa-save"></span> Guardar Registros
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="Errores && files.length>0">
+          <h4 style="color: #003366">Resultado de validacion: </h4>
+          <div class="responsive-table mat-elevation-z8">
+            <mat-table [dataSource]="dataSource" matSort>
+              <!-- Progress Column -->
+              <ng-container matColumnDef="NumContrato">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Numero de contrato</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  {{row.NumContrato}}
+                </mat-cell>
+              </ng-container>
+              <!-- Progress Column -->
+              <ng-container matColumnDef="Error">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Error</mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.Error}}</mat-cell>
+              </ng-container>
+
+              <!-- Color Column -->
+              <ng-container matColumnDef="Linea">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Columna</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Columna}}</mat-cell>
+              </ng-container>
+              <!-- Color Column -->
+              <ng-container matColumnDef="Fila">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fila</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.Fila}}</mat-cell>
+              </ng-container>
+              <!-- Color Column -->
+              <ng-container matColumnDef="Tipo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Accion</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <button mat-raised-button color="primary"
+                          (click)="AbrirAccion(row)">{{MensajeBoton(row.Tipo)}}</button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;">
+              </mat-row>
+            </mat-table>
+          </div>
+        </div>
+        <h2 *ngIf="validado && files.length>0">Archivo sin errores de validacion</h2>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>
+

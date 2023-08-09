@@ -1,0 +1,22 @@
+<div mat-dialog-content fxLayout="row wrap">
+  <!-- Card column -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title style="color: #c90025">Unidad Médica Actual</mat-card-title>
+      <mat-card-subtitle>{{unidadActual}}</mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content>
+      <mat-slide-toggle [disabled]="visible" (change)="desactivarSelect()">Cambiar Unidad Médica</mat-slide-toggle>
+      <mat-form-field>
+        <mat-label>Unidad Médica</mat-label>
+        <mat-select [(value)]="selected" [disabled]="visibleSelec" (selectionChange)="selectUnidades($event.value)">
+          <mat-option *ngFor="let unidad of unidades" [value]="unidad.Id">
+            {{unidad.DenominacionUni}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+</div>

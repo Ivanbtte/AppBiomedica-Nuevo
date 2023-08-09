@@ -1,0 +1,36 @@
+<mat-card class="oh text-center little-profile">
+  <img mat-card-image src="assets/images/background/fondoAlasCuenta2.jpeg" alt="Photo of a Shiba Inu" height="150">
+  <mat-card-content style="background-color: #f1f8ff">
+    <div *ngIf="data.user.Usuario.Persona.Genero === 'F'" class="pro-img">
+      <img src="assets/images/users/woman.png" width="100" alt="user">
+    </div>
+    <div *ngIf="data.user.Usuario.Persona.Genero === 'M'" class="pro-img">
+      <img src="assets/images/users/man.png" width="100" alt="user">
+    </div>
+    <div *ngIf="data.user.Usuario.Persona.Genero === 'O'" class="pro-img">
+      <img src="assets/images/users/otro.png" width="100" alt="user">
+    </div>
+    <h1
+      class="m-b-0">{{data.user.Usuario.Persona.Nombre}} {{data.user.Usuario.Persona.ApellidoPat}} {{data.user.Usuario.Persona.ApellidoMat}}</h1>
+    <h4 class="m-b-0"><strong>Correo: </strong>{{data.user.Usuario.Persona.Correo}}</h4>
+    <h4><strong>Matricula: </strong>{{data.user.Usuario.Persona.Matricula}}</h4>
+    <h1 class="m-b-0">{{data.user.PuestoOrganigrama.catalogoPuesto.Puesto}}</h1>
+    <h3 class="m-b-0">{{returnDepartment().department}}</h3>
+    <h4><strong>Fecha de registro: </strong>{{formatExpeditionDate(data.user.FechaRegistro)}}</h4>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" class="centerText">
+        <h4 class="m-b-0" *ngIf="returnDepartment().unidad"><strong>Unidad: </strong>{{returnDepartment().unidad}}</h4>
+        <h4 class="m-b-0"><strong>Delegacion: </strong>{{returnDepartment().delegation}}</h4>
+      </div>
+      <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" class="centerText">
+        <h4 class="m-b-0"><strong>Telefono: </strong>{{data.user.Usuario.Persona.Telefono}}</h4>
+        <h4 class="m-b-0" *ngIf="data.user.Usuario.Persona.Celular"><strong>Celular: </strong>{{data.user.Usuario.Persona.Celular}}</h4>
+      </div>
+    </div>
+
+  </mat-card-content>
+</mat-card>
+<div mat-dialog-actions class="endAlign">
+  <button mat-raised-button color="warn" (click)="onNoClick()">Cerrar</button>
+</div>

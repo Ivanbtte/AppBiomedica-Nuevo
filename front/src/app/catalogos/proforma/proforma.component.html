@@ -1,0 +1,78 @@
+<mat-card>
+  <mat-card-content>
+    <div class="bg-light p-10 p-r-20 p-l-20">
+      <div fxLayout="row wrap">
+        <div fxFlex="55" fxFlexAlign="center" *ngIf="options.length>0">
+          <form class="example-form">
+            <mat-form-field>
+              <mat-label>Filtrar por servicio proforma</mat-label>
+              <input type="text"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="buscarPorGrupo()">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option.Descripcion}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Proforma</mat-card-title>
+        <div class="bg-light p-10 p-r-20 p-l-20">
+          <mat-form-field>
+            <input matInput [formControl]="control_nombre" (keyup.enter)="buscarPorNombre()" placeholder="Buscar"
+                   autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div [hidden]="cargando">
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource" matSort>
+
+            <!-- Column -->
+            <ng-container matColumnDef="IdArticulo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Id Articulo</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.PreiIdArticulo}}</mat-cell>
+            </ng-container>
+
+            <!-- Column -->
+            <ng-container matColumnDef="ClaveCuadroBasico">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Clave Cuadro Basico</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.ClaveCB}}</mat-cell>
+            </ng-container>
+
+            <!-- Column -->
+            <ng-container matColumnDef="Descripcion">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>
+            </ng-container>
+            <!-- Column -->
+            <ng-container matColumnDef="Vista">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Vista</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="openDialog(row.PreiIdArticulo)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

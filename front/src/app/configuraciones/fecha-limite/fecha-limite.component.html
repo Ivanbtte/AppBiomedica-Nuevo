@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-title class="p-20">Establecer fechas de recepcion de solicitudes</mat-card-title>
+  <mat-card-content>
+    <mat-label class="text-inverse p-20">Seleccionar la fecha inicial y fecha límite para recepcion de solicitudes
+    </mat-label>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+      <div fxFlex="45" *ngIf="fechaEstado">
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha de inicio</mat-label>
+          <input matInput [value]="fechaInico" [readonly]="true">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona una fecha</mat-label>
+<!--          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Seleccionar fecha"-->
+<!--                 (dateChange)="valorFecha($event)" readonly [disabled]="estadoDataPick">-->
+          <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Seleccionar fecha"
+                         readonly [disabled]="estadoDataPick">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="45" *ngIf="fechaEstado">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fecha límite</mat-label>
+                    <input matInput [value]="fechaLimite" [readonly]="true">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona una fecha</mat-label>
+<!--                    <input matInput [min]="minDate2" [max]="maxDate2" [matDatepicker]="picker2" placeholder="Seleccionar fecha"-->
+<!--                           (dateChange)="valorFechaLimite($event)" readonly [disabled]="estadoDataPick">-->
+                    <input matInput [min]="minDate2" [max]="maxDate2" [matDatepicker]="picker2" placeholder="Seleccionar fecha"
+                            readonly [disabled]="estadoDataPick">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #picker2 color="primary"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <button mat-flat-button color="primary" (click)="hacerVisibleFormulario()" *ngIf="botonAgregar">
+                  Agregar Fechas
+                  <mat-icon aria-label="Example icon-button with a heart icon">date_range</mat-icon>
+                </button>
+                <button mat-flat-button color="primary" *ngIf="botonEditar" (click)="editarFechas()">
+                  Editar Fechas
+                  <mat-icon aria-label="Example icon-button with a heart icon">update</mat-icon>
+                </button>
+                <button mat-flat-button color="primary" *ngIf="botonGuardar" (click)="guardarFechas()">
+                  Guardar Cambios
+                  <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                </button>
+                <button mat-flat-button color="primary" *ngIf="botonActualizar" (click)="actualizarFechas()">
+                  Actualizar
+                  <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>

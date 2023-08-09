@@ -1,0 +1,66 @@
+<mat-card>
+  <mat-card-title class="p-10 p-r-20 p-l-20">Mis Solicitudes</mat-card-title>
+  <mat-card-subtitle class="p-10 p-r-20 p-l-20">Editar Solicitudes</mat-card-subtitle>
+  <mat-card-content style="width: 100%; height: auto">
+    <div class="main-principal">
+      <mat-list>
+        <mat-list-item *ngFor="let item of solicitudes" style="height: 300px; margin-bottom: 15px">
+          <div class="div-principal p-10 p-r-20 p-l-20">
+            <div class="div-cabecera p-10 p-r-20 p-l-20">
+              <div class="div-cabecera-izquierdo">
+                <div class="div-fecha">
+                  <div class="m10">Solicitud Realizada</div>
+                  <div class="font-bold">{{item.FechaCreacion}}</div>
+                </div>
+                <div class="div-total">
+                  <div class="m10">Total</div>
+                  <div class="font-bold">{{item.Total | currency}}</div>
+                </div>
+                <div class="div-enviar-a">
+                  <div class="m10">Estatus</div>
+                  <div class="font-bold">{{item.Estatus.Status}}</div>
+                </div>
+              </div>
+              <div class="div-cabecera-derecha">
+                <div class="div-pedido">
+                  <div class="m10">Folio de solicitud</div>
+                  <div class="font-bold">{{item.Id.substring((item.Id.length - 6), (item.Id.length))}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="div-informacion p-10 p-r-20 p-l-20">
+              <div class="div-inf">
+                <div class="detalles font-bold">
+                  Solicitado por: {{usuarioLog.Nombre}} {{usuarioLog.AppellidoP}}
+                </div>
+                <div class="detalles font-bold">
+                  Tipo de Solicitud: {{item.TipoSolicitud.Tipo}}
+                </div>
+                <div class="detalles font-bold">
+                  Unidad Médica: {{item.UnidadMed.DenominacionUni}}
+                </div>
+              </div>
+              <div class="div-botones ">
+                <div>
+                  <button mat-raised-button class="botones font-bold" color="primary" style="margin-top: 20px"
+                          (click)="darSeguimiento()">Ver seguimiento de solicitud
+                  </button>
+                </div>
+                <div>
+                  <button mat-raised-button class="botones font-bold" color="primary"
+                          [routerLink]="['/solicitudes/editar/folio',item.Id]">{{checarEstado(item)}}
+                  </button>
+                </div>
+                <div>
+                  <button mat-raised-button class="botones font-bold" color="primary" (click)="cancelarsolicitud(item)">
+                    Cancelar solicitud
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </mat-card-content>
+</mat-card>

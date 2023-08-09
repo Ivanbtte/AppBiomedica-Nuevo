@@ -1,0 +1,62 @@
+<mat-card>
+  <mat-card-title class="p-20">Bloquear  usuarios</mat-card-title>
+  <mat-card-subtitle class="p-20">Lista de usuarios </mat-card-subtitle>
+  <mat-card-content>
+    <div class="responsive-table">
+      <mat-table [dataSource]="dataSource" matSort>
+        <!--  Columna Id del usuario -->
+        <ng-container matColumnDef="IdUser">
+          <mat-header-cell fxFlex="10px" *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+          <mat-cell fxFlex="10px" *matCellDef="let row"> {{row.Id}}</mat-cell>
+        </ng-container>
+        <!--  Columna Nombre del usuario -->
+        <ng-container matColumnDef="Nombre">
+          <mat-header-cell fxFlex="10px" *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+          <mat-cell fxFlex="10px" *matCellDef="let row"> {{row.Persona.Nombre}}</mat-cell>
+        </ng-container>
+        <!-- columna apellido del usuario -->
+        <ng-container matColumnDef="Apellidos">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Apellidos</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Persona.ApellidoPat}} {{row.Persona.ApellidoMat}}</mat-cell>
+
+        </ng-container>
+        <!-- Columna del correo del usuario -->
+        <ng-container matColumnDef="Correo">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Correo</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Persona.Correo}}</mat-cell>
+        </ng-container>
+
+        <!-- Columna de la matricula del usuario -->
+        <ng-container matColumnDef="Matricula">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Matricula</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Persona.Matricula}}</mat-cell>
+        </ng-container>
+        <!-- Columna de la unidad del usuario -->
+        <!--        <ng-container matColumnDef="Unidad">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Unidad</mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{row.TipoSolicitud.Tipo}}</mat-cell>
+                </ng-container>-->
+        <!-- Columna del detalle del usuario -->
+        <ng-container matColumnDef="Detalle">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Revisar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="openDialogClave(row.Persona.Id)" color="primary">
+              <mat-icon>remove_red_eye</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <!-- Columna del Validar del usuario -->
+        <ng-container matColumnDef="Validar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Bloquear</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" color="warn" (click)="bloquearUsuario(row.Id)">
+              <mat-icon>block</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

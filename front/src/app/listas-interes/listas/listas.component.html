@@ -1,0 +1,175 @@
+<mat-card>
+  <h1 class="centerText font-bold">SITIOS DE INTERES</h1>
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+      <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void(0)" (click)="toggleMedicos()">
+          <mat-card class="backMedicos text-white text-center">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-10">
+              <div fxFlex.gt-sm="6" fxFlex.gt-xs="6" fxFlex="6">
+                <div style="text-align: left!important; justify-content: flex-start!important;">
+                  <img src="assets/images/imss-2.png" alt="user">
+                </div>
+              </div>
+              <div fxFlex.gt-sm="94" fxFlex.gt-xs="94" fxFlex="94">
+                <h2 class="m-0">Medicos</h2>
+              </div>
+            </div>
+          </mat-card>
+        </a>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center" *ngIf="medicos">
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://infosalud.imss.gob.mx" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-info">insert_chart_outlined</mat-icon>
+                <h3 class="m-0">InfoSalud</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://intranet/normatividad/Paginas/index.aspx" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-danger">menu_book</mat-icon>
+                <h3 class="m-0">Normatividad</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://emisor.imss.gob.mx" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-purple">videocam</mat-icon>
+                <h3 class="m-0">Emisor</h3>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void(0)" (click)="toggleAbastecimiento()">
+          <mat-card class="backAbasto text-white text-center">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-10">
+              <div fxFlex.gt-sm="6" fxFlex.gt-xs="6" fxFlex="6">
+                <div style="text-align: left!important; justify-content: flex-start!important;">
+                  <img src="assets/images/imss-2.png" alt="user">
+                </div>
+              </div>
+              <div fxFlex.gt-sm="94" fxFlex.gt-xs="94" fxFlex="94">
+                <h2 class="m-0">Abastecimiento</h2>
+              </div>
+            </div>
+          </mat-card>
+        </a>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center" *ngIf="abasto">
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="https://portalcca.imss.gob.mx" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-info">receipt_long</mat-icon>
+                <h3 class="m-0">Control del Abasto</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="32" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://www.diputados.gob.mx/LeyesBiblio/pdf/14_200521.pdf" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-danger">gavel</mat-icon>
+                <h3 class="m-0">Ley Adquisiciones</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="32" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://www.diputados.gob.mx/LeyesBiblio/regley/Reg_LAASSP_140621.pdf" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-purple">rule</mat-icon>
+                <h3 class="m-0">Reglamento LAASSP</h3>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void(0)" (click)="toggleFinanzas()">
+          <mat-card class="backFinanzas text-white text-center">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-10">
+              <div fxFlex.gt-sm="6" fxFlex.gt-xs="6" fxFlex="6">
+                <div style="text-align: left!important; justify-content: flex-start!important;">
+                  <img src="assets/images/imss-2.png" alt="user">
+                </div>
+              </div>
+              <div fxFlex.gt-sm="94" fxFlex.gt-xs="94" fxFlex="94">
+                <h2 class="m-0">Finanzas</h2>
+              </div>
+            </div>
+          </mat-card>
+        </a>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center" *ngIf="finanzas">
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://df_ccte.imss.gob.mx/site_ccte/" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-info">price_change</mat-icon>
+                <h3 class="m-0">Portal CCTE</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="32" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://172.24.81.43/anexo2adm" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-danger">price_check</mat-icon>
+                <h3 class="m-0">Normatividad Pago</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="32" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://prei.imss.gob.mx" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-purple">sync</mat-icon>
+                <h3 class="m-0">PREI</h3>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div fxFlex.gt-sm="47" fxFlex.gt-xs="100" fxFlex="100">
+        <a href="javascript:void(0)" (click)="toggleCatalogs()">
+          <mat-card class="backCatalogos text-white text-center">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-10">
+              <div fxFlex.gt-sm="6" fxFlex.gt-xs="6" fxFlex="6">
+                <div style="text-align: left!important; justify-content: flex-start!important;">
+                  <img src="assets/images/imss-2.png" alt="user">
+                </div>
+              </div>
+              <div fxFlex.gt-sm="94" fxFlex.gt-xs="94" fxFlex="94">
+                <h2 class="m-0">Catalogos</h2>
+              </div>
+            </div>
+          </mat-card>
+        </a>
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center" *ngIf="catalogs">
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://prei.imss.gob.mx/manualusr/PREI/ce02_b.htm" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-info">savings</mat-icon>
+                <h3 class="m-0">Finanzas</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="32" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://www.imss.gob.mx/profesionales-salud/cuadros-basicos" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-danger">medication_liquid</mat-icon>
+                <h3 class="m-0">Cuadros Basicos</h3>
+              </mat-card>
+            </a>
+          </div>
+          <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100">
+            <a href="http://www.imss.gob.mx/guias_practicaclinica?field_categoria_gs_value=All" target="_blank">
+              <mat-card class="centerText mat-card-format">
+                <mat-icon class="text-purple">medical_services</mat-icon>
+                <h3 class="m-0">Guias practica clinica</h3>
+              </mat-card>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,87 @@
+<div class="login-register" style="background-image:url(assets/images/background/fondoAlas.jpeg);">
+  <div class="login-register-box" style="width: 35%">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="formForgot" *ngIf="!confirm">
+          <div class="text-center">
+            <img alt="homepage" src="../../../assets/images/g924.png">
+            <h2 class="m-t-0">Recuperar contraseña</h2>
+          </div>
+          <p class="text-center font-14">Ingrese sus datos</p>
+
+          <div fxLayout="column" fxLayoutAlign="space-around">
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field appearance="legacy">
+                <input matInput placeholder="Correo electronico" type="email" formControlName="email">
+              </mat-form-field>
+              <small *ngIf="formForgot.controls['email'].hasError('required') && formForgot.controls['email'].touched"
+                     class="text-danger support-text">Correo requerido
+              </small>
+              <small *ngIf="formForgot.controls['email'].errors?.email && formForgot.controls['email'].touched"
+                     class="text-danger support-text">Por favor ingresa un Correo valido
+              </small>
+            </div>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field appearance="legacy">
+                <mat-label>Fecha de nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="Dia/Mes/Año" autocomplete="off"
+                       formControlName="fecha" (dateChange)="selectedDate($event)"
+                       [min]="minDate" [max]="maxDate" disabled>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker touchUi disabled="false" startView="multi-year"
+                ></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <button mat-raised-button color="primary" type="button" (click)="onSubmit()"
+                      class="btn-block btn-lg m-t-20"
+                      [disabled]="!formForgot.valid">Enviar
+              </button>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="formPassword" *ngIf="confirm" autocomplete="of">
+          <div class="text-center">
+            <img alt="homepage" src="../../../assets/images/g924.png">
+            <h2 class="m-t-0">Nueva contraseña</h2>
+          </div>
+          <p class="text-center font-14">Ingresa tu nueva contraseña</p>
+          <div fxLayout="column" fxLayoutAlign="space-around">
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field>
+                <input matInput placeholder="Contraseña" [type]="hide ? 'password' : 'text'"
+                       formControlName="password" autocomplete="off" readonly
+                       onfocus="this.removeAttribute('readonly');">
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <small
+                *ngIf="formPassword.controls['password'].hasError('required') && formPassword.controls['password'].touched"
+                class="text-danger support-text">Contraseña requerida.
+              </small>
+            </div>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field>
+                <input matInput placeholder="Confirmar Contraseña" [type]="hide2 ? 'password' : 'text'"
+                       formControlName="confirmPassword" autocomplete="off">
+                <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </mat-form-field>
+              <small
+                *ngIf="formPassword.controls['confirmPassword'].hasError('required') && formPassword.controls['confirmPassword'].touched"
+                class="text-danger support-text">Contraseña requerida.
+              </small>
+              <small *ngIf="formPassword.controls['confirmPassword'].errors?.equalTo"
+                     class="text-danger support-text">Las
+                contraseñas no coinciden
+              </small>
+            </div>
+            <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+              <button mat-raised-button color="primary" class="btn-block btn-lg m-t-20"
+                      [disabled]="!formPassword.valid" (click)="resetPassword()">Actualizar contraseña
+              </button>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

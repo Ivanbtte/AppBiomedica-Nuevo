@@ -1,0 +1,348 @@
+<div class="login-register" style="background-image:url(../../../assets/images/background/fondoAlas.jpeg);"
+     fxLayout="row wrap" fxLayoutAlign="center center">
+  <div fxFlex.gt-sm="65" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-horizontal-stepper [linear]="isLinear" labelPosition="bottom">
+          <mat-step [stepControl]="secondFormGroup">
+            <form [formGroup]="secondFormGroup">
+              <ng-template matStepLabel>Datos Imss</ng-template>
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayout.xs="column">
+                <!-- Tipo de usuario -->
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="35" fxFlex="35">
+                  <h4 class="m-0">Tipo de Usuario</h4>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex.gt-xs="50" fxFlex="50">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select (selectionChange)="selectedUserType($event.value)"
+                                formControlName="tipo_usuario" required>
+                      <mat-option *ngFor="let tipo of usuario_tipo" [value]="tipo.Id">
+                        {{tipo.Tipo}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <!--  Delegaciones -->
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100" *ngIf="delegaciones.length">
+                  <h4 class="m-0">{{textTypeDelegations}}</h4>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" *ngIf="delegaciones.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select formControlName="delegaciones" required
+                                (selectionChange)="selectedDelegation($event.value)">
+                      <mat-option *ngFor="let dele of delegaciones" [value]="dele">
+                        {{dele.NombreDele}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <!-- unidad medica -->
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100" *ngIf="UM.length">
+                  <h4 class="m-0">Unidad Médica</h4>
+                </div>
+                <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100" *ngIf="UM.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select formControlName="unidad_med" required>
+                      <mat-option *ngFor="let unidad of UM" [value]="unidad">
+                        {{unidad.DenominacionUni}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-flat-button color="warn" (click)="exit()">
+                    <mat-icon>cancel</mat-icon>
+                    Salir
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+                  <button mat-flat-button color="primary" matStepperNext type="button"
+                          [disabled]="secondFormGroup.invalid">Siguiente
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="thirdFormGroup">
+            <ng-template matStepLabel>Datos Puesto</ng-template>
+            <form [formGroup]="thirdFormGroup">
+              <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+                <div fxFlex.gt-sm="27" fxFlex.gt-xs="100" fxFlex="100" *ngIf="secondFormGroup.valid">
+                  <mat-label>Adscripción</mat-label>
+                </div>
+                <div fxFlex.gt-sm="48" fxFlex.gt-xs="100" fxFlex="100"
+                     *ngIf="thirdFormGroup.get('departamentos').value">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Departamento</mat-label>
+                    <input matInput formControlName="departamentos" readonly>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" *ngIf="secondFormGroup.valid">
+                  <button mat-raised-button color="accent" (click)="openDialogDepartment()" type="button"
+                          [disabled]="secondFormGroup.invalid"
+                          *ngIf="!thirdFormGroup.get('departamentos').value">Selecccionar
+                    <mat-icon>apartment</mat-icon>
+                  </button>
+                  <button mat-raised-button color="accent" (click)="openDialogDepartment()" type="button"
+                          [disabled]="secondFormGroup.invalid"
+                          *ngIf="thirdFormGroup.get('departamentos').value">Editar
+                    <mat-icon>apartment</mat-icon>
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100"
+                     *ngIf="thirdFormGroup.get('departamentos').value">
+                  <mat-label>Area</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100"
+                     *ngIf="thirdFormGroup.get('departamentos').value">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select required formControlName="area">
+                      <mat-option *ngFor="let area of areas" [value]="area.id">
+                        {{area.nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positions.length">
+                  <mat-label>Puesto</mat-label>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100" *ngIf="positions.length">
+                  <mat-form-field>
+                    <mat-label>Selecciona</mat-label>
+                    <mat-select required formControlName="puesto">
+                      <mat-option *ngFor="let positions of positions" [value]="positions">
+                        {{positions.catalogoPuesto.Puesto}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100"
+                     *ngIf="positions.length==0 && thirdFormGroup.get('departamentos').value">
+                  <mat-label>No existen puestos disponibles en este departamento</mat-label>
+                </div>
+                <div fxFlex.gt-sm="60" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-flat-button color="warn" (click)="exit()">
+                    <mat-icon>cancel</mat-icon>
+                    Salir
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="16" fxFlex.gt-xs="100" fxFlex="100" class="endText m-t-20">
+                  <button mat-flat-button color="primary" matStepperNext type="button"
+                          [disabled]="thirdFormGroup.invalid">Siguiente
+                  </button>
+                </div>
+              </div>
+              <br> <small style="color: #661421">*Si no encuentras tu departamento o coordinacion, reportalo con el jefe
+              del departamento o responsable de personal.</small>
+              <br> <small style="color: #661421">*Si no te aparece el puesto que tienes reportalo a tu jefe inmediato ya
+              que puede ser que no esten actualizados los registros.</small>
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+              <ng-template matStepLabel>Datos Personales</ng-template>
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayout.xs="column">
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Matricula</mat-label>
+                    <input matInput maxlength="10" placeholder="Matricula" formControlName="Matricula" required
+                           (blur)="blurEvent()">
+                  </mat-form-field>
+                  <mat-error *ngIf="enrollmentField.touched && enrollmentField.invalid">
+                    {{getErrorMessage()}}
+                  </mat-error>
+                  <div *ngIf="personResponse">
+                    <mat-error *ngIf="personResponse.personStatus">
+                      Esta matrícula ya esta registrada
+                    </mat-error>
+                  </div>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput placeholder="example@imss.gob.mx"
+                           type="email"
+                           formControlName="Correo"
+                           required autocomplete="off">
+                    <mat-hint align="end"
+                              *ngIf="firstFormGroup.controls['Correo'].dirty && firstFormGroup.controls['Correo'].invalid">
+                      <button mat-button color="warn" (click)="cambiarValidaCorreo()" disabled="{{estadoBoton}}">
+                        No tengo Correo imss
+                      </button>
+                    </mat-hint>
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['Correo'].hasError('pattern') && firstFormGroup.controls['Correo'].touched
+                   || firstFormGroup.controls['Correo'].hasError('email')"
+                    class="text-danger support-text"> {{mensajeErrorCorreo}}
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Nombre(s)</mat-label>
+                    <input matInput placeholder="Nombre(s)" formControlName="Nombre" required autocomplete="off"
+                           style="text-transform: capitalize;">
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['Nombre'].hasError('pattern')"
+                         class="text-danger support-text">Nombre no valido
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Apellido Paterno</mat-label>
+                    <input matInput placeholder="Apellido Paterno" formControlName="ApellidoPat" required
+                           autocomplete="off" style="text-transform: capitalize;">
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['ApellidoPat'].hasError('pattern')"
+                         class="text-danger support-text">Apellido no valido
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Apellido Materno</mat-label>
+                    <input matInput placeholder="Apellido Materno" formControlName="ApellidoMat"
+                           autocomplete="off" style="text-transform: capitalize;">
+                  </mat-form-field>
+                  <small *ngIf="firstFormGroup.controls['ApellidoMat'].hasError('pattern')"
+                         class="text-danger support-text">Apellido no valido
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Fecha de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="Dia/Mes/Año" autocomplete="off"
+                           formControlName="FechaNac" (dateChange)="selectedDate($event)" [min]="minDate"
+                           [max]="maxDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker" style="color: #0d6dfb"></mat-datepicker-toggle>
+                    <mat-datepicker #picker touchUi disabled="false" startView="multi-year"></mat-datepicker>
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['FechaNac'].hasError('required') && firstFormGroup.controls['FechaNac'].touched"
+                    class="text-danger support-text">Campo requerido
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Teléfono</mat-label>
+                    <input matInput #input maxlength="10" placeholder="Teléfono" formControlName="Telefono" required
+                           type="tel">
+                    <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['Telefono'].hasError('pattern')"
+                    class="text-danger support-text">Teléfono incorrecto.
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <div class="m-b-5">
+                    <mat-label>Genero</mat-label>
+                  </div>
+                  <mat-radio-group aria-label="Select an option" formControlName="Genero" required>
+                    <mat-radio-button value="M">Masculino</mat-radio-button>
+                    <mat-radio-button value="F">Femenino</mat-radio-button>
+                    <mat-radio-button value="O">Otro</mat-radio-button>
+                  </mat-radio-group>
+                  <br>
+                  <small
+                    *ngIf="firstFormGroup.controls['Genero'].hasError('required') && firstFormGroup.controls['Genero'].touched"
+                    class="text-danger support-text">Campo requerido.
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Extensión</mat-label>
+                    <input type="tel" matInput maxlength="5" placeholder="Extensión" formControlName="Extension">
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['Extension'].hasError('pattern')"
+                    class="text-danger support-text">Extensión incorrecta.
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field appearance="legacy">
+                    <mat-label>Celular</mat-label>
+                    <input type="tel" matInput maxlength="10" placeholder="Celular" formControlName="Celular">
+                  </mat-form-field>
+                  <small
+                    *ngIf="firstFormGroup.controls['Celular'].hasError('pattern')"
+                    class="text-danger support-text">Celular incorrecto.
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" *ngIf="personResponse">
+                  <h4 *ngIf="!this.personResponse.status &&!personResponse.personStatus" style="color: #8e2545">
+                    <strong>Nota: </strong>
+                    Esta matricula ya estaba dada de alta anteriormente, valida o actualiza los datos para reactivar la
+                    cuenta</h4>
+                </div>
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-flat-button color="warn" (click)="exit()">
+                    <mat-icon>cancel</mat-icon>
+                    Salir
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+                  <button matStepperNext mat-flat-button color="primary" type="button"
+                          [disabled]="firstFormGroup.invalid">Siguiente
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <form [formGroup]="fourthFormGroup">
+              <ng-template matStepLabel>Guardar</ng-template>
+              <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayout.xs="column">
+                <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Contraseña" [type]="hide ? 'password' : 'text'"
+                           formControlName="password" autocomplete="off" readonly
+                           onfocus="this.removeAttribute('readonly');">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </mat-form-field>
+                  <small
+                    *ngIf="fourthFormGroup.controls['password'].hasError('required') && fourthFormGroup.controls['password'].touched"
+                    class="text-danger support-text">Contraseña requerida.
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+                  <mat-form-field>
+                    <input matInput placeholder="Confirmar Contraseña" [type]="hide2 ? 'password' : 'text'"
+                           formControlName="confirmPassword" autocomplete="off" readonly
+                           onfocus="this.removeAttribute('readonly');">
+                    <mat-icon matSuffix (click)="hide2 = !hide2">{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </mat-form-field>
+                  <small
+                    *ngIf="fourthFormGroup.controls['confirmPassword'].hasError('required') && fourthFormGroup.controls['confirmPassword'].touched"
+                    class="text-danger support-text">Contraseña requerida.
+                  </small>
+                  <small *ngIf="fourthFormGroup.controls['confirmPassword'].errors?.equalTo"
+                         class="text-danger support-text">Las
+                    contraseñas no coinciden
+                  </small>
+                </div>
+                <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+                  <button mat-flat-button color="warn" (click)="exit()">
+                    <mat-icon>cancel</mat-icon>
+                    Salir
+                  </button>
+                </div>
+                <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="endText">
+                  <button mat-raised-button color="primary"
+                          (click)="addNewUser()"
+                          [disabled]="!fourthFormGroup.valid"
+                  >Registrar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

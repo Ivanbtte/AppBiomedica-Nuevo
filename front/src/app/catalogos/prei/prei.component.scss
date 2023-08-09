@@ -1,0 +1,33 @@
+.mat-header-cell {
+  font-size: 11pt;
+  font-weight: bold;
+}
+
+.mat-table {
+  .mat-column-Clave {
+    flex: 0 0 12%;
+    text-align: left !important;
+  }
+  .mat-column-IdArticulo {
+    flex: 0 0 7%;
+    text-align: left !important;
+  }
+  .mat-column-Descripcion {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  .mat-column-Tipo {
+    flex: 0 0 10%;
+    text-align: center !important;
+  }
+  .mat-column-Precio {
+    flex: 0 0 10%;
+    text-align: center !important;
+    justify-content: center!important;
+
+  }
+  .mat-column-Vista {
+    flex: 0 0 4.5%;
+    justify-content: center !important;
+  }
+}

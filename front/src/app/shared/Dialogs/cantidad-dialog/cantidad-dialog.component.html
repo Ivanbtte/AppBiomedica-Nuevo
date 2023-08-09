@@ -1,0 +1,149 @@
+<h1 mat-dialog-title align="center" *ngIf="!agregar">Editar Cantidad</h1>
+<h1 mat-dialog-title align="center" *ngIf="agregar">Agregar Cantidad</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between">
+      <div fxFlex="95" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="producto" color="primary">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput [value]="producto.Descripcion.substring(0,160)" [readonly]="true"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" color="primary" *ngIf="claveSai">
+          <mat-label>Unidad de presentacion</mat-label>
+          <input matInput [value]="claveSai.UnidadPresentacion.UnidadPresentacion" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" color="primary" *ngIf="claveSai">
+          <mat-label>Cantidad de presentacion</mat-label>
+          <input matInput [value]="claveSai.CantidadPresentacion" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="claveSai" color="primary">
+          <mat-label>Tipo de presentacion</mat-label>
+          <input matInput [value]="claveSai.TipoPresentacion.Presentacion" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!agregar">
+        <mat-form-field appearance="outline" *ngIf="producto" color="primary">
+          <mat-label class="text-danger">Cantidad Anual Anterior</mat-label>
+          <input matInput [value]="producto.CantidadSolicitada" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="producto" color="primary">
+          <mat-label>Precio sin IVA</mat-label>
+          <input matInput [value]="(producto.Precio) | currency" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="producto" color="primary">
+          <mat-label class="text-info">Total sin IVA</mat-label>
+          <input matInput [value]="(producto.Precio  * cantidad) | currency" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline" *ngIf="producto" color="primary">
+          <mat-label class="text-info">C P M Actual</mat-label>
+          <input matInput [value]="(cantidad / 12) | number" [readonly]="true">
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- Div de cantidad y comentario -->
+    <form [formGroup]="form">
+      <mat-card-content>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+          <div fxFlex.gt-sm="21" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+              <mat-label style="color: #16584b">Nueva Cantidad Anual</mat-label>
+              <input matInput placeholder="Ingresar cantidad" [formControl]="form.controls['Cantidad']"
+                     maxlength="6" (change)="inputCantidad()">
+              <mat-hint align="first"
+                        *ngIf="cantidadAnual">{{cantidadAnual | number}} {{claveSai.UnidadPresentacion.UnidadPresentacion}}
+                con {{(cantidadAnual * claveSai.CantidadPresentacion) | number}} {{claveSai.TipoPresentacion.Presentacion}}
+                Anuales
+              </mat-hint>
+            </mat-form-field>
+            <small *ngIf="form.controls['Cantidad'].hasError('required') && form.controls['Cantidad'].touched"
+                   class="text-danger font-14">Cantidad obligatoria
+            </small>
+            <small *ngIf="form.controls['Cantidad'].errors?.pattern && form.controls['Cantidad'].touched"
+                   class="text-danger font-14">
+              Escribe una cantidad correcta
+            </small>
+          </div>
+          <div fxFlex.gt-sm="24" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+              <mat-label style="color: #16584b">Nueva Cantidad Semestral</mat-label>
+              <input matInput [value]="form.controls['CantidadSemestre'].value | number" placeholder="Ingresar cantidad"
+                     [formControl]="form.controls['CantidadSemestre']"
+                     maxlength="6" (change)="inputCantidadSemestre()">
+              <mat-hint align="first"
+                        *ngIf="cantidadSemestral">{{cantidadSemestral | number}} {{claveSai.UnidadPresentacion.UnidadPresentacion}}
+                con {{(cantidadSemestral * claveSai.CantidadPresentacion) | number}} {{claveSai.TipoPresentacion.Presentacion}}
+                Semestrales
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="23" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+              <mat-label style="color: #16584b">Nueva Cantidad Bimestral</mat-label>
+              <input matInput [value]="form.controls['CantidadBimestre'].value | number" placeholder="Ingresar cantidad"
+                     [formControl]="form.controls['CantidadBimestre']"
+                     maxlength="6" (change)="inputCantidadBimestre()">
+              <mat-hint align="first"
+                        *ngIf="cantidadBimestral">{{cantidadBimestral | number}} {{claveSai.UnidadPresentacion.UnidadPresentacion}}
+                con {{(cantidadBimestral * claveSai.CantidadPresentacion) | number}} {{claveSai.TipoPresentacion.Presentacion}}
+                Bimestrales
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="23" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline" color="primary" floatLabel="always">
+              <mat-label style="color: #16584b">Nueva Cantidad Mensual</mat-label>
+              <input matInput [value]="form.controls['CantidadMes'].value | number" placeholder="Ingresar cantidad"
+                     [formControl]="form.controls['CantidadMes']"
+                     maxlength="6" (change)="inputCantidadMes()">
+              <mat-hint align="first"
+                        *ngIf="cantidadMes">{{cantidadMes | number}} {{claveSai.UnidadPresentacion.UnidadPresentacion}}
+                con {{(cantidadMes * claveSai.CantidadPresentacion) | number}} {{claveSai.TipoPresentacion.Presentacion}}
+                Mensuales
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!agregar" class="m-t-15">
+            <mat-form-field appearance="outline">
+              <mat-label>Comentario</mat-label>
+              <input matInput placeholder="Motivo de la actualizacion" [formControl]="form.controls['Comentario']"
+                     maxlength="120">
+            </mat-form-field>
+            <small *ngIf="form.controls['Comentario'].hasError('required') && form.controls['Comentario'].touched"
+                   class="text-danger font-14">Comentario obligatorio
+            </small>
+            <small *ngIf="form.controls['Comentario'].errors?.pattern && form.controls['Comentario'].touched"
+                   class="text-danger font-14">
+              Escribe un comentario valido
+            </small>
+          </div>
+
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>
+
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-between">
+  <button mat-raised-button (click)="actualizarCantidad()" [disabled]="!form.valid" color="primary" *ngIf="editar">
+    Actualizar
+  </button>
+  <button mat-raised-button (click)="aprobarCantidad()" [disabled]="!form.valid" color="primary" *ngIf="aprobar">
+    Aprobar
+  </button>
+  <button mat-raised-button (click)="agregarCantidad()" [disabled]="!form.valid" color="primary" *ngIf="agregar">
+    Agregar
+  </button>
+  <button mat-raised-button (click)="onNoClick()" color="warn">Cancelar</button>
+</div>

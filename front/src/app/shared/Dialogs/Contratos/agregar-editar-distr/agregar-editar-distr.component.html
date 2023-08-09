@@ -1,0 +1,68 @@
+<h1 mat-dialog-title align="center">Distribucion de clave</h1>
+<div mat-dialog-content>
+  <span style="color: #003366">{{data.concepto}}</span>
+  <form [formGroup]="formularioDistribucion" *ngIf="delegacionesArray">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center"
+         class="b-all p-t-20 p-r-20 p-l-20 radius" style="border-color: rgba(162,162,162,0.67)">
+      <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona una delegacion</mat-label>
+          <mat-select required formControlName="Delegacion" (selectionChange)="valorSelecDeleg($event.value)"
+                      [compareWith]="compare">
+            <mat-option *ngFor="let deleg of delegacionesArray" [value]="deleg">
+              {{deleg.ClvDele}}  {{deleg.NombreDele}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Unidad Medica</mat-label>
+          <mat-select required formControlName="UnidadMedClvPresupuestal" [compareWith]="UnidadSeleccionada">
+            <mat-option *ngFor="let unidad of UM" [value]="unidad">
+              {{unidad.DenominacionUni}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Cantidad a distribuir</mat-label>
+          <input matInput type="text"
+                 autocomplete="off" placeholder="Cantidad"
+                 formControlName="Cantidad">
+          <mat-error *ngIf="formularioDistribucion.controls['Cantidad'].hasError('pattern')">
+            Ingresa solo numeros.
+          </mat-error>
+          <mat-error *ngIf="formularioDistribucion.controls['Cantidad'].hasError('max') && !data.editar">
+            La cantidad max es {{por_distribuir}}.
+          </mat-error>
+          <mat-error *ngIf="formularioDistribucion.controls['Cantidad'].hasError('max') && data.editar">
+            La cantidad max es {{por_distribuir + data.distribucion.Cantidad}}.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center" *ngIf="delegacionesArray">
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" align="end">
+    <button mat-stroked-button color="warn" (click)="onNoClick()">
+      Cerrar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="data.editar">
+    <button mat-raised-button color="primary"
+            [disabled]="formularioDistribucion.invalid || !formularioDistribucion.dirty" (click)="EditarDistribucion()">
+      Editar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="!data.editar">
+    <button mat-flat-button color="primary" [disabled]="formularioDistribucion.invalid"
+            (click)="agregardistribucion()">
+      <mat-icon>save</mat-icon>
+      Guardar
+    </button>
+  </div>
+</div>
+

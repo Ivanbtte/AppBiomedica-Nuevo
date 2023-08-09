@@ -1,0 +1,26 @@
+mat-card-header {
+  padding: 0px !important;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+.margenBoton {
+  margin-bottom: 8px !important;
+  margin-right: 8px !important;
+}
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}

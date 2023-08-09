@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Selecciona el tipo de baja</h2>
+<mat-dialog-content class="mat-typography">
+  <form [formGroup]="form">
+    <div fxLayout="row wrap">
+      <!-- col full-->
+      <div fxFlex.gt-sm="95" fxFlex.gt-xs="95" fxFlex="80">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona</mat-label>
+          <mat-select formControlName="tipoModificacion">
+            <mat-option *ngFor="let tipo of tiposModificaciones" [value]="tipo">
+              {{tipo.tipo}}
+            </mat-option>
+          </mat-select>
+          <mat-hint style="color: crimson;">{{form.get("tipoModificacion").value?.descripcion}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="95" fxFlex.gt-xs="95" fxFlex="80" class="m-t-15">
+        <mat-form-field appearance="outline">
+          <mat-label>Escribe la justificación</mat-label>
+          <textarea matInput formControlName="justificacion"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button mat-dialog-close color="warn">Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="onSubmit()">Aceptar</button>
+</mat-dialog-actions>

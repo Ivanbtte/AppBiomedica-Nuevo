@@ -1,0 +1,53 @@
+<mat-card>
+  <div class="centerText">
+    <mat-card-title style="color: #003366; font-weight: bold">Asignación de administradores del modulo de traslados
+    </mat-card-title>
+  </div>
+  <mat-card-content>
+    <div class="responsive-table adminUser" *ngIf="dataSource">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="accion">
+          <mat-header-cell *matHeaderCellDef>Permisos</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary" *ngIf="!element.estado" (click)="openDialogDepartment(element)">
+              <mat-icon>add_moderator</mat-icon>
+              Agregar
+            </button>
+            <button mat-raised-button color="accent" *ngIf="element.estado" style="background-color: dodgerblue;"
+            (click)="openDialogDepartment(element)">
+              <mat-icon>edit</mat-icon>
+              Editar
+            </button>
+          </mat-cell>
+        </ng-container>
+        <!-- Position Column -->
+        <ng-container matColumnDef="unidad">
+          <mat-header-cell *matHeaderCellDef>Unidad</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.unidad}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="departamento">
+          <mat-header-cell *matHeaderCellDef>Departamento</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.departamento}}</mat-cell>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="puesto">
+          <mat-header-cell *matHeaderCellDef>Puesto</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.puesto}}</mat-cell>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.usuario}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

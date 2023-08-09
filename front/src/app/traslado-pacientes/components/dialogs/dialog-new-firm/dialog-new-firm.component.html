@@ -1,0 +1,69 @@
+<form [formGroup]="formFirm">
+  <div mat-dialog-content>
+    <div fxLayout="row wrap">
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card>
+          <mat-card-title align="center" style="color: #003366; font-weight: bold">Agregar nueva firma
+          </mat-card-title>
+          <mat-card-content>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <mat-form-field appearance="outline">
+                  <mat-label>Nombre Completo</mat-label>
+                  <input matInput placeholder="Nombre Completo" required autocomplete="off" formControlName="nombre">
+                  <mat-error
+                    *ngIf="formFirm.controls['nombre'].hasError('pattern') && formFirm.controls['nombre'].touched">
+                    Ingresa solo letras.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <mat-form-field appearance="outline">
+                  <mat-label>Cargo</mat-label>
+                  <input matInput placeholder="Cargo" autocomplete="off" required formControlName="cargo">
+                  <mat-error
+                    *ngIf="formFirm.controls['cargo'].hasError('pattern') && formFirm.controls['cargo'].touched">
+                    Ingresa solo letras.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <mat-form-field appearance="outline">
+                  <mat-label>Matricula</mat-label>
+                  <input matInput placeholder="Matricula" autocomplete="off" required formControlName="matricula">
+                  <mat-error
+                    *ngIf="formFirm.controls['matricula'].hasError('pattern') &&
+                    formFirm.controls['matricula'].touched">
+                    Ingresa solo números.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="types">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo firma</mat-label>
+                  <mat-select required formControlName="tipo">
+                    <mat-option *ngFor="let tipo of types" [value]="tipo">
+                      {{tipo.tipo}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center" align="end"
+       style="padding-right: 24px; padding-left: 24px">
+    <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+      <button mat-stroked-button (click)="onNoClick()" color="warn">Cancelar</button>
+    </div>
+    <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+      <button mat-raised-button color="primary" [disabled]="formFirm.invalid" (click)="saveFirm()">
+        <mat-icon aria-label="Exampl">save</mat-icon>
+        Guardar
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,64 @@
+<h1 mat-dialog-title align="center" style="color: #003366" class="font-bold">Archivos: {{Contrato.NumeroContrato}}</h1>
+<h5 align="center" class="m-t-5" style="color: #003366"> Proveedor: {{Contrato.Proveedor.AliasEmpresa}}</h5>
+<div mat-dialog-content>
+  <div>
+    <!--    <button mat-raised-button
+                class="example-add-tab-button"
+                (click)="addTab()">
+          Add new tab
+        </button>-->
+  </div>
+
+  <mat-tab-group [selectedIndex]="selected.value"
+                 (selectedIndexChange)="selected.setValue($event)" (selectedTabChange)="tabSelecionado($event)">
+    <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab.Nombre">
+      <div class="p-10" fxLayout="row wrap" fxLayoutAlign="space-between center">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <span style="color: #0d453c;" class="font-bold">Archivos:</span>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-icon-button
+                  color="primary" class="p-l-20">
+            <mat-icon aria-label="Example icon-button with a heart icon">create_new_folder</mat-icon>
+            Crear Carpeta
+          </button>
+        </div>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-icon-button
+                  color="primary" class="p-l-20">
+            <mat-icon aria-label="Example icon-button with a heart icon">cloud_upload</mat-icon>
+            Subir Archivo
+          </button>
+        </div>
+        <mat-list-item *ngFor="let archivos of Archivos" class="p-0">
+          {{archivos.Nombre}}
+          <button mat-icon-button (click)="AbrirPDF(archivos)"
+                  color="primary" *ngIf="visualizar(archivos)" class="p-l-20">
+            <mat-icon aria-label="Example icon-button with a heart icon">picture_as_pdf</mat-icon>
+          </button>
+        </mat-list-item>
+      </div>
+      <div class="p-10">
+        <mat-divider></mat-divider>
+        <mat-list-item *ngFor="let carpetas of Carpetas">
+          <button mat-icon-button (click)="consultarArchivossubcarpeta(tab_seleccioando+ '/' +carpetas.Nombre)"
+                  color="primary">
+            <mat-icon aria-label="Example icon-button with a heart icon">folder_open</mat-icon>
+            {{carpetas.Nombre}}
+          </button>
+          <div *ngIf="ArchivosSubcarpeta" style="padding-left: 30px">
+            <span style="color: #0d453c;" class="font-bold">Archivos:</span>
+            <mat-list-item *ngFor="let archivos of ArchivosSubcarpeta">
+              <span *ngIf="archivo_carpeta(archivos, carpetas)">{{archivos.Nombre}}</span>
+            </mat-list-item>
+          </div>
+        </mat-list-item>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button (click)="onNoClick()" cdkFocusInitial color="warn">Cerrar</button>
+</div>
+

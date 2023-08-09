@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Busqueda Avanzada</h1>
+<!-- ============================================================== -->
+<!-- Image Card row-->
+<!-- ============================================================== -->
+<div mat-dialog-content>
+  <!-- Card column -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title style="color: #c90025">Panel de busquedas avanzadas</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <div fxFlex.gt-sm="80" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-label>Selecciona el metodo de filtro</mat-label>
+          <mat-radio-group aria-label="Select an option" class="example-radio-group" (change)="valorRadioButton()"
+                           [formControl]="radioTema">
+            <mat-radio-button class="example-radio-button" value="1">Filtrar por tema</mat-radio-button>
+            <mat-radio-button class="example-radio-button" value="2">Filtrar por nombre de grupo</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" *ngIf="filtroPorTema">
+          <mat-selection-list dense #shoes>
+            <mat-list-option *ngFor="let shoe of filtroTema" [value]="shoe.Tema">
+              {{shoe.Tema.Tema}}
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <mat-divider vertical></mat-divider>
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" *ngIf="filtroGrupo">
+          <mat-form-field>
+            <input type="text" placeholder="Filtrar por nombre de grupo" aria-label="Number" matInput
+                   [formControl]="myControl"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn"
+                              (opened)="borrar()">
+              <mat-option [value]="{Grupo: 0, Tema:{Tema:'Todos'}}">Todos</mat-option>
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option.Tema.Tema}} ({{option.Grupo}})
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()"
+          [disabled]="!radioTema.value">Aplicar Filtros
+  </button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close([])">Cancelar</button>
+</div>

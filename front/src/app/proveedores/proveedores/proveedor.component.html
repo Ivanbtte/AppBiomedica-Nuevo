@@ -1,0 +1,99 @@
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row wrap" class="b-all">
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" style="color: white; background-color: #3a83c2"
+           class="p-10">Lista de Proveedores
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="p-10" fxLayoutAlign="end center" *ngIf="permisos">
+        <button mat-flat-button color="primary" (click)="openDialogAgregar()">
+          <mat-icon>add</mat-icon>
+          Proveedor
+        </button>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="p-0" fxLayoutAlign="center center">
+        <mat-form-field class="p-l-20 p-r-20">
+          <input matInput [formControl]="control_nombre" (keyup.enter)="buscarPorNombre()" placeholder="Buscar"
+                 autocomplete="off">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <div [hidden]="cargando">
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource" matSort>
+            <!-- Color Column -->
+            <ng-container matColumnDef="DetallePro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Ver</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button style="color: #3a83c2" (click)="openDialogDetalleProveedor(row)">
+                  <mat-icon>remove_red_eye</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <!-- Alias Column -->
+            <ng-container matColumnDef="Alias">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre Empresa</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <a [routerLink]="" (click)="openDialogDetalleProveedor(row)">{{row.AliasEmpresa}}</a>
+              </mat-cell>
+            </ng-container>
+            <!-- Direccion Column -->
+            <ng-container matColumnDef="Estado">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Estado</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.Estados.Nombre}}</mat-cell>
+            </ng-container>
+            <!-- Correo Column -->
+            <ng-container matColumnDef="CorreoPro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Correo</mat-header-cell>
+              <mat-cell *matCellDef="let row"><a href="mailto:{{row.Correo}}">{{row.Correo}}</a></mat-cell>
+            </ng-container>
+            <!-- RFC Column -->
+            <ng-container matColumnDef="RFC">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>No. Prov IMSS</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.NProvImss}}</mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="Telefono">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Telefono</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Telefono}}</mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="VerPro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Contactos</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button style="color: #3a83c2" (click)="openDialogVer(row)">
+                  <mat-icon>perm_contact_calendar</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="EditarPro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="openDialogEditar(row)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="EliminarPro">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Eliminar
+              </mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="warn" (click)="EliminarProveedor(row.Id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

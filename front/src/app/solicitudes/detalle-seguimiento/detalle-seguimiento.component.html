@@ -1,0 +1,71 @@
+<mat-card>
+  <mat-card-title class="p-10 p-r-20 p-l-20">Seguimiento de solicitud</mat-card-title>
+  <mat-card-subtitle class="p-10 p-r-20 p-l-20">Solicitud No. {{solicitud.Id.substring((solicitud.Id.length - 6), (solicitud.Id.length))}}</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="sliderDiv">
+      <mat-slider
+        color="primary"
+        thumbLabel
+        [displayWith]="formatLabel"
+        tickInterval="1"
+        step="1"
+        min="1"
+        max="9"
+        [(value)]="solicitud.EstatusId"
+        class="slider">
+      </mat-slider>
+    </div>
+    <div>
+      <p>Estado actual de la solicitud:&nbsp;&nbsp; <strong>{{solicitud.Estatus.Status}}</strong></p>
+    </div>
+  </mat-card-content>
+  <mat-card-content>
+    <div class="div-principal">
+      <div *ngIf="bitacora" class="div-estatus">
+        <h4>Detalle del seguimiento</h4>
+        <mat-list>
+          <mat-list-item *ngFor="let item of bitacora" style="height: 100px">
+            <div class="div-alinear" style="width: 20%">
+              {{item.EstatusId}}
+            </div>
+            <div class="div-alinear">
+              <div>
+                Fecha: {{item.Fecha}}
+              </div>
+              <div>
+                Hora: {{item.Hora}}
+              </div>
+              <div>
+                Estado: {{item.Estatus.Status}}
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <!--voy a desactivar temporalmente la bitacora de la solicitud-->
+      <div *ngIf="false" class="div-bitacora">
+        <a mat-flat-button (click)="visibleBitacora=!visibleBitacora"><h4>Ver bitacora de solicitd</h4></a>
+        <mat-list *ngIf="visibleBitacora">
+          <mat-list-item *ngFor="let item of bitacora" style="height: 100px">
+            <div class="div-alinear" style="width: 20%">
+              {{item.EstatusId}}
+            </div>
+            <div class="div-alinear">
+              <div>
+                Fecha: {{item.Fecha}}
+              </div>
+              <div>
+                Hora: {{item.Hora}}
+              </div>
+              <div>
+                Estado: {{item.Estatus.Status}}
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+

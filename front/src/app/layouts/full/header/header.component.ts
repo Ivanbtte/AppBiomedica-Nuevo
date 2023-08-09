@@ -1,0 +1,128 @@
+import { Component, OnInit } from '@angular/core';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { LoginService } from '../../../authentication/servicios/login.service';
+import { Router } from '@angular/router';
+import { UsuarioService } from '../../../authentication/servicios/usuario.service';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: []
+})
+export class AppHeaderComponent implements OnInit {
+  public config: PerfectScrollbarConfigInterface = {};
+  // variables de interfaces
+  masculino = false;
+  femenino = false;
+  otro = false;
+  position = '';
+  // This is for Notifications
+
+
+  notifications: Object[] = [
+    {
+      round: 'round-danger',
+      icon: 'ti-link',
+      title: 'Launch Admin',
+      subject: 'Just see the my new admin!',
+      time: '9:30 AM'
+    },
+    {
+      round: 'round-success',
+      icon: 'ti-calendar',
+      title: 'Event today',
+      subject: 'Just a reminder that you have event',
+      time: '9:10 AM'
+    },
+    {
+      round: 'round-info',
+      icon: 'ti-settings',
+      title: 'Settings',
+      subject: 'You can customize this template as you want',
+      time: '9:08 AM'
+    },
+    {
+      round: 'round-primary',
+      icon: 'ti-user',
+      title: 'Pavan kumar',
+      subject: 'Just see the my admin!',
+      time: '9:00 AM'
+    }
+  ];
+
+  // This is for Mymessages
+  mymessages: Object[] = [
+    {
+      useravatar: 'assets/images/users/1.jpg',
+      status: 'online',
+      from: 'Pavan kumar',
+      subject: 'Just see the my admin!',
+      time: '9:30 AM'
+    },
+    {
+      useravatar: 'assets/images/users/2.jpg',
+      status: 'busy',
+      from: 'Sonu Nigam',
+      subject: 'I have sung a song! See you at',
+      time: '9:10 AM'
+    },
+    {
+      useravatar: 'assets/images/users/2.jpg',
+      status: 'away',
+      from: 'Arijit Sinh',
+      subject: 'I am a singer!',
+      time: '9:08 AM'
+    },
+    {
+      useravatar: 'assets/images/users/4.jpg',
+      status: 'offline',
+      from: 'Pavan kumar',
+      subject: 'Just see the my admin!',
+      time: '9:00 AM'
+    }
+  ];
+
+  constructor(
+    private _login: LoginService,
+    private router: Router,
+    private usuarioService: UsuarioService
+
+  ) {
+  }
+
+  ngOnInit() {
+    this.consultUserPosition(localStorage.getItem('idUser'));
+
+  }
+  consultUserPosition(id: string) {
+    this.usuarioService.ConsultUSerByPosition(id).subscribe(result => {
+      console.log(result.Data)
+      if (result.Data.Estado == true) {
+        this.position = result.Data.PuestoOrganigrama.catalogoPuesto.Puesto;
+        this.asignar(result.Data.Usuario.Persona.Genero);
+      }
+    });
+  }
+  asignar(nombre: string) {
+    if (nombre === 'M') {
+      this.masculino = true;
+    }
+    if (nombre === 'F') {
+      this.femenino = true;
+    }
+    if (nombre === 'O') {
+      this.otro = true;
+    }
+  }
+  cerrarSesion() {
+    this._login.logoutUser();
+  }
+
+  cuenta() {
+    this.router.navigate(['cuenta/info']);
+  }
+
+  configuracion() {
+    this.router.navigate(['cuenta/configuracion']);
+  }
+}

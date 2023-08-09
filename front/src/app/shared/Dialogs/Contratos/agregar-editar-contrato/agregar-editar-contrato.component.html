@@ -1,0 +1,382 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group mat-stretch-tabs class="mat-elevation-z4" backgroundColor="primary" color="warn" #tabGroup
+                     [selectedIndex]="index_tab">
+        <!-- este es el tab de datos del contrato -->
+        <mat-tab label="Datos Contrato">
+          <form [formGroup]="formulario_contrato" style="background-color: white">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" tabIndex="-1">
+                <button [@.disabled]="disableAnimation" mat-flat-button color="primary" type="button"
+                        (click)="openDialogRepresentante()" style="max-width: 100%">
+                  Seleccionar Proveedor
+                </button>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="representante">
+                <mat-form-field appearance="outline">
+                  <mat-label>Proveedor</mat-label>
+                  <input matInput formControlName="ProveedorNProvImss"
+                         autocomplete="off" readonly [value]="representante.AliasEmpresa">
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="representante">
+                <mat-form-field appearance="outline">
+                  <mat-label>Representante Legal</mat-label>
+                  <input matInput formControlName="ContactoProveedorId"
+                         autocomplete="off" readonly [value]="representante.NombreCompleto">
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Numero de contrato</mat-label>
+                  <input matInput placeholder="Numero de contrato"
+                         formControlName="NumeroContrato" autocomplete="off"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline" (click)="picker.open()">
+                  <mat-label>Fecha Inicio contrato</mat-label>
+                  <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker"
+                         placeholder="Seleccionar fecha" readonly (dateChange)="valorFecha($event)"
+                         formControlName="InicioContrato">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline" (click)="picker2.open()">
+                  <mat-label>Fecha fin contrato</mat-label>
+                  <input matInput [min]="minDate2" [matDatepicker]="picker2" placeholder="Seleccionar fecha"
+                         readonly formControlName="FinContrato" (dateChange)="valorFechaLimite($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker2 color="primary"></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Procedimiento de contratacion</mat-label>
+                  <input matInput placeholder="Procedimiento de contratacion" formControlName="ProcedContratacion"
+                         autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Descripcion Procedimiento</mat-label>
+                  <input matInput placeholder="Descripcion del procedimiento" formControlName="TipoProcedContratacion"
+                         autocomplete="off">
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline" (click)="picker3.open()">
+                  <mat-label>Fecha Fallo</mat-label>
+                  <input matInput [min]="minDate" [matDatepicker]="picker3" placeholder="Fecha del fallo"
+                         readonly formControlName="FechaFallo" (dateChange)="valorFechaFallo($event)">
+                  <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker3 color="primary"></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Monto total del contrato sin IVA</mat-label>
+                  <input matInput placeholder="Monto total del contrato" formControlName="MontoTotal"
+                         autocomplete="off" type="number" class="soloNumeros">
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo de Contrato</mat-label>
+                  <mat-select formControlName="TipoContrato">
+                    <mat-option value="Equipo Medico">Equipo Medico</mat-option>
+                    <mat-option value="Servicios">Servicios</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="delegacionesArray">
+                <mat-form-field appearance="outline">
+                  <mat-label>Selecciona una delegacion</mat-label>
+                  <mat-select required multiple [formControl]="form_delegaciones"
+                              (selectionChange)="seleccionados()">
+                    <mat-option *ngFor="let deleg of delegacionesArray" [value]="deleg">
+                      {{deleg.NombreDele}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <button mat-flat-button color="primary" (click)="siguiente()"
+                        [disabled]="formulario_contrato.invalid">
+                  Siguiente
+                  <mat-icon>arrow_right_alt</mat-icon>
+                </button>
+              </div>
+              <div fxFlex.gt-sm=" 100
+                " fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <label>* Campos requeridos</label>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <!-- Este es el tap para agregar administradores o auxiliares -->
+        <mat-tab label="Administrador" [disabled]="formulario_contrato.invalid">
+          <form [formGroup]="formulario_admin_aux">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between" class="p-20">
+              <div fxFlex.gt-sm="55" fxFlex.gt-xs="100" fxFlex="100">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <div fxFlex.gt-sm="65" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline" (click)="openDialogPersona()">
+                      <mat-label>Nombre Completo</mat-label>
+                      <input matInput placeholder="Nombre Completo"
+                             autocomplete="off" [value]="nombre_compelto"
+                             readonly
+                             required>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Cargo</mat-label>
+                      <input matInput placeholder="Cargo"
+                             formControlName="Cargo" autocomplete="off"
+                             required>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="55" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Selecciona una delegacion</mat-label>
+                      <mat-select formControlName="DelegacionesClvDele" required>
+                        <mat-option *ngFor="let deleg of array_delegaciones_admin" [value]="deleg">
+                          {{deleg.NombreDele}}
+                        </mat-option>
+                      </mat-select>
+                      <mat-hint align="end" *ngIf="!array_delegaciones_admin">No has agregado ninguna delegacion en el
+                        contrato
+                      </mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Responsabilidad</mat-label>
+                      <mat-select formControlName="Responsabilidad" required>
+                        <mat-option value="Administrador de contratos">Administrador de contratos</mat-option>
+                        <mat-option value="Auxiliar de contratos">Auxiliar de contratos</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100" class="b-all"
+                   style="border-width: medium; height: 200px; overflow: auto">
+                <mat-label align="center">Lista de Asignaciones</mat-label>
+                <mat-list role="list">
+                  <mat-list-item role="listitem" *ngFor="let item2 of array_admin">
+                    <p matLine>{{item2.Persona.Nombre}} {{item2.Persona.ApellidoPat}}</p>
+                    <p matLine>{{item2.Responsabilidad}}</p>
+                    <p matLine>{{item2.Delegaciones.NombreDele}}</p>
+                    <button mat-icon-button (click)="eliminar_admin(item2)">
+                      <mat-icon aria-label="Example icon-button with a heart icon" color="warn"
+                      >highlight_off
+                      </mat-icon>
+                    </button>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" class="m-t-30">
+                <button mat-flat-button color="primary" (click)="agregar_admin_aux()"
+                        [disabled]="formulario_admin_aux.invalid">Agregar
+                </button>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <button mat-flat-button color="primary" (click)="siguiente()"
+                        [disabled]="!verificarArrayAdmin()">Siguiente
+                  <mat-icon>arrow_right_alt</mat-icon>
+                </button>
+              </div>
+              <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+                <p><strong>NOTA: </strong>Debes agregar al menos un administrador del contrato</p>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <!--        Este es el tap para las penas convencionales-->
+        <mat-tab label="Pena Convencional" >
+          <form [formGroup]="formulario_penas_conv" style="background-color: white">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+              <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Descripcion</mat-label>
+                  <textarea matInput placeholder="Pena Convencional"
+                            formControlName="Descripcion" autocomplete="off"
+                            required></textarea>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Porcentaje de la pena por dia</mat-label>
+                  <input matInput type="number" placeholder="Porcentaje" class="example-right-align" autocomplete="off"
+                         required formControlName="Porcentaje">
+                  <span matPrefix>&nbsp;</span>
+                  <span matSuffix>%</span>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <button mat-flat-button color="primary" (click)="siguiente()"
+                        [disabled]="formulario_penas_conv.invalid">Siguiente
+                  <mat-icon>arrow_right_alt</mat-icon>
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <mat-tab label="Penas Deductivas" [disabled]="formulario_penas_conv.invalid">
+          <form [formGroup]="formulario_penas_ded" style="background-color: white">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between" class="p-20">
+              <div fxFlex.gt-sm="60" fxFlex.gt-xs="100" fxFlex="100">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Concepto Obligacion</mat-label>
+                      <textarea matInput placeholder="Concepto Obligacion"
+                                formControlName="ConceptoObligacion" autocomplete="off"
+                                required></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Nivel Servicio</mat-label>
+                      <textarea matInput placeholder="Nivel del servicio"
+                                formControlName="NivelServicio" autocomplete="off"
+                                required></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Unidad de Medida</mat-label>
+                      <textarea matInput placeholder="Unidad de Medida"
+                                formControlName="UnidadMedida" autocomplete="off"
+                                required></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Porcentaje deduccion</mat-label>
+                      <input matInput type="number" placeholder="Porcentaje" class="example-right-align"
+                             autocomplete="off"
+                             required formControlName="Deduccion">
+                      <span matPrefix>&nbsp;</span>
+                      <span matSuffix>%</span>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Descripcion de la deduccion</mat-label>
+                      <textarea matInput placeholder="Descripcion"
+                                formControlName="DescripcionDeduccion" autocomplete="off"
+                                required></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Limite incumplimiento</mat-label>
+                      <textarea matInput placeholder="Limite incumplimiento"
+                                formControlName="LimiteIncumplimiento" autocomplete="off"
+                                required></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-list role="list">
+                  <mat-label align="center">Lista de penas</mat-label>
+                  <mat-list-item role="listitem" *ngFor="let item of array_penas_deductivas ">
+                    {{item.DescripcionDeduccion}}
+                    <button mat-icon-button>
+                      <mat-icon aria-label="Example icon-button with a heart icon" color="warn"
+                                (click)="eliminar_pena_deductiva(item)">highlight_off
+                      </mat-icon>
+                    </button>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <button mat-flat-button color="primary"
+                        [disabled]="formulario_penas_ded.invalid" (click)="agregar_pena_deductiva()">Agregar Pena
+                </button>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" align="end">
+                <button mat-flat-button color="primary" (click)="siguiente()"
+                        [disabled]="!verificarArrayPenas()">Siguiente
+                  <mat-icon>arrow_right_alt</mat-icon>
+                </button>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+        <!-- Este es el tap  para las fianzas -->
+        <mat-tab label="Fianza" [disabled]="formulario_penas_conv.invalid">
+          <form [formGroup]="formulario_fianza">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-20">
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Tipo de Fianza</mat-label>
+                  <mat-select formControlName="Tipo" required>
+                    <mat-option value="Afianzadora">Afianzadora</mat-option>
+                    <mat-option value="Cheque">Cheque</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Afianzadora / Cheque</mat-label>
+                  <input matInput placeholder="Afianzadora o Cheque"
+                         formControlName="Afianzadora" autocomplete="off"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field appearance="outline">
+                  <mat-label>Numero Poliza / Cheque</mat-label>
+                  <input matInput placeholder="Numero de poliza o Cheque"
+                         formControlName="NumPoliza" autocomplete="off"
+                         required>
+                </mat-form-field>
+              </div>
+              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-form-field>
+                  <mat-label>Monto de Fianza</mat-label>
+                  <input matInput placeholder="Monto de Fianza" type="number" class="example-right-align"
+                         formControlName="MontoFianza">
+                  <span matPrefix>$&nbsp;</span>
+                  <span matSuffix>.00</span>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-around end">
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-flat-button color="warn" (click)="cerrarDialog()">
+      Cancelar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!data.editar">
+    <button mat-flat-button color="primary"
+            [disabled]="formulario_penas_conv.invalid"
+            (click)="agregar_contrato()">Agregar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="data.editar">
+    <button mat-flat-button color="primary"
+            [disabled]="formulario_contrato.invalid || formulario_contrato.pristine">
+      Guardar
+    </button>
+  </div>
+</div>
+
+

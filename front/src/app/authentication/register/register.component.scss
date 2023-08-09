@@ -1,0 +1,15 @@
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header, .mat-vertical-stepper-header {
+  padding: 6px!important;
+}
+.messages {
+  opacity: 0;
+  transition: all .5s ease-in;
+  &.active {
+    opacity: 1;
+  }
+}
+

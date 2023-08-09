@@ -1,0 +1,65 @@
+.mat-header-cell2 {
+  justify-content: center !important;
+  font-weight: bold;
+  color: #ffffff;
+  padding: 0 !important;
+  background-color: #1f594b;
+  padding-left: 5px !important;
+  border-right-color: #ffffff !important;
+  border-right-width: 1px;
+  border-right-style: solid;
+  font-size: 11pt;
+}
+
+.mat-table {
+  .mat-column-nameUser {
+    justify-content: left !important;
+    padding-left: 5px !important;
+  }
+  .mat-column-departmentUser {
+    justify-content: left !important;
+  }
+  .mat-column-cargoUser {
+    justify-content: left !important;
+  }
+  .mat-column-detalleUser {
+    flex: 0 0 6%;
+    justify-content: center !important;
+  }
+
+  .mat-column-validarUser {
+    flex: 0 0 7%;
+    justify-content: center !important;
+  }
+
+  .mat-column-rechazarUser {
+    flex: 0 0 8%;
+    justify-content: center !important;
+  }
+
+  mat-header-row, mat-row {
+    padding-right: 0;
+    padding-left: 0;
+    border-bottom-color: #2f3d4a;
+    border-top-color: #2f3d4a;
+    border-left-color: #2f3d4a !important;
+    border-left-style: solid !important;
+    border-left-width: 1px !important;
+  }
+
+  mat-cell {
+    padding-left: 5px !important;
+    padding-right: 0 !important;
+    border-right-color: #2f3d4a !important;
+    border-right-width: 1px;
+    border-right-style: solid;
+  }
+}
+
+.mat-row:nth-child(even) {
+  background-color: #ffffff;
+}
+
+.mat-row:nth-child(odd) {
+  background-color: #e5d3a8;
+}

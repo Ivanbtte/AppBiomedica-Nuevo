@@ -1,0 +1,30 @@
+.main-containerSolicitud {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+  width: 100%;
+  height: auto;
+}
+.div-izquierdo{
+  flex: auto;
+  max-width: 45%;
+}
+.div-derecho{
+  flex: auto;
+  max-width: 45%;
+
+}
+.div-centro{
+  flex: auto;
+  max-width: 90%;
+}
+.div-centro-div{
+  flex: auto;
+  max-width: 30%;
+
+}
+.tituloUnidadMed{
+  text-align: left;
+}

@@ -1,0 +1,154 @@
+<mat-card>
+  <mat-card-content>
+    <div class="bg-light p-10 p-r-20 p-l-20">
+      <mat-card-title class="font-bold centerText" style="color: #003366">Filtros por clave de cuadro básico
+      </mat-card-title>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+        <div fxFlex.gt-sm="55" fxFlex.gt-xs="100" fxFlex="100" *ngIf="options.length>0">
+          <form class="example-form">
+            <mat-form-field appearance="standard">
+              <mat-label>Selecciona un tema de búsqueda</mat-label>
+              <input type="text"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="buscarPorTema()">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option.Grupo}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+        </div>
+        <div fxFlex.gt-sm="10" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="standard" *ngIf="arreglo_grupos">
+            <mat-label>Grupo</mat-label>
+            <input type="text" placeholder="Grupo" aria-label="Number" matInput
+                   [formControl]="control_grupo"
+                   [matAutocomplete]="auto1"
+                   maxlength="3">
+            <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete" (optionSelected)="buscarPorGrupo()">
+              <mat-option *ngFor="let option of filteredGrupos | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button *ngIf="control_grupo.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarGrupo()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon matSuffix *ngIf="!control_grupo.value">filter_list</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="12" fxFlex.gt-xs="100" fxFlex="100" class="m-l-15">
+          <mat-form-field appearance="standard">
+            <mat-label>Genérico</mat-label>
+            <input type="text" placeholder="Genérico" aria-label="Number" matInput
+                   [formControl]="control_generico"
+                   [matAutocomplete]="auto2"
+                   [matAutocompleteDisabled]="!grupo_id"
+                   maxlength="3"
+                   autocomplete="off"
+                   (keyup.enter)="buscarPorGenerico()">
+            <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="buscarPorGenerico()">
+              <mat-option *ngFor="let option of filteredGenerico | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+            <button mat-button *ngIf="control_generico.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarGenerico()">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-icon *ngIf="!control_generico.value" matSuffix>filter_list</mat-icon>
+          </mat-form-field>
+        </div>
+        <div fxFlex.gt-sm="12" fxFlex.gt-xs="100" fxFlex="100" class="m-l-15">
+          <mat-form-field appearance="standard">
+            <mat-label>Especifico</mat-label>
+            <input type="text" placeholder="Especifico" matInput
+                   [formControl]="control_especifico"
+                   [matAutocomplete]="auto3"
+                   autocomplete="off"
+                   [matAutocompleteDisabled]="!generico_id"
+                   maxlength="4" (keyup.enter)="buscarPorEspecifico()">
+            <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="buscarPorEspecifico()">
+              <mat-option *ngFor="let option2 of filteredEspecifico | async" [value]="option2">
+                {{option2}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix *ngIf="!control_especifico.value">filter_list</mat-icon>
+            <button mat-button *ngIf="control_especifico.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="borrarEspecifico()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<div fxLayout="row wrap">
+  <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Bienes de Inversión</mat-card-title>
+        <div class="bg-light p-10 p-r-20 p-l-20">
+          <mat-form-field>
+            <mat-label>Buscar por la descripción de la clave</mat-label>
+            <input matInput [formControl]="control_nombre" (keyup.enter)="buscarPorNombre()"
+                   placeholder="Escribe la descripcion" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div [hidden]="cargando">
+          <mat-progress-bar mode="query"></mat-progress-bar>
+        </div>
+        <div class="responsive-table">
+          <mat-table [dataSource]="dataSource">
+            <!-- Progress Column -->
+            <ng-container matColumnDef="Clave">
+              <mat-header-cell *matHeaderCellDef>Clave Cuadro Básico</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                {{row.Grupo}}.{{row.Generico}}.{{row.Especifico}}.{{row.Diferenciador}}.{{row.Variable}}
+              </mat-cell>
+            </ng-container>
+            <!-- Progress Column -->
+            <ng-container matColumnDef="IdArticulo">
+              <mat-header-cell *matHeaderCellDef>Id Articulo</mat-header-cell>
+              <mat-cell *matCellDef="let row">{{row.IdArticulo}}</mat-cell>
+            </ng-container>
+
+            <!-- Color Column -->
+            <ng-container matColumnDef="Descripcion">
+              <mat-header-cell *matHeaderCellDef> Descripción</mat-header-cell>
+              <!--              <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>-->
+              <mat-cell *matCellDef="let row"> {{regresaDescripcion(row.Descripcion)}}</mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="Tipo">
+              <mat-header-cell *matHeaderCellDef>Tipo de Presentación</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.UnidadesMedidas.Unidad}}</mat-cell>
+            </ng-container>
+            <!-- Color Column -->
+            <ng-container matColumnDef="Precio">
+              <mat-header-cell *matHeaderCellDef>Precio con IVA</mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{(row.Precio * 1.16)| currency}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Vista">
+              <mat-header-cell *matHeaderCellDef> Vista</mat-header-cell>
+              <mat-cell *matCellDef="let row">
+                <button mat-icon-button color="primary" (click)="openDialog(row.Id)">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="tamanios" [pageSize]="tamanioPagina" [length]="totalRegistros"
+                         [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

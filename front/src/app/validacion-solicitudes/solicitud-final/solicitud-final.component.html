@@ -1,0 +1,57 @@
+<mat-card>
+  <mat-card-title class="p-20">Solicitudes Final</mat-card-title>
+  <mat-card-content fxLayout="row wrap">
+    <mat-form-field appearance="outline" fxFlex="55">
+      <mat-label>Filtrar por servicio</mat-label>
+      <mat-select [(value)]="valorServicio" (selectionChange)="valorSelecServicios(valorServicio)" >
+        <mat-option *ngFor="let servicios of serviciosSelect" [value]="servicios.id">
+          {{servicios.servicio}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="responsive-table">
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="Clave">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Clave Cuadro Basico</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ClaveId}}</mat-cell>
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Descripcion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>
+
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Servicio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Servicio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ServiciosProforma.Descripcion}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Unidad">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Unidad Medica</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.Solicitud.UnidadMed.DenominacionUni}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Precio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Precio | currency}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Aprobada">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad Aprobada</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.CantidadAprobada}}</mat-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Total">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Total | currency}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+</mat-card>

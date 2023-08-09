@@ -1,0 +1,12 @@
+.soloNumeros {
+  text-align: left;
+}
+
+input.soloNumeros::-webkit-outer-spin-button,
+input.soloNumeros::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.soloNumeros {
+  -moz-appearance: textfield;
+}

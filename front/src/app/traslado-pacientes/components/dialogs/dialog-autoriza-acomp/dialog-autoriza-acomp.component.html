@@ -1,0 +1,56 @@
+<h1 mat-dialog-title align="center" style="color: #003366" class="font-bold m-0">Autorizacion de acompañante</h1>
+<div mat-dialog-content class="quita">
+  <form [formGroup]="form">
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona el motivo</mat-label>
+          <mat-select formControlName="motivo">
+            <mat-option *ngFor="let justificacion of justificaciones" [value]="justificacion.id"
+                        style="font-size: 13px">
+              {{justificacion.justificacion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Justificacion o Diagnostico medico</mat-label>
+          <input #input matInput placeholder="Escriba la justificacion" autocomplete="off" required
+                 formControlName="justificacion" maxlength="250">
+          <mat-hint align="end">{{input.value?.length || 0}}/250</mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre de quien autoriza</mat-label>
+          <input matInput placeholder="Nombre" autocomplete="off" required formControlName="nombreAutoriza">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Cargo</mat-label>
+          <input matInput placeholder="Cargo" autocomplete="off" formControlName="cargo">
+        </mat-form-field>
+      </div>
+      <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-form-field appearance="outline">
+          <mat-label>Matricula</mat-label>
+          <input matInput placeholder="Matricula" autocomplete="off" formControlName="matricula" maxlength="11">
+          <mat-error *ngIf="form.controls['matricula'].hasError('pattern')">
+            Ingresa solo numeros.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="end center" align="end" class="m-0 p-0">
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-stroked-button color="warn" (click)="onNoClick()">Cancelar</button>
+  </div>
+  <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="save()">Aceptar
+    </button>
+  </div>
+</div>

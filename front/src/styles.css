@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+.centerText {
+  text-align: center!important;
+  justify-content: center;
+}
+
+.endText {
+  text-align: end;
+}
+
+.endAlign {
+  align-items: end !important;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.startText {
+  text-align: start;
+}
+
+.buttonBlue {
+  background-color: #429fff !important;
+  color: white !important;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header, .mat-vertical-stepper-header {
+  padding: 6px !important;
+}
+
+.mat-horizontal-content-container {
+  overflow: hidden;
+  padding: 0 15px 15px 15px !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,91 @@
+<!-- Card Group Row -->
+<!-- ============================================================== -->
+<mat-card>
+  <mat-card-title>
+    <h2 class="centerText m-b-0">Tablero de control para contratos de transporte subrogado</h2>
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngFor="let item of contratos" class="b-all" style="border-width: 4px;">
+      <h3 class="font-bold centerText">{{item.contrato.NumeroContrato}}</h3>
+      <div class="card-group">
+        <!-- column -->
+        <mat-card>
+          <mat-card-content class="centerText">
+            <!-- column -->
+            <h2>Devengo</h2>
+            <div *ngIf="item.devengo">
+              <h1 class="m-0">{{item.devengo | currency}}</h1>
+              <h5 class="text-muted m-t-0 m-b-10">Monto ejercido del contrato</h5>
+              <mat-progress-bar mode="determinate" [value]="item.porcentajeDevengo"></mat-progress-bar>
+              <h2 class="m-t-0 m-b-10">{{item.porcentajeDevengo/100 | percent:'.2-2'}}</h2>
+            </div>
+            <div *ngIf="!item.devengo">
+              <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <!-- column -->
+        <!-- column -->
+        <mat-card>
+          <mat-card-content class="centerText">
+            <!-- column -->
+            <h2>Con acompañantes</h2>
+            <div *ngIf="item.conAcompaniante">
+            <h1 class="m-0">{{item.conAcompaniante}} solicitudes</h1>
+            <h5 class="text-muted m-t-0 m-b-10">Total de solicitudes con acompañantes</h5>
+            <mat-progress-bar color="warn" mode="determinate" [value]="item.porcentajeAcompanianteContrato*100">
+            </mat-progress-bar>
+            <h2 class="m-t-0 m-b-10">{{item.porcentajeAcompanianteContrato | percent:'.2-2'}}</h2>
+            </div>
+            <div *ngIf="!item.conAcompaniante">
+              <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <!-- column -->
+        <!-- column -->
+        <mat-card>
+          <mat-card-content class="centerText">
+            <!-- column -->
+            <h2>Mas acompañantes</h2>
+            <div *ngIf="item.promedioAcompaniante.Promedio.Promedio">
+            <h1 class="m-0">{{item.promedioAcompaniante.UnidadMedica.DenominacionUni}}</h1>
+            <h5 class="text-muted m-t-0 m-b-10">Unidad con mayor % de acompañantes</h5>
+            <mat-progress-bar color="accent" mode="determinate"
+              [value]="item.promedioAcompaniante.Promedio.Promedio*100"></mat-progress-bar>
+            <h2 class="m-t-0 m-b-10">{{item.promedioAcompaniante.Promedio.Promedio | percent:'.2-2'}}</h2>
+            </div>
+            <div *ngIf="!item.promedioAcompaniante.Promedio.Promedio">
+              <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <!-- column -->
+        <!-- column -->
+        <mat-card>
+          <mat-card-content class="centerText">
+            <!-- column -->
+            <h2>Mas traslados</h2>
+            <div *ngIf="item.mayorSolicitud.porcentaje">
+            <h1 class="m-0">{{item.mayorSolicitud.unidad.DenominacionUni}}</h1>
+            <h5 class="text-muted m-t-0  m-b-10">La unidad con mas traslados</h5>
+            <mat-progress-bar color="accent" mode="determinate" [value]="item.mayorSolicitud.porcentaje*100">
+            </mat-progress-bar>
+            <h2 class="m-t-0 m-b-10">{{item.mayorSolicitud.porcentaje | percent:'.2-2'}}</h2>
+            </div>
+            <div *ngIf="!item.mayorSolicitud.porcentaje">
+              <h2 class="m-t-0 m-b-10 text-muted">Sin datos</h2>
+            </div>
+          </mat-card-content>
+        </mat-card>
+        <!-- column -->
+      </div>
+      <div class="centerText m-b-15">
+        <button mat-raised-button color="primary" (click)="masDetalles(item)">
+          <mat-icon>insert_chart_outlined</mat-icon>
+          Detalles
+        </button>
+       </div>
+    </div>
+  </mat-card-content> 
+</mat-card>

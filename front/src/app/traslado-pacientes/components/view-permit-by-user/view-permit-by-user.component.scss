@@ -1,0 +1,27 @@
+.mat-header-cell {
+  justify-content: left !important;
+  font-weight: bold;
+  font-size: 11pt;
+  //font-family: "Montserrat Light", serif;
+}
+
+.mat-table {
+
+  .mat-column-edit {
+    justify-content: center !important;
+    flex: 0 0 20%;
+  }
+
+  .mat-column.module {
+    justify-content: left !important;
+  }
+}
+
+//.mat-row:nth-child(even) {
+//  background-color: #e2eade;
+//}
+//
+//.mat-row:nth-child(odd) {
+//  background-color: #ffffff;
+//}
+

@@ -1,0 +1,118 @@
+<h1 mat-dialog-title>{{titulo}}</h1>
+<div mat-dialog-content>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="formulario_proveedor">
+        <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre del Proveedor</mat-label>
+              <input matInput placeholder="Nombre Proveedor"
+                     formControlName="NombreEmpresa" autocomplete="off"
+                     required style="text-transform: uppercase;">
+            </mat-form-field>
+            <small
+              *ngIf="formulario_proveedor.controls['NombreEmpresa'].hasError('pattern') && formulario_proveedor.controls['NombreEmpresa'].touched"
+              class="text-danger support-text">Nombre invalido.
+            </small>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Nombre corto Proveedor</mat-label>
+              <input matInput placeholder="Alias Proveedor" formControlName="AliasEmpresa" autocomplete="off" required
+                     style="text-transform: uppercase;">
+            </mat-form-field>
+            <small
+              *ngIf="formulario_proveedor.controls['AliasEmpresa'].hasError('pattern') && formulario_proveedor.controls['AliasEmpresa'].touched"
+              class="text-danger support-text">Nombre invalido.
+            </small>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Correo Electronico</mat-label>
+              <input matInput placeholder="Correo" formControlName="Correo" autocomplete="off" required
+                     style="text-transform: lowercase">
+            </mat-form-field>
+            <small
+              *ngIf="formulario_proveedor.controls['Correo'].hasError('email') && formulario_proveedor.controls['Correo'].touched"
+              class="text-danger support-text">Introduce un correo Valido.
+            </small>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>RFC</mat-label>
+              <input matInput placeholder="RFC" formControlName="RFC" autocomplete="off" style="text-transform: uppercase;">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Numero de Proveedor del IMSS</mat-label>
+              <input matInput  placeholder="Numero Proveedor" formControlName="NProvImss" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Numero Telefonico</mat-label>
+              <input matInput #input placeholder="Numero Telefonico" formControlName="Telefono" autocomplete="off" required
+                     maxlength="10">
+              <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+            </mat-form-field>
+            <small
+              *ngIf="formulario_proveedor.controls['Telefono'].hasError('pattern') && formulario_proveedor.controls['Telefono'].touched"
+              class="text-danger support-text">Introduce un telefono Valido.
+            </small>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Selecciona un estado</mat-label>
+              <mat-select formControlName="EstadosId" required>
+                <mat-option *ngFor="let estados of entidades_arreglo" [value]="estados.Clave">
+                  {{estados.Nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Municipio</mat-label>
+              <input matInput placeholder="Municipio" formControlName="Municipio" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Codigo Postal</mat-label>
+              <input matInput  placeholder="CP" formControlName="CP" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Direccion</mat-label>
+              <input matInput placeholder="Direccion" formControlName="Direccion" autocomplete="off">
+            </mat-form-field>
+          </div>
+          <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100">
+            <label>* Campos requeridos</label>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions fxLayout="row wrap" fxLayoutAlign="space-around center">
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+    <button mat-flat-button color="warn" (click)="cerrarDialog()">
+      Cancelar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!data.editar">
+    <button mat-flat-button color="primary"
+            [disabled]="formulario_proveedor.invalid" (click)="agregarProveedor()">Agregar
+    </button>
+  </div>
+  <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" *ngIf="data.editar">
+    <button mat-flat-button color="primary"
+            [disabled]="formulario_proveedor.invalid || formulario_proveedor.pristine" (click)="EditarProveedor()">
+      Guardar
+    </button>
+  </div>
+</div>

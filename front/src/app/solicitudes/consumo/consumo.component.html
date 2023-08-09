@@ -1,0 +1,139 @@
+
+<mat-card *ngIf="estadoSolicitud">
+  <mat-card-title align="center">Elige las claves que deseas solicitar</mat-card-title>
+  <mat-card-content>
+    <div class="main-containerSolicitud">
+      <div class="div-izquierdo">
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona una unidad médica</mat-label>
+          <mat-select style="max-width: 90%" [(value)]="valor" (selectionChange)="valorSelecUnidades(valor)"
+                      [disabled]="estatusCarrito">
+            <mat-option *ngFor="let unidades of unidadesMedicas" [value]="unidades.Id">
+              {{unidades.DenominacionUni}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Selecciona un servicio</mat-label>
+          <mat-select style="max-width: 90%" [(value)]="valorServicio"
+                      (selectionChange)="valorSelecServicios(valorServicio)">
+            <mat-option *ngFor="let servicio of servicios" [value]="servicio.ServiciosProforma.Id">
+              {{servicio.ServiciosProforma.Descripcion}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre del solicitante</mat-label>
+          <input matInput [value]="nombreSolic" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <div class="div-derecho">
+        <!--        <h4>Orden de Solicitud</h4>-->
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput [value]="fecha" [readonly]="true" style="width: auto">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Folio de Solicitud</mat-label>
+          <input matInput [value]="folioSolicitud" [readonly]="true" style="width: auto">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Corrreo del solicitante</mat-label>
+          <input matInput [value]="usuarioLog.Correo" [readonly]="true">
+        </mat-form-field>
+      </div>
+      <button mat-flat-button color="primary" (click)="openDialog()" [disabled]="botonAgregar">
+        Agregar Claves
+        <mat-icon aria-label="Example icon-button with a heart icon">add_circle</mat-icon>
+      </button>
+      <label class="font-bold">Esta solicitud aun no ha sido enviada</label>
+      <button mat-flat-button color="primary" (click)="enviarSolicitud()" *ngIf="conceptosBase">
+        Enviar Solicitud
+        <mat-icon aria-label="Example icon-button with a heart icon">send</mat-icon>
+      </button>
+    </div>
+
+    <div class="responsive-table">
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="Clave">
+          <mat-header-cell fxFlex="10px" *matHeaderCellDef mat-sort-header>Clave Cuadro Basico</mat-header-cell>
+          <mat-cell fxFlex="10px" *matCellDef="let row"> {{row.ClaveId}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef> Subtotal</mat-footer-cell>
+
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Descripcion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Descripcion.substring(0, 160)}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+
+        </ng-container>
+        <!-- Progress Column -->
+        <ng-container matColumnDef="Servicio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Servicio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.ServiciosProforma.Descripcion}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="Precio">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Precio</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Precio | currency}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Cantidades">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.CantidadSolicitada}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Total">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Total</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.Total | currency}}</mat-cell>
+          <mat-footer-cell *matFooterCellDef>{{subtotal | currency}}</mat-footer-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Editar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Editar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="openDialogCantidad(row)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <!-- Color Column -->
+        <ng-container matColumnDef="Eliminar">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Eliminar</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button mat-button value="left" (click)="eliminarClave(row)" color="warn">
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef></mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></mat-footer-row>
+      </mat-table>
+    </div>
+  </mat-card-content>
+  <mat-card-content class="bg-light">
+    <div class="d-flex align-items-center">
+
+      <div class="text-right ml-auto">
+        <h6 class="text-uppercase text-md ma-0 text-bold">Subtotal :</h6>
+        <h6 class="text-uppercase text-md ma-0 text-bold">IVA (16%) :</h6>
+        <h6 class="text-uppercase text-sm ma-0 text-bold">Total :</h6>
+      </div>
+      <div class="m-l-10">
+        <h4 class="font-medium">{{subtotal | currency}}</h4>
+        <h4 class="font-medium">{{iva | currency}}</h4>
+        <h4 class="font-medium">{{ totalSolicitud | currency}}</h4>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

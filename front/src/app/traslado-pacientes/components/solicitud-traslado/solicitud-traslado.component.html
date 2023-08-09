@@ -1,0 +1,291 @@
+<mat-card>
+  <mat-card-content>
+    <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <h4 class="m-0" *ngIf="budget">Presupuesto: {{budget| currency}}</h4>
+        <h4 class="m-0" *ngIf="earn">Devengo: {{earn| currency}}</h4>
+        <h4 class="m-0 colorAvailable" *ngIf="available">Disponible: {{available| currency}}</h4>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+        <mat-card-title style="color: #003366; align-items: center!important;" class="font-bold" align="center">
+          Solicitud de Traslado de Pacientes
+        </mat-card-title>
+        <h5 *ngIf="unidadMedica" class="m-0 font-bold text-info" align="center">
+          {{unidadMedica.unidadMed.DenominacionUni}}</h5>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="imprimirPlantilla">
+        <button mat-icon-button style="margin-right: 18px;font-size: 25pt; color: #d60017">
+          <mat-icon aria-label="Example" style="font-size: 25pt" (click)="imprimirSoloPlantilla()">picture_as_pdf
+          </mat-icon>
+        </button>
+      </div>
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" align="end" *ngIf="!imprimirPlantilla">
+        <button mat-icon-button style="margin-right: 18px;font-size: 25pt; color: #d60017">
+          <mat-icon aria-label="Example" style="font-size: 25pt" (click)="imprimirSoloPlantilla()">cancel
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+    <form [formGroup]="formSolicitud">
+      <mat-label style="color: #003366" class="font-bold" *ngIf="imprimirPlantilla">Datos del traslado</mat-label>
+
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
+        style="border-color: #a2a2a2" *ngIf="imprimirPlantilla">
+        <!-- Folio FTP-01 -->
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline" hintLabel="Maximo 10 numeros">
+            <mat-label>Folio FTP-01</mat-label>
+            <input #folionu matInput autocomplete="off" required formControlName="ftp01" maxlength="10"
+              (keyup.enter)="buscarFolio()" cdkFocusInitial id="folionu">
+            <mat-hint align="end">{{folionu.value?.length || 0}}/10</mat-hint>
+            <mat-error *ngIf="formSolicitud.controls['ftp01'].hasError('pattern')">
+              Ingresa solo numeros.
+            </mat-error>
+            <button matSuffix mat-icon-button color="primary" type="button" (click)="buscarFolio()"
+              [disabled]="formSolicitud.controls['ftp01'].hasError('pattern') || formSolicitud.controls['ftp01'].hasError('minLength')">
+              <mat-icon aria-label="Selecciona">search</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <!-- Fecha cita -->
+        <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha de la cita</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" autocomplete="off"
+              (dateChange)="fechaCitaSeleccionada($event)" formControlName="fechaCita" [min]="today">
+            <!-- (dateChange)="fechaCitaSeleccionada($event)" formControlName="fechaCita"> -->
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <!-- Numero de contrato -->
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Numero Contrato</mat-label>
+            <mat-select (selectionChange)="numeroContratoSeleccionado($event.value)"
+              formControlName="contratoNumeroContrato">
+              <mat-option *ngFor="let cont of contratos" [value]="cont.NumeroContrato" style="font-size: 14px">
+                {{cont.NumeroContrato}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="contratos.length == 0">No existe un contrato vigente para la fecha de cita
+              seleccionada
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxFlex="100">
+          <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100" fxLayout="row wrap"
+            fxLayoutAlign="space-between center">
+            <!-- Ida -->
+            <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" class="p-r-20 ">
+              <mat-checkbox color="primary" [checked]="true" [formControl]="controlIda" required>Ida</mat-checkbox>
+            </div>
+            <!-- Regreso -->
+            <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-checkbox color="primary" [checked]="true" [formControl]="controlRegreso" required>Regreso
+              </mat-checkbox>
+            </div>
+            <!-- Folios separados -->
+            <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-checkbox color="primary" required [formControl]="controlFoliosS"
+                *ngIf="(controlIda.value && controlRegreso.value) && folioSeparado" matTooltip="Esta opcion genera el vale de ida y regreso con folios separados, util si se tramitan los
+              boletos en diferentes terminales." matTooltipClass="example-tooltip-red" matTooltipShowDelay="0">
+                En folios separados
+              </mat-checkbox>
+            </div>
+          </div>
+          <div fxFlex.gt-sm="55" fxFlex.gt-xs="100" fxFlex="100" class="m-l-30">
+            <mat-form-field appearance="outline">
+              <mat-label>Especialidad</mat-label>
+              <input matInput autocomplete="off" required formControlName="especialidad">
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxFlex="100">
+          <!-- Destino -->
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline"
+              matTooltip="El boleto de solo regreso, el destino es el de la unidad medica origen"
+              matTooltipClass="example-tooltip-destino" matTooltipShowDelay="0" [matTooltipDisabled]="controlIda.value">
+              <mat-label>Selecciona el destino</mat-label>
+              <mat-select (selectionChange)="consultOrigin($event.value)" formControlName="destino">
+                <mat-option *ngFor="let des of destinos" [value]="des.destino" style="font-size: 14px">
+                  {{des.destino}}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="controlRegreso.value && controlIda.value || controlIda.value">(LUGAR DE CITA)</mat-hint>
+              <mat-hint *ngIf="controlRegreso.value && !controlIda.value">(PROCEDENCIA)</mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- Origen -->
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Selecciona el origen</mat-label>
+              <mat-select formControlName="origen">
+                <mat-option *ngFor="let ori of origenes" [value]="ori.origen" style="font-size: 14px">
+                  {{ori.origen}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- Representante Legal -->
+          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+            <mat-form-field appearance="outline">
+              <mat-label>Representante Legal</mat-label>
+              <input matInput autocomplete="off" required formControlName="representanteLegal">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <mat-label style="color: #003366" class="font-bold" *ngIf="imprimirPlantilla">Datos del paciente</mat-label>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
+        style="border-color: #a2a2a2" *ngIf="imprimirPlantilla">
+        <!-- Nombre del paciente -->
+        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre del Paciente</mat-label>
+            <input matInput autocomplete="off" required formControlName="nombrePaciente">
+          </mat-form-field>
+        </div>
+        <!-- Numero de seguridad social -->
+        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>NSS</mat-label>
+            <input matInput autocomplete="off" required formControlName="nss" maxlength="11">
+            <mat-error *ngIf="formSolicitud.controls['nss'].hasError('pattern') && formSolicitud.controls['nss'].touched ||
+              formSolicitud.controls['nss'].hasError('minLength')">Formato
+              incorrecto
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Agregado Medico -->
+        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Agregado Médico</mat-label>
+            <input #agregado matInput autocomplete="off" required formControlName="agregadoMedico" maxlength="8">
+            <mat-hint align="end">{{agregado.value?.length || 0}}/8</mat-hint>
+            <mat-error *ngIf="formSolicitud.controls['agregadoMedico'].hasError('pattern') &&
+            formSolicitud.controls['agregadoMedico'].touched">
+              Error formato incorrecto
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-label style="color: #003366" class="font-bold" *ngIf="formSolicitud.controls['agregadoMedico'].value &&
+           formSolicitud.controls['fechaCita'].value && imprimirPlantilla">Datos del boleto y acompañante
+      </mat-label>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
+        style="border-color: #a2a2a2" *ngIf="formSolicitud.controls['agregadoMedico'].value &&
+           formSolicitud.controls['fechaCita'].value && imprimirPlantilla">
+        <!-- Tipo de paciente -->
+        <div class="centerText" fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="b-b m-b-10">
+          <mat-spinner *ngIf="respuestaAcceder"></mat-spinner>
+        </div>
+        <div fxFlex.gt-sm="100" fxFlex.gt-xs="100" fxFlex="100" class="b-b m-b-10">
+          <mat-label><strong>Datos del paciente:</strong> {{tipo_paciente}} de {{edad}} años {{tipo_boleto}}
+          </mat-label>
+        </div>
+        <!-- Datos Nacimiento -->
+        <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!preguntarFechaNac">
+        </div>
+        <div fxFlex.gt-sm="33" fxFlex.gt-xs="100" fxFlex="100" *ngIf="preguntarFechaNac">
+          <mat-label>Datos nacimiento</mat-label>
+          <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+            <mat-form-field appearance="fill" *ngIf="preguntarFechaNac">
+              <mat-label>Selecciona fecha de nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" required [min]="startDate" [max]="maxDate"
+                (dateChange)="fechaNacimientoSeleccionada($event)">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker startView="year"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <!-- Paciente INAPAN -->
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100" class="m-b-10" align="center" *ngIf="!pacienteInapan">
+        </div>
+        <div fxFlex.gt-sm="22" fxFlex.gt-xs="100" fxFlex="100" class="m-b-10" align="center" *ngIf="pacienteInapan">
+          <mat-label>Cuenta con tarjeta INAPAN</mat-label>
+          <div>
+            <mat-radio-group (change)="tarjetaInapan($event)">
+              <mat-radio-button value="si"
+                matTooltip="Validar que cuente con su Tarjeta Vigente de INAPAN y solicitarle presentarla."
+                matTooltipClass="example-tooltip-red" matTooltipShowDelay="0"
+                aria-label="Button that shows a red tooltip" [matTooltipDisabled]="!pacienteInapan"
+                matTooltipHideDelay="2500">Si
+              </mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <!-- Autorizar Acompañante -->
+        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" class="m-b-10" align="center">
+          <mat-label>Autorizar Acompañante</mat-label>
+          <div>
+            <!-- [disabled]="!acompaniante" -->
+            <mat-radio-group (change)="valorAcompaniante($event)" [formControl]="control_acompaniante">
+              <mat-radio-button value="si">Si</mat-radio-button>
+              <mat-radio-button value="no">No</mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <!-- Boton especial -->
+        <div fxFlex.gt-sm="15" fxFlex.gt-xs="100" fxFlex="100">
+          <button mat-stroked-button color="warn" [disabled]="formSolicitud.invalid" (click)="abrirDialogExcepciones()">
+            Excepciones
+          </button>
+        </div>
+      </div>
+      <!-- *****************************************************-->
+      <!-- Seccion para los datos de las firmas -->
+      <mat-label style="color: #003366" class="font-bold">Datos de las firmas</mat-label>
+      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5"
+        style="border-color: #a2a2a2" align="end">
+        <!-- Vo. Bo -->
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" class="centerText">
+          <mat-label class="font-bold" style="margin-right: 15px">Vo. Bo</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona la firma</mat-label>
+            <mat-select [formControl]="controlVoBo" required>
+              <mat-option *ngFor="let firm of firmsVoBo" [value]="firm.id">
+                {{firm.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!-- Autoriza -->
+        <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100" class="centerText">
+          <mat-label class="font-bold" style="margin-right: 15px">Autoriza</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-label>Selecciona la firma</mat-label>
+            <mat-select [formControl]="controlValidate" required>
+              <mat-option *ngFor="let firm of firmsValidate" [value]="firm.id">
+                {{firm.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <div fxLayout="row wrap" fxLayoutAlign="end center" align="end">
+      <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" *ngIf="imprimirPlantilla" class="m-r-15">
+        <button mat-flat-button type="button" color="primary"
+          [disabled]="formSolicitud.invalid || controlVoBo.invalid
+           || controlValidate.invalid || (!controlIda.value && !controlRegreso.value)||(!fechaNacimiento&& preguntarFechaNac)" (click)="vistaPreviaSolicitud()">
+          Siguiente
+          <mat-icon>trending_flat</mat-icon>
+        </button>
+      </div>
+      <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100" *ngIf="!imprimirPlantilla" class="m-r-15">
+        <button mat-flat-button type="button" color="primary" [disabled]="controlVoBo.invalid|| controlValidate.invalid"
+          (click)="sendPrintTemplate()">
+          <mat-icon>print</mat-icon>
+          Imprimir Plantilla
+        </button>
+      </div>
+    </div>
+  </mat-card-actions>
+</mat-card>

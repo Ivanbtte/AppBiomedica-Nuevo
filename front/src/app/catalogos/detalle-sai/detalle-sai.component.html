@@ -1,0 +1,67 @@
+<h1 mat-dialog-title>Detalle clave</h1>
+<!-- ============================================================== -->
+<!-- Image Card row-->
+<!-- ============================================================== -->
+<div mat-dialog-content fxLayout="row wrap">
+  <!-- Card column -->
+  <mat-card *ngIf="clave">
+    <mat-card-header>
+      <mat-card-title style="color: #545454">{{clave.Descripcion.substring(0, 160)}}</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div class="container">
+        <div class="div-text">
+          <p style="margin: 0 0">
+            Grupo Cuadro Basico: <strong>{{clave.DescripcionGrupo.Descripcion}}</strong>
+          </p>
+          <p>
+            Dentro de cuadro basico: <strong>{{clave.CuadroBasico}}</strong>
+          </p>
+          <p>
+            Clave Cuadro Basico:
+            <strong>
+              {{clave.Grupo}}.{{clave.Generico}}.{{clave.Especifico}}.{{clave.Diferenciador}}.{{clave.Variable}}
+            </strong>
+          </p>
+          <p>
+            Unidad de Presentacion: <strong>{{clave.UnidadPresentacion.UnidadPresentacion}}</strong>
+          </p>
+          <p>
+            Cantidad de la Presentacion: <strong>{{clave.CantidadPresentacion}}</strong>
+          </p>
+          <p>
+            Tipo de la Presentacion: <strong>{{clave.TipoPresentacion.Presentacion}}</strong>
+          </p>
+          <p>
+            Partida Presupuestal: <strong>{{clave.PartidaPresupuestal}}</strong>
+          </p>
+          <p style="color: #c90025; font-size: medium">
+            Precio sin IVA: <strong>{{clave.Precio | currency}}</strong>
+          </p>
+          <p style="color: #c90025; font-size: medium">
+            Precio con IVA: <strong>{{clave.Precio * 1.16 | currency}}</strong>
+          </p>
+        </div>
+        <div class="div-imagen">
+          <img mat-card-image class="imagen"
+               src="../../../assets/images/background/sin-imagen.jpg"
+               alt="Photo of a Shiba Inu">
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <p style="color: #3100cb; text-align: justify">
+        {{clave.Descripcion}}
+      </p>
+      <!--<img mat-card-image src="assets/images/{{CLAVE.IdArticulo}}.jpg" alt="Sin imagen">-->
+    </mat-card-content>
+  </mat-card>
+</div>
+<mat-card-actions>
+  <div class="main-containerAction">
+    <button mat-raised-button color="warn" (click)="onNoClick()" style="height: min-content">
+      Regresar
+    </button>
+  </div>
+</mat-card-actions>
+
