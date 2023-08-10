@@ -9,11 +9,13 @@ import {MaterialModule} from '../material.module';
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {CustomFormsModule} from 'ng2-validation';
 import { SolicitudSubrogadoComponent } from './solicitud-subrogado/solicitud-subrogado.component';
+import { AdministrarUsuariosSubComponent } from './administrar-usuarios-sub/administrar-usuarios-sub.component';
 
 
 @NgModule({
   declarations: [
-    SolicitudSubrogadoComponent
+    SolicitudSubrogadoComponent,
+    AdministrarUsuariosSubComponent
   ],
   imports: [
     CommonModule,
