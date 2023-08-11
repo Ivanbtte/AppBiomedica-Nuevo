@@ -13,8 +13,8 @@ func Init() error {
 	// conn, err := gorm.Open("postgres", "host=localhost port=5432 user=dbbiomedica dbname=biomedicaPrueba "+
 	// "password=serverSCC2020 sslmode=disable")
 	//***************************conexion servidor
-	conn, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=biomedica "+
-		"password=guille sslmode=disable")
+	conn, err := gorm.Open("postgres", "host=192.168.1.133 port=5432 user=postgres dbname=biomedica "+
+		"password=root sslmode=disable")
 	//**************************conexion pc oficina
 	// conn, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres dbname=biomedica "+
 	// 	"password=123qwe123 sslmode=disable")
