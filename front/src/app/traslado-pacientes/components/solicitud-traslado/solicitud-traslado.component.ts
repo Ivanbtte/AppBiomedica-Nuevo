@@ -132,12 +132,14 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
     this.formSolicitud.controls["unidadMedId"].setValue(this.unidadMedica.unidadMedId);
     this.fetchFirms();
   }
+
   consultarPermisoFolioSeparado(unit, modulo: string) {
     this.modules.ConsultarPermisosUnidad(unit, modulo).subscribe(result => {
       console.log(result.Data)
       this.folioSeparado = result.Data
     })
   }
+  
   buscarFolio() {
     const folio: string = this.formSolicitud.controls["ftp01"].value !== null ? this.formSolicitud.controls["ftp01"].value : "";
     this.borrarDatos();

@@ -9,10 +9,11 @@ import (
 	"appbiomedica/Modelos/ModeloUnidadM"
 	"errors"
 	"fmt"
-	"github.com/360EntSecGroup-Skylar/excelize/v2"
-	"github.com/asaskevich/govalidator"
 	"io"
 	"strconv"
+
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
+	"github.com/asaskevich/govalidator"
 )
 
 type Prei_Contr struct {
@@ -102,7 +103,7 @@ func ValidarDistribucionConConceptos(file io.Reader) ([]ConceptoContratoModelo.R
 		if res {
 			mensaje := "Esta unidad no se puede agregar 2 veces al mismo contrato y el mismo id prei"
 			n := ConceptoContratoModelo.RespuestaDistribucion{NumContrato: id.NumContrato, IdPrei: id.IdPrei, Error: mensaje,
-				Columna: encabezado[1], Fila: 0, Tipo: 0,}
+				Columna: encabezado[1], Fila: 0, Tipo: 0}
 			errores = append(errores, n)
 		}
 	}
@@ -253,7 +254,7 @@ func ValidarDistribucionSinConceptos(file io.Reader) ([]ConceptoContratoModelo.R
 		if res {
 			mensaje := "Este Id Prei no se puede distribuir dos veces en el mismo contrato y en la misma unidad medica"
 			n := ConceptoContratoModelo.RespuestaDistribucion{NumContrato: id.NumContrato, IdPrei: id.IdPrei,
-				Error: mensaje, Columna: encabezado[1], Fila: 0, Tipo: 0,}
+				Error: mensaje, Columna: encabezado[1], Fila: 0, Tipo: 0}
 			errores = append(errores, n)
 		}
 	}
@@ -263,7 +264,7 @@ func ValidarDistribucionSinConceptos(file io.Reader) ([]ConceptoContratoModelo.R
 		if precios {
 			mensaje := "Este Id Prei tiene dos precios diferentes"
 			n := ConceptoContratoModelo.RespuestaDistribucion{NumContrato: idPrei.NumContrato, IdPrei: idPrei.IdPrei,
-				Error: mensaje, Columna: encabezado[2], Fila: posci + 1, Tipo: 0,}
+				Error: mensaje, Columna: encabezado[2], Fila: posci + 1, Tipo: 0}
 			errores = append(errores, n)
 		}
 	}

@@ -14,6 +14,7 @@ export interface AdminTraslado {
   templateUrl: "./administrar-usuarios.component.html",
   styleUrls: ["./administrar-usuarios.component.scss"],
 })
+
 export class AdministrarUsuariosComponent implements OnInit {
   displayedColumns: string[] = [
     "accion",
@@ -30,7 +31,6 @@ export class AdministrarUsuariosComponent implements OnInit {
   ) {
     this.user = JSON.parse(<string>localStorage.getItem("user"));
     this.consultarAdministradores();
-
   }
 
   ngOnInit(): void { }
