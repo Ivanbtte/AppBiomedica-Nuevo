@@ -115,7 +115,7 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
     this.input1.nativeElement.focus();
   }
   ngOnInit() {
-    this.usuarioLog = jwt_decode(<string>localStorage.getItem("token"));
+     this.usuarioLog = jwt_decode(<string>localStorage.getItem("token"));
     this.unidadMedica = JSON.parse(<string>localStorage.getItem("unit"));
     this.formularioSolicitud();
     this.consultarPermisoFolioSeparado(this.unidadMedica.unidadMed.Id, '61367026d7be0a42003137fb')
@@ -139,7 +139,7 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
       this.folioSeparado = result.Data
     })
   }
-  
+
   buscarFolio() {
     const folio: string = this.formSolicitud.controls["ftp01"].value !== null ? this.formSolicitud.controls["ftp01"].value : "";
     this.borrarDatos();
@@ -380,6 +380,7 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
       unidadMedId: [null, Validators.compose([Validators.required])],
       usuarioId: [null, Validators.compose([Validators.required])],
     });
+    
   }
 
   validarEdad(anioNac: number) {
@@ -447,7 +448,7 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
     }
   }
   consultarFechaNacAcceder(nss, agregado: string) {
-    this.respuestaAcceder=true
+    this.respuestaAcceder = true
     // Swal.fire({
     //   title: 'Uploading...',
     //   html: 'Please wait...',
@@ -468,8 +469,8 @@ export class SolicitudTrasladoComponent implements OnInit, AfterViewInit {
         console.log(tmp)
         const separarFecha = tmp[0].FechaNacimiento.split("/");
         console.log(separarFecha)
-        this.fechaNacimiento = new Date(separarFecha[2], separarFecha[1]-1, separarFecha[0])
-        console.log('Fechaa Nc',this.fechaNacimiento)
+        this.fechaNacimiento = new Date(separarFecha[2], separarFecha[1] - 1, separarFecha[0])
+        console.log('Fechaa Nc', this.fechaNacimiento)
         if (Object.prototype.toString.call(this.fechaNacimiento) === '[object Date]') {
           if (isNaN(this.fechaNacimiento.getTime())) {
             Swal.fire({

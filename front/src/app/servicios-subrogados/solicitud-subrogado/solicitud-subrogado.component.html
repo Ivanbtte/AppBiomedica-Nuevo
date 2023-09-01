@@ -1,124 +1,51 @@
 <mat-card>
   <mat-card-title class="centerText">SOLICITUD DE SUBROGACIÓN DE SERVICIOS</mat-card-title>
-  <mat-card-subtitle class="centerText">{{unidad.unidadMed.DenominacionUni}}</mat-card-subtitle>
+  <mat-card-subtitle
+    class="centerText">{{unidad.unidadMed.DescripServicio}}{{unidad.unidadMed.NumUnidad}}</mat-card-subtitle>
+  <mat-card-subtitle class="centerText">{{unidad.unidadMed.Localidad}}</mat-card-subtitle>
+
   <mat-card-content>
-    <form>
-      <mat-label style="color: #003366" class="font-bold">Solicitud de subrogacion de servicios</mat-label>
+    <form [formGroup]="formSolicitud">
+      <mat-label stylze="color: #003366" class="font-bold">Servicio que deriva</mat-label>
       <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2">
-        <!-- Folio -->
-        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
-          <mat-form-field appearance="outline" hintLabel="Maximo 6 numeros">
-            <mat-label>Folio</mat-label>
-            <input #folionu matInput autocomplete="off" required formControlName="ftp01" maxlength="6" cdkFocusInitial
-              id="folionu">
-            <mat-hint align="end">{{folionu.value?.length || 0}}/6</mat-hint>
-            <mat-error>
-              Ingresa solo numeros.
-            </mat-error>
-            <button matSuffix mat-icon-button color="primary" type="button">
-              <mat-icon aria-label="Selecciona">search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <!-- Fecha cita -->
-        <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
-          <mat-form-field appearance="outline">
-            <mat-label>Fecha de la solicitud</mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" autocomplete="off"
-              formControlName="fechaCita">
-            <!-- (dateChange)="fechaCitaSeleccionada($event)" formControlName="fechaCita"> -->
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
-      <mat-label style="color: #003366" class="font-bold">Unidad médica</mat-label>
-      <!-- Clave presupuestal -->
-      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
-        style="border-color: #a2a2a2">
-        <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
-          <mat-form-field appearance="outline" hintLabel="Maximo 20 numeros">
-            <mat-label>Clave presupuestal</mat-label>
-            <input #folionu matInput autocomplete="off" required formControlName="ftp01" maxlength="20" cdkFocusInitial
-              id="folionu">
-            <mat-hint align="end">{{folionu.value?.length || 0}}/20</mat-hint>
-            <mat-error>
-              Ingresa solo numeros.
-            </mat-error>
-            <button matSuffix mat-icon-button color="primary" type="button">
-              <mat-icon aria-label="Selecciona">search</mat-icon>
-            </button>
-          </mat-form-field>
-        </div>
-        <!-- Tipo y numero -->
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo y número</mat-label>
-            <input matInput autocomplete="off" required formControlName="especialidad">
-          </mat-form-field>
-        </div>
-        <!-- Localidad -->
-        <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-          <mat-form-field appearance="outline">
-            <mat-label>Localidad</mat-label>
-            <input matInput autocomplete="off" required formControlName="especialidad">
-          </mat-form-field>
-        </div>
-      </div>
-      <mat-label style="color: #003366" class="font-bold">Servicio que deriva</mat-label>
-      <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
-        style="border-color: #a2a2a2">
-        <!-- Localidad -->
         <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
-            <input matInput autocomplete="off" required formControlName="especialidad">
+            <input matInput autocomplete="off" required formControlName="nombreser">
           </mat-form-field>
         </div>
-        <!-- Localidad -->
         <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Dirección</mat-label>
-            <input matInput autocomplete="off" required formControlName="especialidad">
+            <input matInput autocomplete="off" required formControlName="direccionser">
           </mat-form-field>
         </div>
       </div>
       <mat-label style="color: #003366" class="font-bold">Tipo de servicio</mat-label>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2">
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-          <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="110" fxLayout="row wrap">
-            <mat-label class="font-bold" style="margin-right: 15px">Tipo de servicio</mat-label>
-            <mat-radio-group aria-label="Seleccione una opción" fxLayout="row">
-              <div fxFlex.gt-sm="60" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="1">Ordinario</mat-radio-button>
-              </div>
-              <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="2">Urgencia</mat-radio-button>
-              </div>
-            </mat-radio-group>
-          </div>
-          <div fxFlex.gt-sm="50" fxFlex.gt-xs="100" fxFlex="110" fxLayout="row wrap">
-            <mat-label class="font-bold" style="margin-right: 15px">Motivo de subrogación</mat-label>
-            <mat-radio-group aria-label="Seleccione una opción" fxLayout="row">
-              <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="1">CS</mat-radio-button>
-              </div>
-              <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="2">FP</mat-radio-button>
-              </div>
-              <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="3">FE</mat-radio-button>
-              </div>
-              <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-                <mat-radio-button value="4">FI</mat-radio-button>
-              </div>
-            </mat-radio-group>
-          </div>
+        <!-- Agregar identificadores de nombre -->
+        <div fxFlex.gt-sm="35" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field appearance="fill">
+            <mat-label>Selecciona uno</mat-label>
+            <mat-select #mode value="Ordinario">
+              <mat-option value="Ordinario">Ordinario</mat-option>
+              <mat-option value="Urgencia">Urgencia</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
-        <br>
-        <br>
+        <div fxFlex.gt-sm="35" fxFlex.gt-xs="50" fxFlex="100">
+          <mat-form-field appearance="fill">
+            <mat-label>Selecciona uno</mat-label>
+            <mat-select #mode value="CS">
+              <mat-option value="CS">CS</mat-option>
+              <mat-option value="FP">FP</mat-option>
+              <mat-option value="FE">FE</mat-option>
+              <mat-option value="FI">FI</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
       <mat-label style="color: #003366" class="font-bold">Paciente</mat-label>
       <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
@@ -126,13 +53,13 @@
         <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline" hintLabel="Maximo 11 numeros">
             <mat-label>Número de seguridad social</mat-label>
-            <input #folionu matInput autocomplete="off" required formControlName="ftp01" maxlength="11" cdkFocusInitial
-              id="folionu">
-            <mat-hint align="end">{{folionu.value?.length || 0}}/11</mat-hint>
+            <input #nss matInput autocomplete="off" required formControlName="ftp03" maxlength="11"
+              (keyup.enter)="consultarNSS(nss)" cdkFocusInitial id="nss">
+            <mat-hint align="end">{{nss.value?.length || 0}}/11</mat-hint>
             <mat-error>
               Ingresa solo numeros.
             </mat-error>
-            <button matSuffix mat-icon-button color="primary" type="button">
+            <button matSuffix mat-icon-button color="primary" type="button" (click)="consultarNSS(nss)">
               <mat-icon aria-label="Selecciona">search</mat-icon>
             </button>
           </mat-form-field>
@@ -140,7 +67,7 @@
         <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline" hintLabel="Maximo 6 numeros">
             <mat-label>Agregado</mat-label>
-            <input #folionu matInput autocomplete="off" required formControlName="ftp01" maxlength="6" cdkFocusInitial
+            <input #folionu matInput autocomplete="off" required formControlName="ftp04" maxlength="6" cdkFocusInitial
               id="folionu">
             <mat-hint align="end">{{folionu.value?.length || 0}}/6</mat-hint>
             <mat-error>
@@ -151,13 +78,13 @@
         <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Nombre</mat-label>
-            <input matInput autocomplete="off" required formControlName="Nombre">
+            <input matInput autocomplete="off" required formControlName="NombrePac">
           </mat-form-field>
         </div>
         <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Apellido</mat-label>
-            <input matInput autocomplete="off" required formControlName="Apellido">
+            <input matInput autocomplete="off" required formControlName="ApellidoPac">
           </mat-form-field>
         </div>
         <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxFlex="100">
@@ -176,7 +103,7 @@
           <div fxFlex.gt-sm="60" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>CURP</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="CurpPac">
             </mat-form-field>
           </div>
         </div>
@@ -184,48 +111,44 @@
       <mat-label style="color: #003366" class="font-bold">Ramo de seguro que se afecta</mat-label>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2">
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="100">
-          <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="110" fxLayout="row wrap">
-            <mat-label class="font-bold" style="margin-right: 15px">Ramo de seguro que se afecta</mat-label>
-            <div fxLayout="row wrap" fxLayoutAlign="start center">
-              <mat-form-field appearance="fill">
-                <mat-label>Selecciona uno</mat-label>
-                <mat-select #mode value="RT">
-                  <mat-option value="RT">RT</mat-option>
-                  <mat-option value="RG">EG</mat-option>
-                  <mat-option value="MAT">MAT</mat-option>
-                  <mat-option value="IV">IV</mat-option>
-                  <mat-option value="PE">PE</mat-option>
-                  <mat-option value="Spf AM">Spf AM</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-          </div>
-          <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="110" fxLayout="row wrap">
-            <mat-label class="font-bold" style="margin-right: 15px">Tipo de</mat-label>
-            <div fxLayout="row wrap" fxLayoutAlign="start center">
-              <mat-radio-group aria-label="Seleccione una opción" fxLayout="row">
-                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-                  <mat-radio-button value="1">Unica</mat-radio-button>
-                </div>
-                <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
-                  <mat-radio-button value="2">Multiple</mat-radio-button>
-                </div>
-                <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
-                  <mat-radio-button value="3">Hemodiálisis Subrogada</mat-radio-button>
-                </div>
-              </mat-radio-group>
-            </div>
-          </div>
-          <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
-            <mat-form-field appearance="outline">
-              <mat-label>Vigencia de</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" fxLayout="row wrap">
+          <mat-label class="font-bold" style="margin-right: 15px">Ramo de seguro que se afecta</mat-label>
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-form-field appearance="fill">
+              <mat-label>Selecciona uno</mat-label>
+              <mat-select #mode value="RT">
+                <mat-option value="RT">RT</mat-option>
+                <mat-option value="RG">EG</mat-option>
+                <mat-option value="MAT">MAT</mat-option>
+                <mat-option value="IV">IV</mat-option>
+                <mat-option value="PE">PE</mat-option>
+                <mat-option value="Spf AM">Spf AM</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </div>
-        <br>
-        <br>
+        <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100" fxLayout="row wrap">
+          <mat-label class="font-bold" style="margin-right: 15px">Tipo de</mat-label>
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <mat-radio-group aria-label="Seleccione una opción" fxLayout="row">
+              <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-radio-button value="1">Unica</mat-radio-button>
+              </div>
+              <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-radio-button value="2">Multiple</mat-radio-button>
+              </div>
+              <div fxFlex.gt-sm="40" fxFlex.gt-xs="100" fxFlex="100">
+                <mat-radio-button value="3">Hemodiálisis Subrogada</mat-radio-button>
+              </div>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
+          <mat-form-field appearance="outline">
+            <mat-label>Vigencia de</mat-label>
+            <input matInput autocomplete="off" required formControlName="VigenciaRamSeg">
+          </mat-form-field>
+        </div>
       </div>
       <mat-label style="color: #003366" class="font-bold">Diagnostico(s) y resumen clínico</mat-label>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
@@ -233,11 +156,10 @@
         <div fxFlex.gt-sm="90" fxFlex.gt-xs="100" fxFlex="100">
           <mat-form-field appearance="outline">
             <mat-label>Diagnostico</mat-label>
-            <input matInput autocomplete="off" required formControlName="especialidad">
+            <input matInput autocomplete="off" required formControlName="DiagnosticoClin">
           </mat-form-field>
         </div>
       </div>
-
       <mat-label style="color: #003366" class="font-bold">Grupo a subrogar</mat-label>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2">
@@ -273,31 +195,7 @@
             <mat-label class="font-bold" style="margin-right: 15px">Especificar</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
-            </mat-form-field>
-          </div>
-          <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
-            <mat-form-field appearance="fill">
-              <mat-label>Cantidad</mat-label>
-              <input matInput type="number" placeholder="Ex. 1" min="1">
-            </mat-form-field>
-          </div>
-          <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100">
-            <mat-form-field appearance="outline">
-              <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
-            </mat-form-field>
-          </div>
-          <div fxFlex.gt-sm="20" fxFlex.gt-xs="100" fxFlex="100">
-            <mat-form-field appearance="fill">
-              <mat-label>Cantidad</mat-label>
-              <input matInput type="number" placeholder="Ex. 1" min="1">
-            </mat-form-field>
-          </div>
-          <div fxFlex.gt-sm="70" fxFlex.gt-xs="100" fxFlex="100">
-            <mat-form-field appearance="outline">
-              <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="especificacion1">
             </mat-form-field>
           </div>
         </div>
@@ -310,54 +208,71 @@
             <mat-label class="font-bold" style="margin-right: 15px">Nombre o razón social</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="NomRaProve">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">RFC</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="RfcProve">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Domicilio</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="DomiProve">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="45" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Telefono</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="TelProve">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Contrato No.</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="ContraProve">
             </mat-form-field>
           </div>
-          <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+          <div fxFlex.gt-sm="60" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Vigencia del</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
-            </mat-form-field>
+            <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Fecha de la solicitud</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" autocomplete="off"
+                  formControlName="VegenProve1">
+                <!-- (dateChange)="fechaCitaSeleccionada($event)" formControlName="fechaCita"> -->
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <mat-label class="font-bold" style="margin-right: 15px"> al </mat-label>
+            <div fxFlex.gt-sm="35" fxFlex.gt-xs="100" fxFlex="100">
+              <mat-form-field appearance="outline">
+                <mat-label>Fecha de la solicitud</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="DD/MM/AAAA" autocomplete="off"
+                  formControlName="VegenProve2">
+                <!-- (dateChange)="fechaCitaSeleccionada($event)" formControlName="fechaCita"> -->
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker color="primary"></mat-datepicker>
+              </mat-form-field>
+            </div>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Al.</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Especificar</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="EspeProve">
             </mat-form-field>
           </div>
         </div>
       </div>
-      <mat-label style="color: #003366" class="font-bold">Proveedor</mat-label>
+      <mat-label style="color: #003366" class="font-bold">Firmas</mat-label>
       <div fxLayout="row" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2">
         <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxFlex="100">
@@ -366,66 +281,66 @@
             <mat-label class="font-bold" style="margin-right: 15px">Elaboro</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Elaboro</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="ElabFir">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Vo. Bo. Jefe de servicio</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Vo. Bo. Jefe de servicio</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="JefeSerFir">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-label class="font-bold" style="margin-right: 15px">Aut. Director</mat-label>
             <mat-form-field appearance="outline">
               <mat-label>Aut. Director</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="DirecFir">
             </mat-form-field>
           </div>
           <mat-label class="font-bold" style="margin-right: 5x">Matrícula</mat-label>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Elaboro</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="ElabFir2">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Vo. Bo. Jefe de servicio</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="JefeSerFir2">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Aut. Director</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="DirecFir2">
             </mat-form-field>
           </div>
           <mat-label class="font-bold" style="margin-right: 30px">Firma</mat-label>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Elaboro</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="ElabFir3">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Vo. Bo. Jefe de servicio</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="JefeSerFir3">
             </mat-form-field>
           </div>
           <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
             <mat-form-field appearance="outline">
               <mat-label>Aut. Director</mat-label>
-              <input matInput autocomplete="off" required formControlName="especialidad">
+              <input matInput autocomplete="off" required formControlName="DirecFir3">
             </mat-form-field>
           </div>
         </div>
       </div>
       <div fxLayout="row wrap" fxLayoutAlign="end center" align="end">
         <div fxFlex.gt-sm="25" fxFlex.gt-xs="100" fxFlex="100" class="m-r-15">
-          <button mat-flat-button type="button" color="primary">
+          <button mat-flat-button type="button" color="primary" (click)="guardarDatos()">
             Guardar
           </button>
         </div>

@@ -6,7 +6,7 @@
         <h4 class="m-0" *ngIf="earn">Devengo: {{earn| currency}}</h4>
         <h4 class="m-0 colorAvailable" *ngIf="available">Disponible: {{available| currency}}</h4>
       </div>
-      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">
+      <div fxFlex.gt-sm="30" fxFlex.gt-xs="100" fxFlex="100">   
         <mat-card-title style="color: #003366; align-items: center!important;" class="font-bold" align="center">
           Solicitud de Traslado de Pacientes
         </mat-card-title>
@@ -28,7 +28,6 @@
     </div>
     <form [formGroup]="formSolicitud">
       <mat-label style="color: #003366" class="font-bold" *ngIf="imprimirPlantilla">Datos del traslado</mat-label>
-
       <div fxLayout="row wrap" fxLayoutAlign="space-between center" class="p-t-20 p-r-20 p-l-20 b-all m-t-5 m-b-15"
         style="border-color: #a2a2a2" *ngIf="imprimirPlantilla">
         <!-- Folio FTP-01 -->
@@ -63,7 +62,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Numero Contrato</mat-label>
             <mat-select (selectionChange)="numeroContratoSeleccionado($event.value)"
-              formControlName="contratoNumeroContrato">
+              formControlName="   ">
               <mat-option *ngFor="let cont of contratos" [value]="cont.NumeroContrato" style="font-size: 14px">
                 {{cont.NumeroContrato}}
               </mat-option>
@@ -173,6 +172,7 @@
           </mat-form-field>
         </div>
       </div>
+      
       <mat-label style="color: #003366" class="font-bold" *ngIf="formSolicitud.controls['agregadoMedico'].value &&
            formSolicitud.controls['fechaCita'].value && imprimirPlantilla">Datos del boleto y acompañante
       </mat-label>
