@@ -2,6 +2,8 @@ package ConceptosServiciosModelo
 
 import (
 	"appbiomedica/Conexion"
+
+	"github.com/jinzhu/gorm"
 )
 
 //********************************************************************************************************
@@ -13,6 +15,10 @@ func (concepto *Conceptos) AgregarConceptoContrato() error {
 		return err
 	}
 	return nil
+}
+
+func (c *Conceptos) AddConceptos(tx *gorm.DB) error {
+	return tx.Create(c).Error
 }
 
 /*****  Funcion para consultar un concepto  *****/
